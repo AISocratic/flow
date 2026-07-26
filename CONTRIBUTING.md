@@ -21,7 +21,7 @@ work elsewhere.
 **To sign:** open a pull request. An automated check will post a one-time
 prompt asking you to confirm agreement; replying to it signs the CLA against
 your GitHub account for all future contributions. Contributing on behalf of an
-employer? Email <fed@flowai.xyz> for a Corporate CLA first.
+employer? Email <fed@aisocratic.org> for a Corporate CLA first.
 
 ## Working on the spec
 

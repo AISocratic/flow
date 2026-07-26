@@ -2,6 +2,10 @@
 """Dev server for flow.html: watches src/, reruns build.sh, live-reloads the browser.
 
 Usage: ./serve.py [port]   (default 8000)
+
+Flow — Agentic Company OS
+Copyright (c) 2026 AISocratic
+SPDX-License-Identifier: AGPL-3.0-or-later
 """
 import http.server
 import os

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-# Assemble flow-system-design.html from the pieces in src/.
+# Flow — Agentic Company OS
+# Copyright (c) 2026 AISocratic
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# Assemble flow.html from the pieces in src/.
 # Usage: ./build.sh
 set -euo pipefail
 cd "$(dirname "$0")"

@@ -126,4 +126,4 @@ this document; confirming on the pull request constitutes your signature and is
 recorded against your commit history.
 
 If you are contributing on behalf of an employer, contact us at
-<fed@flowai.xyz> for a Corporate CLA before submitting.
+<fed@aisocratic.org> for a Corporate CLA before submitting.
