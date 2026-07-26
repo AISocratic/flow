@@ -1,0 +1,45 @@
+  <!-- ============ 06 AUTONOMY GATE ============ -->
+  <section class="comp">
+    <h2><span class="num">06</span>Autonomy — automerge vs. review</h2>
+    <p class="role">Trust is a per-card dial, not a global switch.</p>
+    <p>Every card decides how much freedom its agent gets. Marked <strong>automerge</strong>,
+    the agent squash-merges its own passing PR and the card lands in Done untouched by human
+    hands. Otherwise the card parks in <strong>Review</strong> and waits for a verdict:
+    approve, and an agent merges it; request changes, and the feedback goes back to the same
+    agent on the same branch. Low-stakes work flows friction-free; high-stakes work keeps a
+    human gate — on exactly the cards you choose.</p>
+    <div class="diagram dg" role="img" aria-label="A passing PR reaches a policy gate. Automerge leads straight to done. Otherwise the card waits in review for a human verdict: approve merges it; request changes sends it back to the agent.">
+    <svg viewBox="0 0 860 210">
+      <rect class="ns" x="20" y="70" width="120" height="50" rx="9"></rect>
+      <text x="80" y="91" text-anchor="middle">PR passing</text>
+      <text x="80" y="107" text-anchor="middle" class="sm">lint · test · verify</text>
+
+      <path class="ns" d="M 260 60 L 330 95 L 260 130 L 190 95 Z"></path>
+      <text x="260" y="92" text-anchor="middle" class="sm">automerge</text>
+      <text x="260" y="106" text-anchor="middle" class="sm">policy?</text>
+
+      <rect class="na" x="430" y="20" width="130" height="46" rx="9"></rect>
+      <text x="495" y="40" text-anchor="middle">Agent merges</text>
+      <text x="495" y="56" text-anchor="middle" class="sm">squash · no human</text>
+
+      <rect class="nh" x="430" y="128" width="130" height="46" rx="9"></rect>
+      <text x="495" y="148" text-anchor="middle">Human verdict</text>
+      <text x="495" y="164" text-anchor="middle" class="sm">card sits in Review</text>
+
+      <rect class="ns" x="680" y="70" width="120" height="50" rx="9"></rect>
+      <text x="740" y="91" text-anchor="middle">Done</text>
+      <text x="740" y="107" text-anchor="middle" class="sm">merged + closed</text>
+
+      <line class="edge" x1="140" y1="95" x2="184" y2="95" marker-end="url(#arr)"></line>
+      <line class="edge ok" x1="310" y1="72" x2="424" y2="46" marker-end="url(#arrok)"></line>
+      <text x="358" y="46" class="sm">yes</text>
+      <line class="edge" x1="310" y1="118" x2="424" y2="146" marker-end="url(#arr)"></line>
+      <text x="358" y="150" class="sm">no</text>
+      <line class="edge ok" x1="560" y1="40" x2="676" y2="80" marker-end="url(#arrok)"></line>
+      <line class="edge ok" x1="560" y1="146" x2="676" y2="106" marker-end="url(#arrok)"></line>
+      <text x="600" y="118" class="sm">approve</text>
+      <path class="edge no" d="M 495 174 C 495 205, 200 205, 90 124" marker-end="url(#arrno)"></path>
+      <text x="290" y="196" text-anchor="middle" class="sm">changes requested — feedback returns to the same agent, same branch</text>
+    </svg>
+    </div>
+  </section>

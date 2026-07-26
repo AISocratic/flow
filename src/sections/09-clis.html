@@ -1,0 +1,38 @@
+  <!-- ============ 09 CLIS ============ -->
+  <section class="comp">
+    <h2><span class="num">09</span>Two CLIs</h2>
+    <p class="role">Headless hands for agents working in isolated worktrees.</p>
+    <p>Worktrees don't carry the app's runtime, so all reads and writes go through two small
+    command-line tools. <code>todo-cli</code> is the board: read the plan, update a card,
+    attach a PR, leave a comment. <code>agent-cli</code> is the run lifecycle: start a run,
+    heartbeat, ask a human, finish — plus durable memory reads and writes. Everything an agent
+    does to shared state flows through these two audited doors.</p>
+    <div class="diagram dg" role="img" aria-label="Agents in worktrees call todo-cli for board operations and agent-cli for run lifecycle and memory; both write to Postgres.">
+    <svg viewBox="0 0 860 190">
+      <rect class="na" x="20" y="30"  width="140" height="40" rx="9"></rect>
+      <text x="90" y="55" text-anchor="middle" class="sm">agent · worktree A</text>
+      <rect class="na" x="20" y="80"  width="140" height="40" rx="9"></rect>
+      <text x="90" y="105" text-anchor="middle" class="sm">agent · worktree B</text>
+      <rect class="na" x="20" y="130" width="140" height="40" rx="9"></rect>
+      <text x="90" y="155" text-anchor="middle" class="sm">agent · worktree C</text>
+
+      <rect class="ns" x="330" y="34" width="210" height="52" rx="9"></rect>
+      <text x="435" y="56" text-anchor="middle" class="mono">todo-cli</text>
+      <text x="435" y="74" text-anchor="middle" class="sm">board · get · set · pr · comment</text>
+      <rect class="ns" x="330" y="112" width="210" height="52" rx="9"></rect>
+      <text x="435" y="134" text-anchor="middle" class="mono">agent-cli</text>
+      <text x="435" y="152" text-anchor="middle" class="sm">start · heartbeat · ask · finish · memory</text>
+
+      <rect class="nd" x="660" y="70" width="170" height="60" rx="12"></rect>
+      <text x="745" y="96" text-anchor="middle">Postgres</text>
+      <text x="745" y="114" text-anchor="middle" class="sm">cards · runs · memory</text>
+
+      <line class="edge" x1="160" y1="48"  x2="324" y2="56"  marker-end="url(#arr)"></line>
+      <line class="edge" x1="160" y1="100" x2="324" y2="72"  marker-end="url(#arr)"></line>
+      <line class="edge" x1="160" y1="110" x2="324" y2="130" marker-end="url(#arr)"></line>
+      <line class="edge" x1="160" y1="152" x2="324" y2="142" marker-end="url(#arr)"></line>
+      <line class="edge" x1="540" y1="62"  x2="654" y2="88"  marker-end="url(#arr)"></line>
+      <line class="edge" x1="540" y1="138" x2="654" y2="112" marker-end="url(#arr)"></line>
+    </svg>
+    </div>
+  </section>

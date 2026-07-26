@@ -1,0 +1,36 @@
+  <!-- ============ 11 RUNNER DAEMON ============ -->
+  <section class="comp">
+    <h2><span class="num">11</span>Runner daemon</h2>
+    <p class="role">The always-on autopilot.</p>
+    <p>A long-running process that makes the loop continuous instead of on-demand. It scans
+    the board, claims ready cards race-safely (two daemons never grab the same card), executes
+    each through the standard worktree pipeline, merges or parks the result per the card's
+    autonomy policy, and alerts a human — Telegram, SMS — only when something genuinely needs
+    one. With the daemon on, filing a card <em>is</em> shipping the feature.</p>
+    <div class="diagram dg" role="img" aria-label="The daemon's cycle: scan board, claim card, execute in worktree, merge or park, alert if needed, repeat.">
+    <svg viewBox="0 0 860 170">
+      <rect class="na" x="20"  y="56" width="120" height="50" rx="9"></rect>
+      <text x="80" y="77" text-anchor="middle">Scan board</text>
+      <text x="80" y="93" text-anchor="middle" class="sm">ready + unblocked</text>
+      <rect class="na" x="188" y="56" width="120" height="50" rx="9"></rect>
+      <text x="248" y="77" text-anchor="middle">Claim</text>
+      <text x="248" y="93" text-anchor="middle" class="sm">race-safe lock</text>
+      <rect class="na" x="356" y="56" width="120" height="50" rx="9"></rect>
+      <text x="416" y="77" text-anchor="middle">Execute</text>
+      <text x="416" y="93" text-anchor="middle" class="sm">worktree pipeline</text>
+      <rect class="ns" x="524" y="56" width="130" height="50" rx="9"></rect>
+      <text x="589" y="77" text-anchor="middle">Merge or park</text>
+      <text x="589" y="93" text-anchor="middle" class="sm">per card autonomy</text>
+      <rect class="nh" x="702" y="56" width="130" height="50" rx="9"></rect>
+      <text x="767" y="77" text-anchor="middle">Alert human</text>
+      <text x="767" y="93" text-anchor="middle" class="sm">only when needed</text>
+
+      <line class="edge" x1="140" y1="81" x2="182" y2="81" marker-end="url(#arr)"></line>
+      <line class="edge" x1="308" y1="81" x2="350" y2="81" marker-end="url(#arr)"></line>
+      <line class="edge" x1="476" y1="81" x2="518" y2="81" marker-end="url(#arr)"></line>
+      <line class="edge" x1="654" y1="81" x2="696" y2="81" marker-end="url(#arr)"></line>
+      <path class="edge back" d="M 767 106 C 740 155, 140 155, 82 108" marker-end="url(#arr)"></path>
+      <text x="430" y="150" text-anchor="middle" class="sm">…and around again, continuously</text>
+    </svg>
+    </div>
+  </section>

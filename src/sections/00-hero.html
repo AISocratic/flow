@@ -1,0 +1,148 @@
+  <div class="hero-bg" aria-hidden="true"><i></i><i></i></div>
+
+  <p class="eyebrow">System design · v1 · spec</p>
+  <h1>Flow — Agentic Company OS</h1>
+  <p class="lede">
+    Goals become projects. Projects become cards. Cards become merged code. Code moves
+    the metrics. Metrics reshape the goals. Flow is an operating loop where a fleet of
+    AI agents does the running — planning, building, verifying, shipping, monitoring — and
+    humans set direction, review where they choose to, or simply observe.
+  </p>
+
+  <div class="note">
+    <span class="note-title">The goal</span>
+    <p>Run your team or startup in full autonomy:</p>
+    <ol>
+      <li><strong>Install Flow.</strong> It integrates with the Kanban board you already have, or
+      builds you one.</li>
+      <li><strong>Wire up the dashboard</strong> so every number lands in one place — engineering,
+      KPIs, traffic, logs, spend.</li>
+      <li><strong>Give the agents a mission.</strong> They decompose it into projects, epics and
+      tasks on the board.</li>
+      <li><strong>Let the orchestrator run them</strong> — waves of agents working that board until
+      the metric moves.</li>
+    </ol>
+    <p>All of it on <strong>your AI subscriptions</strong> rather than metered API credits — with an
+    exception for models cheap enough to justify on their own (Gemma 4, DeepSeek, Kimi 3, GLM 5.2)
+    on summarization and other non-mission-critical work.</p>
+  </div>
+
+  <div class="legend" role="list" aria-label="Diagram legend">
+    <span role="listitem"><i class="dot hu"></i> Human</span>
+    <span role="listitem"><i class="dot ag"></i> Agent</span>
+    <span role="listitem"><i class="dot sy"></i> System</span>
+    <span role="listitem"><i class="dot da"></i> Data / metrics</span>
+  </div>
+
+  <!-- ============ MASTER LOOP ============ -->
+  <div class="diagram dg" role="img" aria-label="Master loop: a human sets direction into goals; goals flow to projects, board, then an orchestrator and worktree agents grouped inside interchangeable harnesses — Claude Code, Codex, or API — then pull request, verification, deploy and metrics, with monitoring feeding bugs back to the board and insights back to goals. Five data-store cylinders — Agent.md, Skills.md, Code Knowledge (code hierarchy, cache), Company Knowledge (RAG), Memory — sit beneath the agents, linked by a self-improvement loop, and a communication layer — email, text, Slack — underpins everything.">
+  <svg viewBox="-152 0 1052 398">
+    <!-- agents & harnesses enclosure: orchestrator + agents -->
+    <rect class="ghost" x="420" y="4" width="294" height="148" rx="12"></rect>
+    <text x="567" y="19" text-anchor="middle" class="mono mut">Agents and Harnesses</text>
+
+    <!-- memory layer, below the agents enclosure; linked by a self-improvement loop -->
+    <path class="nd" d="M 308 184 v 22 a 30 6 0 0 0 60 0 v -22"></path>
+    <ellipse class="nd" cx="338" cy="184" rx="30" ry="6"></ellipse>
+    <text x="338" y="224" text-anchor="middle" class="sm">Agent.md</text>
+    <path class="nd" d="M 392 184 v 22 a 30 6 0 0 0 60 0 v -22"></path>
+    <ellipse class="nd" cx="422" cy="184" rx="30" ry="6"></ellipse>
+    <text x="422" y="224" text-anchor="middle" class="sm">Skills.md</text>
+    <path class="nd" d="M 480 184 v 22 a 30 6 0 0 0 60 0 v -22"></path>
+    <ellipse class="nd" cx="510" cy="184" rx="30" ry="6"></ellipse>
+    <text x="510" y="224" text-anchor="middle" class="sm">Code knowledge</text>
+    <text x="510" y="236" text-anchor="middle" class="sm">code hierarchy, cache</text>
+    <path class="nd" d="M 584 184 v 22 a 30 6 0 0 0 60 0 v -22"></path>
+    <ellipse class="nd" cx="614" cy="184" rx="30" ry="6"></ellipse>
+    <text x="614" y="224" text-anchor="middle" class="sm">Company</text>
+    <text x="614" y="236" text-anchor="middle" class="sm">Knowledge (RAG)</text>
+    <path class="nd" d="M 666 184 v 22 a 30 6 0 0 0 60 0 v -22"></path>
+    <ellipse class="nd" cx="696" cy="184" rx="30" ry="6"></ellipse>
+    <text x="696" y="224" text-anchor="middle" class="sm">Memory</text>
+    <line class="edge back" x1="528" y1="152" x2="528" y2="172" marker-start="url(#arr)" marker-end="url(#arr)"></line>
+    <text x="539" y="166" class="sm">self-improvement</text>
+
+    <!-- communication layer, below everything -->
+    <rect x="-148" y="336" width="962" height="46" rx="12" fill="none" stroke="var(--line-strong)" stroke-width="1.2" stroke-dasharray="2 5" stroke-linecap="round"></rect>
+    <text x="344" y="356" text-anchor="middle">Communication</text>
+    <text x="344" y="372" text-anchor="middle" class="sm">email · text · Slack</text>
+    <line class="edge back" x1="249" y1="310" x2="249" y2="332" marker-start="url(#arr)" marker-end="url(#arr)"></line>
+
+    <!-- human, left of goals -->
+    <rect class="nh" x="-148" y="40" width="130" height="48" rx="9"></rect>
+    <text x="-83" y="56" text-anchor="middle">Human</text>
+    <text x="-83" y="70" text-anchor="middle" class="sm">sets direction and</text>
+    <text x="-83" y="82" text-anchor="middle" class="sm">monitors the company</text>
+    <line class="edge" x1="-18" y1="62" x2="4" y2="62" marker-end="url(#arr)"></line>
+    <line class="edge back" x1="-83" y1="92" x2="-83" y2="332" marker-start="url(#arr)" marker-end="url(#arr)"></line>
+
+    <!-- forward path -->
+    <rect class="nh" x="10"  y="40" width="92" height="44" rx="9"></rect>
+    <text x="56" y="59" text-anchor="middle">Goals</text>
+    <text x="56" y="74" text-anchor="middle" class="sm">targets + trends</text>
+
+    <rect class="na" x="140" y="40" width="104" height="44" rx="9"></rect>
+    <text x="192" y="59" text-anchor="middle">Projects</text>
+    <text x="192" y="74" text-anchor="middle" class="sm">weekly ritual</text>
+
+    <rect class="ns" x="282" y="40" width="110" height="44" rx="9"></rect>
+    <text x="337" y="59" text-anchor="middle">Kanban board</text>
+    <text x="337" y="74" text-anchor="middle" class="sm">epics · tasks · bugs</text>
+
+    <rect class="na" x="430" y="70" width="112" height="44" rx="9"></rect>
+    <text x="486" y="89" text-anchor="middle">Orchestrator</text>
+    <text x="486" y="104" text-anchor="middle" class="sm">waves from a DAG</text>
+
+    <rect class="na" x="556" y="26" width="156" height="34" rx="8"></rect>
+    <text x="634" y="47" text-anchor="middle">Claude Code - Docker</text>
+    <rect class="na" x="556" y="68" width="156" height="34" rx="8"></rect>
+    <text x="634" y="89" text-anchor="middle">Codex - Local</text>
+    <rect class="na" x="556" y="110" width="156" height="34" rx="8"></rect>
+    <text x="634" y="131" text-anchor="middle">OpenRouter</text>
+
+    <rect class="ns" x="738" y="40" width="70" height="44" rx="9"></rect>
+    <text x="773" y="66" text-anchor="middle">PR</text>
+
+    <line class="edge" x1="102" y1="62" x2="134" y2="62" marker-end="url(#arr)"></line>
+    <line class="edge" x1="244" y1="62" x2="276" y2="62" marker-end="url(#arr)"></line>
+    <line class="edge" x1="392" y1="62" x2="424" y2="86" marker-end="url(#arr)"></line>
+    <line class="edge" x1="542" y1="82" x2="550" y2="46" marker-end="url(#arr)"></line>
+    <line class="edge" x1="542" y1="92" x2="550" y2="85" marker-end="url(#arr)"></line>
+    <line class="edge" x1="542" y1="102" x2="550" y2="124" marker-end="url(#arr)"></line>
+    <line class="edge" x1="710" y1="43" x2="732" y2="54" marker-end="url(#arr)"></line>
+    <line class="edge" x1="710" y1="85" x2="732" y2="63" marker-end="url(#arr)"></line>
+    <line class="edge" x1="710" y1="127" x2="732" y2="74" marker-end="url(#arr)"></line>
+
+    <!-- down the right side: verify -> merge -->
+    <rect class="na" x="728" y="128" width="90" height="44" rx="9"></rect>
+    <text x="773" y="147" text-anchor="middle">Verify</text>
+    <text x="773" y="162" text-anchor="middle" class="sm">score vs goal</text>
+    <line class="edge" x1="773" y1="84" x2="773" y2="122" marker-end="url(#arr)"></line>
+
+    <rect class="ns" x="728" y="200" width="90" height="44" rx="9"></rect>
+    <text x="773" y="219" text-anchor="middle">Deploy</text>
+    <text x="773" y="234" text-anchor="middle" class="sm">merged · live</text>
+    <line class="edge" x1="773" y1="172" x2="773" y2="194" marker-end="url(#arr)"></line>
+
+    <!-- bottom row: deploy -> metrics -> monitoring -->
+    <rect class="nd" x="380" y="262" width="118" height="44" rx="9"></rect>
+    <text x="439" y="281" text-anchor="middle">Metrics</text>
+    <text x="439" y="296" text-anchor="middle" class="sm">dashboards</text>
+    <path class="edge" d="M 745 244 C 680 292, 580 288, 504 285" marker-end="url(#arr)"></path>
+
+    <rect class="na" x="180" y="262" width="138" height="44" rx="9"></rect>
+    <text x="249" y="281" text-anchor="middle">Monitoring agents</text>
+    <text x="249" y="296" text-anchor="middle" class="sm">sweeps · anomalies</text>
+    <line class="edge" x1="374" y1="284" x2="324" y2="284" marker-end="url(#arr)"></line>
+
+    <!-- feedback edges -->
+    <path class="edge back" d="M 249 262 C 249 190, 300 120, 330 92" marker-end="url(#arr)"></path>
+    <text x="222" y="170" class="sm">files bugs +</text>
+    <text x="222" y="184" class="sm">improvements</text>
+
+    <path class="edge back" d="M 180 284 C 70 284, 40 180, 52 92" marker-end="url(#arr)"></path>
+    <text x="52" y="200" class="sm">insights reshape</text>
+    <text x="52" y="214" class="sm">the goals</text>
+  </svg>
+  </div>
+  <p class="caption">The loop. A human sets direction; the orchestrator dispatches agents that run anywhere — docker, local, or plain API — on interchangeable harnesses (Claude Code, Codex, or a direct model like GLM via OpenRouter). The forward path runs along the top and right, the product feeds metrics, and monitoring agents close the circle by filing new work and informing new goals. Nothing in the loop requires a human — every human touchpoint is optional policy.</p>

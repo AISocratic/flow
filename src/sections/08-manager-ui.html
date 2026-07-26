@@ -1,0 +1,22 @@
+  <!-- ============ 08 MANAGER UI ============ -->
+  <section class="comp">
+    <h2><span class="num">08</span>Agents Manager UI</h2>
+    <p class="role">Watch the fleet work, live.</p>
+    <p>A real-time view of the run tree: which orchestrator is active, which waves are open,
+    what every task agent is doing right now, and where a run is waiting on you. This is where
+    a human answers a paused run's question, inspects a live console, or kills something —
+    fleet observability in one screen.</p>
+    <div class="mock" role="img" aria-label="Manager UI mock: a live run tree with an orchestrator, two waves, and task runs carrying status chips.">
+      <div class="bar"><b>Agents Manager</b><span>Agents</span><span>Runs</span><span>DAG</span><span>Memory</span></div>
+      <div class="tree">
+        <div>▾ orchestrator · board-run #142 <span class="chip run">running</span></div>
+        <div class="lvl1">▾ wave 1 <span class="chip run">2 / 3 live</span></div>
+        <div class="lvl2">task a3f2 · referral-page <span class="chip done">done · PR ↗</span></div>
+        <div class="lvl2">task 9c41 · signup-funnel <span class="chip run">implement</span></div>
+        <div class="lvl2">task 77be · email-capture <span class="chip wait">needs-feedback</span></div>
+        <div class="lvl1">▸ wave 2 · 2 tasks <span class="chip done">queued</span></div>
+        <div class="lvl1">▸ wave 0 · merge queue <span class="chip done">merged 2</span></div>
+      </div>
+    </div>
+    <p class="caption">The <span class="chip wait" style="margin-left:0">needs-feedback</span> chip is the human inbox: click it, answer the agent's question, and the run resumes.</p>
+  </section>

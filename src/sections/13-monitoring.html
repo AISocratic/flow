@@ -1,0 +1,41 @@
+  <!-- ============ 13 MONITORING AGENT ============ -->
+  <section class="comp">
+    <h2><span class="num">13</span>Monitoring &amp; improvement agents</h2>
+    <p class="role">The part of the company that never stops paying attention.</p>
+    <p>Standing watchers evaluate trigger conditions against the metric stream — error spikes,
+    metric anomalies, degrading trends. When one fires, an <strong>investigate agent</strong>
+    digs in: reads logs, reproduces, identifies the likely cause, and files a card with its
+    findings attached. A slower-cadence <strong>insights agent</strong> reads analytics for
+    opportunities rather than fires — and files improvement cards the same way. This is what
+    closes the loop: the system doesn't just execute the backlog, it <em>writes</em> it.</p>
+    <div class="diagram dg" role="img" aria-label="Metric stream flows into trigger conditions; a fired trigger launches an investigate agent which files a card on the board; an insights agent files improvement cards on its own cadence.">
+    <svg viewBox="0 0 860 200">
+      <rect class="nd" x="20" y="70" width="130" height="56" rx="9"></rect>
+      <text x="85" y="93" text-anchor="middle">Metric stream</text>
+      <text x="85" y="110" text-anchor="middle" class="sm">errors · perf · business</text>
+
+      <rect class="ns" x="230" y="70" width="140" height="56" rx="9"></rect>
+      <text x="300" y="93" text-anchor="middle">Triggers</text>
+      <text x="300" y="110" text-anchor="middle" class="sm">thresholds + anomalies</text>
+
+      <rect class="na" x="450" y="24" width="150" height="52" rx="9"></rect>
+      <text x="525" y="46" text-anchor="middle">Investigate agent</text>
+      <text x="525" y="63" text-anchor="middle" class="sm">logs · repro · root cause</text>
+      <rect class="na" x="450" y="122" width="150" height="52" rx="9"></rect>
+      <text x="525" y="144" text-anchor="middle">Insights agent</text>
+      <text x="525" y="161" text-anchor="middle" class="sm">reads analytics · 4h cadence</text>
+
+      <rect class="ns" x="690" y="70" width="150" height="56" rx="9"></rect>
+      <text x="765" y="93" text-anchor="middle">Board</text>
+      <text x="765" y="110" text-anchor="middle" class="sm">bug + improvement cards</text>
+
+      <line class="edge" x1="150" y1="98" x2="224" y2="98" marker-end="url(#arr)"></line>
+      <line class="edge" x1="370" y1="84" x2="444" y2="56" marker-end="url(#arr)"></line>
+      <text x="384" y="58" class="sm">fires</text>
+      <path class="edge back" d="M 85 126 C 120 175, 340 168, 444 152" marker-end="url(#arr)"></path>
+      <line class="edge" x1="600" y1="50" x2="684" y2="82" marker-end="url(#arr)"></line>
+      <line class="edge" x1="600" y1="148" x2="684" y2="114" marker-end="url(#arr)"></line>
+      <text x="628" y="140" class="sm">files</text>
+    </svg>
+    </div>
+  </section>

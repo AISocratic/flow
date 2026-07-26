@@ -11,6 +11,24 @@ running), and the metrics + gaps we should close next. It is the companion to
 
 ---
 
+## 0. Goal
+
+Create an AI agent orchestrator that lets you run your team or startup in **full autonomy**:
+
+1. **Install Flow** — it integrates with the Kanban board you already have, or builds a new one
+   (§8, [`install.md`](install.md)).
+2. **Wire up the dashboard** so every metric lands in one place: engineering, KPIs, traffic, logs,
+   spend (§5).
+3. **Give the agents a mission** — they decompose it into projects, epics and tasks on the board
+   (§5c, §6).
+4. **Orchestrate them** — waves of agents work the board until the metric moves (§3, §4).
+
+All of it on **your AI subscriptions** rather than metered API credits. The exception is models cheap
+enough to justify on their own — Gemma 4, DeepSeek, Kimi 3, GLM 5.2 and similar — used for
+summarization and other **non-mission-critical** work. See §4f.
+
+---
+
 ## 1. What it is, in one paragraph
 
 The orchestrator turns the admin Kanban board (`/admin/todo`) into the work queue for a
@@ -70,7 +88,8 @@ Seven tables form the core. Relationships:
   and per-card execution policy (`model`, `effort`, `subtasks_*`, `goal_percentage`, `loop_limit`).
 - `todo_comments` is the append-only work log shared by humans and agents.
 - `agents` is the registry of executors (orchestrator, wave, per-task agents).
-- `card_assignments` records the current owner of a card (≤1 active per card).
+- `card_assignments` records who is working a card: **two slots** with claim timestamps, so a race is
+  recorded rather than lost, but only **one active worker** ever survives arbitration.
 - `agent_runs` is the **execution tracker** — a self-referential tree
   (`parent_run_id`) grouped by `workflow_run_id`, with a state machine + heartbeat.
 - `agent_memories` / `user_agent_memories` are durable knowledge scoped to an agent or a user.
@@ -88,7 +107,9 @@ The board is the human ↔ agent interface. Source: `app/(admin)/admin/todo/`.
 
 ### Columns (the `todos.status` lifecycle)
 
-`backlog → todo → doing → review → done` plus terminal `wont-do` and `archive`.
+`backlog → todo → doing → review → done` plus a parked `to-follow-up` lane and
+terminal `wont-do` and `archive`. A card moves to `to-follow-up` when it's blocked on an
+answer, an external event, or something to revisit later, then rejoins the flow once unblocked.
 Dragging a card **into** Review clears its `review_status` (a fresh verdict is required).
 
 ### Card types
@@ -103,8 +124,8 @@ Dragging a card **into** Review clears its `review_status` (a fresh verdict is r
 |---|---|
 | **Drag & drop** | `dnd-kit` with custom collision detection; one batched `POST /reorder` on drop. |
 | **Hierarchy** | Epics nest subtasks visually when both are in the same column; `parent_id` FK. |
-| **Dependencies** | `dependencies uuid[]` cross-links; visualized as dashed edges in Graph view. |
-| **Three views** | **Board** (Kanban), **List** (grouped), **Graph** (DAG of parent/dep edges). |
+| **Dependencies** | `dependencies uuid[]` cross-links; task deps stay inside one epic, epic deps live on the project. |
+| **Three views** | **Board** (Kanban), **List** (grouped), **Workflow Graph** (per-epic execution DAG — see below). |
 | **Execution policy** | Per card: `effort` (low/mid/high) + `model` (tier or slug); `subtasks_*` for children. |
 | **Verification loop** | `goal_percentage` (0–100) + `loop_limit` drive re-work until the score is met. |
 | **Review & merge** | `pr_url` + `review_status=approved` → "Merging" badge; agent squash-merges → Done. |
@@ -112,6 +133,22 @@ Dragging a card **into** Review clears its `review_status` (a fresh verdict is r
 | **Bulk actions** | Cmd/Ctrl/Shift-select → move / re-priority / assign / approve / archive. |
 | **Live refresh** | Polls `GET /api/admin/todos/version` every 10s; refetches only when the token changes. |
 | **Comments** | Per-card append-only log; authored by humans or `agent-todo`. |
+
+### Workflow Graph view — the board as an execution plan
+
+The third view is the one the orchestrator actually executes (see §4 and the
+_Workflow Graph / Agent Orchestrator_ chart in the design doc). Rules:
+
+- **One graph per epic.** Nodes are tasks, edges are `dependencies`. An epic's graph is
+  self-contained, so a wave of it can be dispatched without reading the rest of the board.
+- **Task edges never cross epics.** A dep is accepted only when both cards resolve to the same
+  `parent_id`; anything else is refused at write time with the reason in the card log.
+- **Epics connect only at the project layer.** An epic → epic link is stored as a gate on the two
+  epic cards. When it clears, the downstream epic's whole graph becomes ready at once.
+- **X-axis is the ready wave.** A task enters wave _N_ once every dep cleared by _N−1_, so
+  horizontal position is execution order; a gated epic shifts right as a whole, independent epics
+  start at wave 1.
+- **Cycles are rejected**, so the graph is a DAG by construction rather than by nightly repair.
 
 ### API surface
 
@@ -142,25 +179,34 @@ Engine: the `agent-todo` skill + two CLIs + git worktrees + the Workflow primiti
    `humanAssigned`, and `readyToMerge`. Approved PRs (`readyToMerge`) are merged first on
    every run.
 
-2. **Distribute.** For each wave the orchestrator spawns **one Workflow** that fans out a
+2. **Claim.** An agent chooses its scope — a **whole epic**, or **a few tasks inside one** (both
+   are safe because an epic graph is self-contained). It then **assigns the card to itself and
+   moves it to `doing`** as one atomic step; that column move is the signal to every other agent
+   and human that the card is taken. `card_assignments` holds **two slots** per card, so a
+   simultaneous claim is recorded instead of lost: when two workers land on the same card, the
+   **lowest claim timestamp** decides whether to keep the card or leave it to the other agent, and
+   the decision is written to the card log. A worker that stops heartbeating loses its slot and the
+   card returns to the ready wave.
+
+3. **Distribute.** For each wave the orchestrator spawns **one Workflow** that fans out a
    **per-task agent in a fresh git worktree** under `.claude/worktrees/<workflow_run_id>/`.
    Worktrees are full checkouts of the default branch with `node_modules` symlinked and
    `.env.local` copied in, so parallel agents never collide on files.
 
-3. **Implement.** Each task agent: checks out `todo/<8-char-id>-<kebab-title>`, implements
+4. **Implement.** Each task agent: checks out `todo/<8-char-id>-<kebab-title>`, implements
    the card, runs `pnpm lint` + `pnpm test`, pushes, and opens a PR via `gh pr create`.
    It returns `{ id, status: done|failed, prUrl, branch, summary }`.
 
-4. **Verify (optional loop).** If `goal_percentage > 0`, a verification agent scores the
+5. **Verify (optional loop).** If `goal_percentage > 0`, a verification agent scores the
    work 0–100. If `score < goal` and `attempts < loop_limit`, the task re-runs on the same
    branch/PR; each attempt is logged as a card comment.
 
-5. **Resolve model/effort.** `resolveExecution(card, parent)` in
+6. **Resolve model/effort.** `resolveExecution(card, parent)` in
    `lib/agents/model-policy.ts` maps tiers → slugs (`low→haiku-4.5`, `mid→sonnet-4.6`,
    `high→opus-4.8`; `fable-5` = high) and applies relative child policies (`same`,
    `same_lower`).
 
-6. **Merge or wait.** `automerge` / `needs_human_review=false` → squash-merge → Done.
+7. **Merge or wait.** `automerge` / `needs_human_review=false` → squash-merge → Done.
    Otherwise the card sits in **Review** for a human verdict.
 
 ### 4b. The two CLIs (headless DB access from worktrees)
@@ -215,6 +261,30 @@ Every coding-agent run should be a reproducible, forkable snapshot:
 - **`agent-todo` skill** — the full multi-wave orchestrator (the default for "run the board").
 - **`todo-task-worker` agent** (`.claude/agents/todo-task-worker.md`) — a single-task
   worker: picks one unblocked high-value card and drives it to a PR. Model: Opus.
+
+### 4f. Cost classes — subscriptions first, cheap models for the rest
+
+Model choice is routed by **cost class** as well as capability. `resolveExecution(card, parent)`
+already resolves `model` + `effort` per card; the cost class is the second axis:
+
+| Lane | Runs on | Used for | Bill |
+|---|---|---|---|
+| **Subscription** (default) | Claude Code / Codex seats we already pay for | Plan, implement, review, verify, judge — anything mission-critical | Flat monthly; unchanged as agent count grows |
+| **Cheap-metered** (exception) | Gemma 4, DeepSeek, Kimi 3, GLM 5.2 etc. via OpenRouter | Summarize, label, dedupe, digest, embed — never mission-critical | Metered, but cheaper than a seat for this work |
+
+What we deliberately don't do is pay per token for work a subscription seat already covers. A card
+can override its lane, so the split is visible and adjustable per card rather than a global switch.
+
+### 4g. Agent signaling — **TBD**
+
+Board state is a good *status* channel: claim a card, move a column, comment on the card, and
+everyone converges on the next poll. What's missing is **agent-to-agent signaling** for live runs —
+updates, changes and notifications pushed between running agents without round-tripping through the
+board ("I changed this module's shape", "my card will break yours", "stop, already fixed").
+
+Open design questions: transport, delivery guarantees, ordering, and who may interrupt whom.
+**Action: ask @dan van flyman about Synapse** before building anything here — it may already be the
+answer.
 
 ---
 
@@ -371,7 +441,36 @@ evaluate conditions, dedupe with a 1-hour cooldown, and can launch an investigat
 
 ---
 
-## 8. Where this is going (one-line summary)
+## 8. Installation — orchestrator & AI project manager
+
+Full agent-executable procedure: **[`install.md`](install.md)**. Design contract:
+
+- **Drop it in any project.** Flow runs on the toolchain that is already installed — JS, Python,
+  Rust, Go — and adds **no new runtime dependency and no new build step**. It *detects* your test /
+  lint / build commands and calls them; those become the verification hooks behind
+  `goal_percentage` / `loop_limit`.
+- **One addition to the repo.** An agent already running on your machine knows what to do after a
+  single skill is added: `.claude/skills/flow-agent-orchestrator/`. Nothing more.
+- **Two deployment shapes.** Standalone admin panel beside your platform, or **integrated into it**.
+  Integrated is better: it shares your **RBAC/ACL** (same users, roles, permissions), your
+  **database**, and your **general knowledge**, so agents read your domain instead of guessing.
+- **Install = drop the code, then ask the agent to run `install.md`.** It cuts a
+  `flow/pre-install` snapshot branch first, detects the stack, mounts the board and API behind your
+  existing auth, wires the skill and CLIs, and finishes with a smoke test that drives one real card
+  to a PR under your own CI.
+
+### Uninstall
+
+Removal is easy — delete the skill, drop the board routes, drop or keep the tables. What removal
+does **not** undo is the work the agents did: those are ordinary commits in your history. The only
+full revert is `git checkout flow/pre-install`. So test it thoroughly on a real but non-critical
+slice of the backlog, with automerge off, keep the snapshot branch until you're satisfied, and be
+ready to revert everything if it isn't working for you. We strongly believe that once you've tried
+the Orchestrator you won't roll back.
+
+---
+
+## 9. Where this is going (one-line summary)
 
 Today: a **fully instrumented, self-driving** orchestrator — a runner daemon takes board
 cards (and decomposed missions) to merged PRs in parallel worktrees, feeds itself work

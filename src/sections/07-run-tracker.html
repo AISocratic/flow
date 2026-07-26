@@ -1,0 +1,37 @@
+  <!-- ============ 07 RUN TRACKER ============ -->
+  <section class="comp">
+    <h2><span class="num">07</span>Run tracker</h2>
+    <p class="role">Every unit of agent work is a tracked, stateful run.</p>
+    <p>Runs form a tree in Postgres — orchestrator → wave → task — and each run moves through
+    an explicit state machine with a heartbeat. A run that stops beating goes
+    <strong>stale</strong> and can be revived or reaped; a run that hits a question a human
+    must answer pauses in <strong>needs-feedback</strong> rather than guessing. Nothing an
+    agent does is invisible: every state, timestamp, prompt, and outcome is queryable.</p>
+    <div class="diagram dg" role="img" aria-label="Run state machine: queued to running; running to done, failed, stale, or needs-feedback; stale and needs-feedback can return to running.">
+    <svg viewBox="0 0 860 210">
+      <rect class="ns" x="30"  y="80" width="110" height="46" rx="23"></rect>
+      <text x="85" y="108" text-anchor="middle" class="mono">queued</text>
+      <rect class="na" x="230" y="80" width="110" height="46" rx="23"></rect>
+      <text x="285" y="108" text-anchor="middle" class="mono">running</text>
+      <rect class="nd" x="430" y="14" width="150" height="42" rx="21"></rect>
+      <text x="505" y="40" text-anchor="middle" class="mono">needs-feedback</text>
+      <rect class="nd" x="450" y="150" width="110" height="42" rx="21"></rect>
+      <text x="505" y="176" text-anchor="middle" class="mono">stale</text>
+      <rect class="na" x="680" y="52" width="110" height="46" rx="23"></rect>
+      <text x="735" y="80" text-anchor="middle" class="mono">done</text>
+      <rect class="nb" x="680" y="118" width="110" height="46" rx="23"></rect>
+      <text x="735" y="146" text-anchor="middle" class="mono">failed</text>
+
+      <line class="edge" x1="140" y1="103" x2="224" y2="103" marker-end="url(#arr)"></line>
+      <text x="182" y="92" text-anchor="middle" class="sm">start</text>
+      <path class="edge" d="M 330 82 C 370 60, 400 48, 424 40" marker-end="url(#arr)"></path>
+      <text x="372" y="48" class="sm">asks a human</text>
+      <path class="edge back" d="M 436 56 C 400 72, 370 84, 344 92" marker-end="url(#arr)"></path>
+      <path class="edge" d="M 330 124 C 370 146, 410 160, 444 168" marker-end="url(#arr)"></path>
+      <text x="352" y="158" class="sm">heartbeat lost</text>
+      <path class="edge back" d="M 452 152 C 410 138, 380 128, 348 118" marker-end="url(#arr)"></path>
+      <line class="edge ok" x1="340" y1="96" x2="674" y2="72" marker-end="url(#arrok)"></line>
+      <line class="edge no" x1="340" y1="110" x2="674" y2="136" marker-end="url(#arrno)"></line>
+    </svg>
+    </div>
+  </section>

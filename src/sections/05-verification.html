@@ -1,0 +1,37 @@
+  <!-- ============ 05 VERIFICATION ============ -->
+  <section class="comp">
+    <h2><span class="num">05</span>Verification loop</h2>
+    <p class="role">Quality as a number, enforced by a loop.</p>
+    <p>A card can declare a <strong>goal percentage</strong>. When it does, an independent
+    verification agent scores the finished work 0–100 against the card's intent. Below the
+    bar, the work goes back — same branch, same PR, with the score's critique attached — until
+    it passes or the card's loop limit is spent. Every attempt is logged on the card, so the
+    cost of quality is visible, not hidden.</p>
+    <div class="diagram dg" role="img" aria-label="Work is scored zero to one hundred; a gate compares the score to the goal. Pass proceeds; fail loops back to rework while attempts remain under the loop limit.">
+    <svg viewBox="0 0 860 190">
+      <rect class="na" x="30" y="60" width="130" height="50" rx="9"></rect>
+      <text x="95" y="81" text-anchor="middle">Agent's work</text>
+      <text x="95" y="97" text-anchor="middle" class="sm">PR diff + card intent</text>
+
+      <rect class="na" x="240" y="60" width="130" height="50" rx="9"></rect>
+      <text x="305" y="81" text-anchor="middle">Verifier scores</text>
+      <text x="305" y="97" text-anchor="middle" class="mono">0–100</text>
+
+      <path class="ns" d="M 480 55 L 545 85 L 480 115 L 415 85 Z"></path>
+      <text x="480" y="82" text-anchor="middle" class="sm">score ≥</text>
+      <text x="480" y="96" text-anchor="middle" class="sm">goal %?</text>
+
+      <rect class="ns" x="640" y="60" width="120" height="50" rx="9"></rect>
+      <text x="700" y="81" text-anchor="middle">Proceed</text>
+      <text x="700" y="97" text-anchor="middle" class="sm">to merge gate</text>
+
+      <line class="edge" x1="160" y1="85" x2="234" y2="85" marker-end="url(#arr)"></line>
+      <line class="edge" x1="370" y1="85" x2="409" y2="85" marker-end="url(#arr)"></line>
+      <line class="edge ok" x1="545" y1="85" x2="634" y2="85" marker-end="url(#arrok)"></line>
+      <text x="586" y="74" text-anchor="middle" class="sm">yes</text>
+
+      <path class="edge no" d="M 480 115 C 480 165, 200 165, 108 114" marker-end="url(#arrno)"></path>
+      <text x="300" y="150" text-anchor="middle" class="sm">no — rework with critique · while attempts &lt; loop limit</text>
+    </svg>
+    </div>
+  </section>

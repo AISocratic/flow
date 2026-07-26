@@ -1,0 +1,94 @@
+  <!-- ============ 04 AGENTS ============ -->
+  <section class="comp">
+    <h2><span class="num">04</span>Agents — engineers, operators, QA &amp; judges</h2>
+    <p class="role">The workforce. One isolated workspace each.</p>
+    <p><strong>Engineer agents</strong> build: each gets a fresh git worktree (a full checkout
+    with dependencies linked in), so parallel agents never collide on files. The pipeline is
+    fixed: branch → implement → lint → test → push → open PR → report back.
+    <strong>Operator agents</strong> run the non-code work — content, emails, triage,
+    scheduled rituals. <strong>QA &amp; judge agents</strong> monitor the platform — sweeps,
+    verification scoring, anomaly watching — and create new tickets, or alert the user when
+    something's off. Every agent keeps durable state: a <code>memory.md</code> of what it
+    has learned, and a per-run <code>steps.md</code> trail of what it did, so knowledge
+    compounds across runs and any run is auditable.</p>
+    <div class="diagram dg" role="img" aria-label="Agent lifecycle pipeline from claiming a card through worktree, implement, lint and test, to pull request — with memory and steps files attached as a sidecar.">
+    <svg viewBox="0 0 860 190">
+      <rect class="na" x="10"  y="40" width="104" height="46" rx="9"></rect>
+      <text x="62" y="60" text-anchor="middle">Claim card</text>
+      <text x="62" y="76" text-anchor="middle" class="sm">race-safe</text>
+      <rect class="na" x="152" y="40" width="104" height="46" rx="9"></rect>
+      <text x="204" y="60" text-anchor="middle">Worktree</text>
+      <text x="204" y="76" text-anchor="middle" class="sm">isolated checkout</text>
+      <rect class="na" x="294" y="40" width="104" height="46" rx="9"></rect>
+      <text x="346" y="60" text-anchor="middle">Implement</text>
+      <text x="346" y="76" text-anchor="middle" class="sm">branch per card</text>
+      <rect class="na" x="436" y="40" width="104" height="46" rx="9"></rect>
+      <text x="488" y="60" text-anchor="middle">Lint + test</text>
+      <text x="488" y="76" text-anchor="middle" class="sm">must pass</text>
+      <rect class="ns" x="578" y="40" width="104" height="46" rx="9"></rect>
+      <text x="630" y="60" text-anchor="middle">Open PR</text>
+      <text x="630" y="76" text-anchor="middle" class="sm">push + report</text>
+
+      <line class="edge" x1="114" y1="63" x2="146" y2="63" marker-end="url(#arr)"></line>
+      <line class="edge" x1="256" y1="63" x2="288" y2="63" marker-end="url(#arr)"></line>
+      <line class="edge" x1="398" y1="63" x2="430" y2="63" marker-end="url(#arr)"></line>
+      <line class="edge" x1="540" y1="63" x2="572" y2="63" marker-end="url(#arr)"></line>
+
+      <!-- memory sidecar -->
+      <rect class="nd" x="726" y="24" width="122" height="36" rx="8"></rect>
+      <text x="787" y="46" text-anchor="middle" class="mono">memory.md</text>
+      <rect class="nd" x="726" y="72" width="122" height="36" rx="8"></rect>
+      <text x="787" y="94" text-anchor="middle" class="mono">steps.md</text>
+      <path class="edge back" d="M 346 86 C 346 150, 640 140, 722 96" marker-end="url(#arr)"></path>
+      <text x="470" y="146" class="sm">reads lessons · writes steps as it works</text>
+      <line class="edge back" x1="682" y1="52" x2="720" y2="45" marker-end="url(#arr)"></line>
+    </svg>
+    </div>
+
+    <h3 class="sub">Running on subscriptions, not credits</h3>
+    <p>The economics are a design constraint, not an afterthought. Mission-critical work runs on the
+    <strong>AI subscriptions you already pay for</strong> — the Claude Code and Codex seats sitting on
+    your desk — so the bill stays flat as you add agents, and the system gets better every time those
+    harnesses do. Metered API credits are the exception, reserved for models cheap enough to justify
+    on their own merits: <strong>Gemma 4, DeepSeek, Kimi 3, GLM 5.2</strong> and friends, on
+    summarization, labelling, dedup and digest work where a wrong answer costs a retry rather than a
+    bad merge. Every card's <code>model</code> + <code>effort</code> policy is what routes it, so the
+    split is a per-card decision you can see and override.</p>
+    <div class="diagram dg" role="img" aria-label="A card's execution policy feeds a policy router, which sends mission-critical work to the subscription lane — Claude Code and Codex seats at flat monthly cost — and non-mission-critical work to a cheap-metered lane of small models via OpenRouter. A highlighted box notes what is deliberately avoided: paying per-token for work a subscription seat already covers.">
+    <svg viewBox="0 0 940 264">
+      <rect class="ns" x="16" y="104" width="180" height="56" rx="9"></rect>
+      <text x="106" y="124" text-anchor="middle" class="sm">card · execution policy</text>
+      <text x="106" y="139" text-anchor="middle" class="mono mut">model tier + effort</text>
+      <text x="106" y="154" text-anchor="middle" class="mono mut">mission-critical?</text>
+
+      <line class="edge" x1="196" y1="132" x2="238" y2="132" marker-end="url(#arr)"></line>
+
+      <rect class="na" x="242" y="104" width="180" height="56" rx="9"></rect>
+      <text x="332" y="124" text-anchor="middle" class="sm">policy router</text>
+      <text x="332" y="139" text-anchor="middle" class="mono mut">resolveExecution()</text>
+      <text x="332" y="154" text-anchor="middle" class="mono mut">harness + model</text>
+
+      <path class="edge" d="M 422 132 C 444 132, 446 84, 462 84" marker-end="url(#arr)"></path>
+      <path class="edge" d="M 422 132 C 444 132, 446 200, 462 200" marker-end="url(#arr)"></path>
+
+      <rect class="ghost" x="466" y="34" width="458" height="100" rx="10"></rect>
+      <text x="482" y="54" class="mono">subscription lane · the default</text>
+      <text x="482" y="76" class="sm">Claude Code · Codex · the seats you already pay for</text>
+      <text x="482" y="95" class="sm">plan · implement · review · verify · judge — anything mission-critical</text>
+      <text x="482" y="114" class="sm">flat monthly cost; the bill doesn't move when you add agents</text>
+
+      <rect class="ghost" x="466" y="150" width="458" height="100" rx="10"></rect>
+      <text x="482" y="170" class="mono">cheap-metered lane · the exception</text>
+      <text x="482" y="192" class="sm">Gemma 4 · DeepSeek · Kimi 3 · GLM 5.2 — via OpenRouter</text>
+      <text x="482" y="211" class="sm">summarize · label · dedupe · digest · embed — never mission-critical</text>
+      <text x="482" y="230" class="sm">metered, but cheap enough that a seat would cost more</text>
+
+      <rect class="nb" x="16" y="190" width="406" height="60" rx="10"></rect>
+      <text x="32" y="212" class="mono no">avoided by design</text>
+      <text x="32" y="232" class="sm">paying per token for work a subscription seat already covers</text>
+    </svg>
+    </div>
+    <p class="caption">The router is the same <code>model</code>/<code>effort</code> resolution the
+    board already does per card — routing by <em>cost class</em> rather than by capability alone is
+    the only addition.</p>
+  </section>

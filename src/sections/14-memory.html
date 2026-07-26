@@ -1,0 +1,79 @@
+  <!-- ============ 14 AGENT KNOWLEDGE, MEMORY & SELF-IMPROVEMENT ============ -->
+  <section class="comp">
+    <h2><span class="num">14</span>Agent knowledge, memory &amp; self-improvement</h2>
+    <p class="role">What the system learns, it keeps — and uses.</p>
+    <p>Every agent boots with the <strong>system prompt</strong> — the constitution: who the
+    company is, what it values, the rules that never change. Beyond that, knowledge lives in
+    five stores:</p>
+    <ul class="tight">
+      <li><strong><code>agent.md</code></strong> — per-agent memory. Durable lessons an agent
+      carries between runs — conventions, gotchas, preferences it has learned — plus the
+      <code>steps.md</code> trail of what it did and why.</li>
+      <li><strong><code>skills.md</code></strong> — shared playbooks. Step-by-step procedures
+      for recurring work (deploys, migrations, review checklists) written once and loadable by
+      any agent on demand; when an agent figures out a better way, the skill is updated for
+      everyone.</li>
+      <li><strong>Code knowledge</strong> — the code hierarchy, cached. A script extracts the
+      current hierarchy of the codebase — what lives where, how it connects — and re-runs each
+      time a PR is created, so it never goes stale. Agents read it on boot for a
+      <strong>warm start</strong> instead of rediscovering the repo cold every run.</li>
+      <li><strong>Company knowledge (RAG)</strong> — everything the business knows: docs,
+      decisions, product specs, emails, brand voice. The admin decides what is stored here and
+      how — a Karpathy-style Obsidian second brain, a typical RAG pipeline, or a set of tools
+      that connects the company's services — and any agent retrieves from it at the moment
+      it's needed, so a week-one agent works with years of context.</li>
+      <li><strong>Memory</strong> — experimental. After each run the agent distills something
+      worth remembering, and that memory is shared across coding agents — Codex, Claude Code,
+      Open Code, plain API — so a lesson learned on one harness is available to all of them.</li>
+    </ul>
+    <p>Self-improvement is the loop across all five: every run ends by distilling its outcome
+    into the right store, so the next run starts smarter. And because every run is a
+    <strong>snapshot</strong> (the exact prompt plus the repo commit it ran against), any card
+    can be rolled back and <strong>forked</strong>: multiple attempts branch from the same
+    snapshot, verification scores pick the winner, and the run tree becomes a search over
+    approaches. The company doesn't just do the work — it gets better at doing the work.</p>
+    <div class="diagram dg" role="img" aria-label="Top: a learning loop — a run produces an outcome, the outcome is distilled into a lesson, the lesson lands in memory, and the next run reads it. Bottom: rollback and fork — two attempts branch from the same run snapshot and the higher-scoring branch continues.">
+    <svg viewBox="0 0 860 320">
+      <rect class="na" x="20" y="30" width="110" height="50" rx="9"></rect>
+      <text x="75" y="51" text-anchor="middle">Run n</text>
+      <text x="75" y="67" text-anchor="middle" class="sm">does the work</text>
+
+      <rect class="ns" x="200" y="30" width="130" height="50" rx="9"></rect>
+      <text x="265" y="51" text-anchor="middle">Outcome</text>
+      <text x="265" y="67" text-anchor="middle" class="sm">score · PR · failures</text>
+
+      <rect class="na" x="394" y="30" width="142" height="50" rx="9"></rect>
+      <text x="465" y="51" text-anchor="middle">Distill</text>
+      <text x="465" y="67" text-anchor="middle" class="sm">what worked, what didn't</text>
+
+      <rect class="nd" x="600" y="30" width="240" height="50" rx="9"></rect>
+      <text x="720" y="51" text-anchor="middle">Memory</text>
+      <text x="720" y="67" text-anchor="middle" class="sm">agent memory.md · project · prompts</text>
+
+      <line class="edge" x1="130" y1="55" x2="194" y2="55" marker-end="url(#arr)"></line>
+      <line class="edge" x1="330" y1="55" x2="388" y2="55" marker-end="url(#arr)"></line>
+      <line class="edge" x1="536" y1="55" x2="594" y2="55" marker-end="url(#arr)"></line>
+      <path class="edge back" d="M 720 80 C 720 130, 200 130, 82 84" marker-end="url(#arr)"></path>
+      <text x="400" y="120" text-anchor="middle" class="sm">run n+1 reads it — every pass starts smarter</text>
+
+      <text x="20" y="180" class="mono">rollback &amp; fork — the run tree becomes a search</text>
+      <rect class="ns" x="320" y="196" width="220" height="42" rx="9"></rect>
+      <text x="430" y="215" text-anchor="middle">Run snapshot</text>
+      <text x="430" y="230" text-anchor="middle" class="sm">exact prompt + repo commit</text>
+
+      <rect class="ghost" x="150" y="272" width="180" height="42" rx="9"></rect>
+      <text x="240" y="291" text-anchor="middle" class="sm">attempt A · score 62</text>
+      <text x="240" y="306" text-anchor="middle" class="sm mut">abandoned</text>
+      <rect class="na" x="530" y="272" width="180" height="42" rx="9"></rect>
+      <text x="620" y="291" text-anchor="middle" class="sm">attempt B · score 89</text>
+      <text x="620" y="306" text-anchor="middle" class="sm">continues ✓</text>
+
+      <line class="edge" x1="380" y1="238" x2="288" y2="268" marker-end="url(#arr)"></line>
+      <line class="edge ok" x1="480" y1="238" x2="572" y2="268" marker-end="url(#arrok)"></line>
+    </svg>
+    </div>
+    <p class="caption">Top: the learning loop — outcomes are distilled into memory that the next run reads. Bottom: because runs are snapshots, attempts fork and the verification score (or the user) picks which branch continues.</p>
+    <figure style="margin:22px 0 0; text-align:center;">
+      <img src="{{IMG:memory.jpeg}}" alt="Comic: a computer is told to think about the Golden Gate Bridge, and its thought bubble reads golden gate bridge; the person exclaims oh my god." style="max-width:100%; height:auto; border-radius:10px; border:1px solid var(--line);">
+    </figure>
+  </section>
