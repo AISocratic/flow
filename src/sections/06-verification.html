@@ -1,0 +1,105 @@
+  <!-- ============ 06 VERIFICATION ============ -->
+  <section class="comp">
+    <h2><span class="num">06</span>Verification loop</h2>
+    <p class="role">Quality as a number, enforced by a loop.</p>
+    <p>A card can declare a <strong>goal percentage</strong>. When it does, an independent
+    verification agent scores the finished work 0–100 against the card's intent. Below the
+    bar, the work goes back — same branch, same PR, with the score's critique attached — until
+    it passes or the card's loop limit is spent. Every attempt is logged on the card, so the
+    cost of quality is visible, not hidden.</p>
+    <div class="diagram dg" role="img" aria-label="Work is scored zero to one hundred; a gate compares the score to the goal. Pass proceeds; fail loops back to rework while attempts remain under the loop limit.">
+    <svg viewBox="0 0 860 190">
+      <rect class="na" x="30" y="60" width="130" height="50" rx="9"></rect>
+      <text x="95" y="81" text-anchor="middle">Agent's work</text>
+      <text x="95" y="97" text-anchor="middle" class="sm">PR diff + card intent</text>
+
+      <rect class="na" x="240" y="60" width="130" height="50" rx="9"></rect>
+      <text x="305" y="81" text-anchor="middle">Verifier scores</text>
+      <text x="305" y="97" text-anchor="middle" class="mono">0–100</text>
+
+      <path class="ns" d="M 480 55 L 545 85 L 480 115 L 415 85 Z"></path>
+      <text x="480" y="82" text-anchor="middle" class="sm">score ≥</text>
+      <text x="480" y="96" text-anchor="middle" class="sm">goal %?</text>
+
+      <rect class="ns" x="640" y="60" width="120" height="50" rx="9"></rect>
+      <text x="700" y="81" text-anchor="middle">Proceed</text>
+      <text x="700" y="97" text-anchor="middle" class="sm">to merge gate</text>
+
+      <line class="edge" x1="160" y1="85" x2="234" y2="85" marker-end="url(#arr)"></line>
+      <line class="edge" x1="370" y1="85" x2="409" y2="85" marker-end="url(#arr)"></line>
+      <line class="edge ok" x1="545" y1="85" x2="634" y2="85" marker-end="url(#arrok)"></line>
+      <text x="586" y="74" text-anchor="middle" class="sm">yes</text>
+
+      <path class="edge no" d="M 480 115 C 480 165, 200 165, 108 114" marker-end="url(#arrno)"></path>
+      <text x="300" y="150" text-anchor="middle" class="sm">no — rework with critique · while attempts &lt; loop limit</text>
+    </svg>
+    </div>
+
+    <h3 class="sub">Two levels of evaluation</h3>
+    <p>Verification is not the only judgment the system makes. <strong>Task or PR
+    verification</strong> runs before merge and asks whether the implementation satisfies the card.
+    <strong>Epic result evaluation</strong> runs after all the work is complete — and, where the
+    completion policy requires it, after deployment metrics have arrived — and asks whether the
+    finished body of work achieved its intended result. A card can pass every gate in the first
+    level and still belong to an epic that failed the second.</p>
+    <div class="diagram dg" role="img" aria-label="The two evaluation levels, drawn as separate controls. Level one, task or PR verification before merge: the agent's work passes lint, tests and build, then a judge score against the card, then merge under the autonomy policy; work below the bar loops back to rework on the same branch. A dashed divider separates the levels, labelled: verification asks did we build the card right, evaluation asks did the work achieve the intended result. Level two, epic result evaluation, runs after all work is complete and, where required, after deployment metrics arrive: an outcome evaluator compares the delivered work against the epic's intent and returns completed successfully, awaiting metrics, or a follow-up epic.">
+    <svg viewBox="0 0 990 340">
+      <!-- level 1 -->
+      <text x="16" y="30" class="mono">01 · task / PR verification — before merge</text>
+      <rect class="na" x="16" y="50" width="130" height="48" rx="9"></rect>
+      <text x="81" y="70" text-anchor="middle" class="sm">Agent's work</text>
+      <text x="81" y="86" text-anchor="middle" class="mono mut">PR diff + card</text>
+
+      <rect class="ns" x="196" y="50" width="140" height="48" rx="9"></rect>
+      <text x="266" y="70" text-anchor="middle" class="sm">Lint · tests · build</text>
+      <text x="266" y="86" text-anchor="middle" class="mono mut">deterministic</text>
+
+      <rect class="na" x="386" y="50" width="130" height="48" rx="9"></rect>
+      <text x="451" y="70" text-anchor="middle" class="sm">Judge score</text>
+      <text x="451" y="86" text-anchor="middle" class="mono">0–100 vs card</text>
+
+      <rect class="ns" x="566" y="50" width="140" height="48" rx="9"></rect>
+      <text x="636" y="70" text-anchor="middle" class="sm">Merge</text>
+      <text x="636" y="86" text-anchor="middle" class="mono mut">per autonomy policy</text>
+
+      <line class="edge" x1="146" y1="74" x2="190" y2="74" marker-end="url(#arr)"></line>
+      <line class="edge" x1="336" y1="74" x2="380" y2="74" marker-end="url(#arr)"></line>
+      <line class="edge ok" x1="516" y1="74" x2="560" y2="74" marker-end="url(#arrok)"></line>
+
+      <!-- rework loop: the curve dips well clear of its own label -->
+      <path class="edge no" d="M 451 98 C 451 142, 170 146, 88 100" marker-end="url(#arrno)"></path>
+      <text x="270" y="166" text-anchor="middle" class="sm">below the bar — rework on the same branch</text>
+
+      <!-- divider -->
+      <line class="ghost" x1="16" y1="192" x2="974" y2="192"></line>
+      <text x="16" y="212" class="sm">verification asks: did we build the card right?&#160;&#160;·&#160;&#160;evaluation asks: did the work achieve the intended result?</text>
+
+      <!-- level 2 -->
+      <text x="16" y="244" class="mono">02 · epic result evaluation — after all work, and after deployment metrics where required</text>
+      <rect class="ns" x="16" y="264" width="150" height="48" rx="9"></rect>
+      <text x="91" y="284" text-anchor="middle" class="sm">Epic complete</text>
+      <text x="91" y="300" text-anchor="middle" class="mono mut">all tasks merged</text>
+
+      <rect class="ns" x="216" y="264" width="150" height="48" rx="9"></rect>
+      <text x="291" y="284" text-anchor="middle" class="sm">Deployed</text>
+      <text x="291" y="300" text-anchor="middle" class="mono mut">metrics arriving</text>
+
+      <rect class="na" x="416" y="264" width="160" height="48" rx="9"></rect>
+      <text x="496" y="284" text-anchor="middle" class="sm">Outcome evaluator</text>
+      <text x="496" y="300" text-anchor="middle" class="mono mut">result vs epic intent</text>
+
+      <line class="edge" x1="166" y1="288" x2="210" y2="288" marker-end="url(#arr)"></line>
+      <line class="edge" x1="366" y1="288" x2="410" y2="288" marker-end="url(#arr)"></line>
+
+      <rect class="ns" x="656" y="238" width="180" height="26" rx="6"></rect>
+      <text x="746" y="255" text-anchor="middle" class="mono mut">completed successfully</text>
+      <rect class="nd" x="656" y="276" width="180" height="26" rx="6"></rect>
+      <text x="746" y="293" text-anchor="middle" class="mono mut">awaiting metrics</text>
+      <rect class="nd" x="656" y="314" width="180" height="26" rx="6"></rect>
+      <text x="746" y="331" text-anchor="middle" class="mono mut">follow-up epic</text>
+      <line class="edge ok" x1="576" y1="282" x2="650" y2="252" marker-end="url(#arrok)"></line>
+      <line class="edge" x1="576" y1="288" x2="650" y2="289" marker-end="url(#arr)"></line>
+      <line class="edge" x1="576" y1="294" x2="650" y2="326" marker-end="url(#arr)"></line>
+    </svg>
+    </div>
+  </section>

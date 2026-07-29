@@ -1,0 +1,69 @@
+  <!-- ============ 02 GOALS, KPIs & PLANNING HORIZONS ============ -->
+  <section class="comp">
+    <h2><span class="num">02</span>Goals, KPIs &amp; planning horizons</h2>
+    <p class="role">The mission, translated into numbers the system can act on.</p>
+    <p>Humans define the company's <strong>goals and KPIs</strong>, normally once per quarter. Each
+    goal connects a strategic outcome to one or more measurable indicators — <em>"grow newsletter
+    signups 25%"</em>, <em>"p75 LCP under 2s"</em>. Agents can recommend goals, surface metric gaps
+    and propose changes, but the final goals and targets stay human-controlled. Each goal also
+    carries <strong>guardrail metrics</strong>, so the system cannot improve one number by quietly
+    damaging another: a signup-growth goal watches unsubscribe rate, spam complaints, signup
+    quality, acquisition cost and page performance alongside the number it is trying to move.</p>
+    <p>Below the goals, work is decomposed by agents and the horizons get shorter at every level:</p>
+    <ul class="tight">
+      <li><strong>Mission</strong> — approximately one year.</li>
+      <li><strong>Goals and KPIs</strong> — approximately one quarter.</li>
+      <li><strong>Projects and features</strong> — open for as long as they remain a valid way of
+      reaching a goal.</li>
+      <li><strong>Epics</strong> — bounded bodies of work inside a project.</li>
+      <li><strong>Tasks and bugs</strong> — short execution units an agent can claim and finish.</li>
+    </ul>
+    <div class="note">
+      <span class="note-title">Projects are containers, not weekly plans</span>
+      A planning agent does <em>not</em> create a new project every week. A weekly ritual may still
+      create or reprioritise work, but a project is a persistent strategic container that can hold
+      many successive epics and outlive several goal cycles. As metrics change, agents create new
+      epics, revise planned ones, or recommend closing the project outright.
+    </div>
+    <div class="diagram dg" role="img" aria-label="Decomposition and traceability: an approved goal becomes projects, then epics, then tasks, then dependencies that determine ready epochs in the Workflow Graph. Two rules are drawn beneath — task dependencies stay inside their epic, and dependencies between epics remain project-level gates. A dashed return edge runs from a deployed change all the way back to the goal that caused it to exist, labelled traceable both ways.">
+    <svg viewBox="0 0 990 230">
+      <rect class="nh" x="16" y="56" width="150" height="52" rx="9"></rect>
+      <text x="91" y="77" text-anchor="middle">Approved goal</text>
+      <text x="91" y="94" text-anchor="middle" class="sm">human-controlled</text>
+
+      <rect class="ns" x="216" y="56" width="150" height="52" rx="9"></rect>
+      <text x="291" y="77" text-anchor="middle">Projects</text>
+      <text x="291" y="94" text-anchor="middle" class="sm">how we intend to reach it</text>
+
+      <rect class="ns" x="416" y="56" width="150" height="52" rx="9"></rect>
+      <text x="491" y="77" text-anchor="middle">Epics</text>
+      <text x="491" y="94" text-anchor="middle" class="sm">measurable increments</text>
+
+      <rect class="na" x="616" y="56" width="150" height="52" rx="9"></rect>
+      <text x="691" y="77" text-anchor="middle">Tasks</text>
+      <text x="691" y="94" text-anchor="middle" class="sm">claimable · executable</text>
+
+      <rect class="nd" x="816" y="56" width="158" height="52" rx="9"></rect>
+      <text x="895" y="77" text-anchor="middle">Dependencies</text>
+      <text x="895" y="94" text-anchor="middle" class="sm">determine ready epochs</text>
+
+      <line class="edge" x1="166" y1="82" x2="210" y2="82" marker-end="url(#arr)"></line>
+      <line class="edge" x1="366" y1="82" x2="410" y2="82" marker-end="url(#arr)"></line>
+      <line class="edge" x1="566" y1="82" x2="610" y2="82" marker-end="url(#arr)"></line>
+      <line class="edge" x1="766" y1="82" x2="810" y2="82" marker-end="url(#arr)"></line>
+
+      <text x="16" y="36" class="mono mut">agents decompose · the DAG stays the execution model</text>
+
+      <rect class="ghost" x="416" y="140" width="558" height="62" rx="10"></rect>
+      <text x="434" y="162" class="sm">task → task dependencies stay inside one epic</text>
+      <text x="434" y="184" class="sm">epic → epic dependencies remain project-level gates</text>
+
+      <path class="edge back" d="M 895 108 C 895 130, 200 140, 91 112" marker-end="url(#arr)"></path>
+      <text x="140" y="150" class="sm">projects stay linked to the goals they influence —</text>
+      <text x="140" y="166" class="sm">epics and tasks inherit it, so a deployed change</text>
+      <text x="140" y="182" class="sm">traces back to the goal that caused it to exist</text>
+    </svg>
+    </div>
+    <p>That traceability is what lets the evaluator ask, months after a change shipped, whether it
+    actually moved the number it was created to move.</p>
+  </section>

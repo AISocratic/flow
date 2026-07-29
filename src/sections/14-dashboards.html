@@ -1,0 +1,177 @@
+  <!-- ============ 14 DASHBOARD ============ -->
+  <section class="comp">
+    <h2><span class="num">14</span>Dashboard</h2>
+    <p class="role">A core component, not a reporting page attached to one.</p>
+    <p>The dashboard is the single surface where every measurable thing the company produces
+    lands: business results, product usage, engineering health, delivery throughput, cost, and
+    agent performance. Humans read it to decide direction. Agents read it to decide work. Because
+    both audiences share one set of numbers, a goal, the work created to move it, and the evidence
+    that it moved are never held in separate systems.</p>
+    <p>It is an <strong>API as much as a page</strong> — the data behind every view is queryable,
+    and most of its readers are not human:</p>
+    <ul class="tight">
+      <li><strong>Planning agents</strong> read KPI gaps, guardrails and historical project impact
+      when proposing projects and epics.</li>
+      <li><strong>The evaluation agent</strong> reads outcome metrics when deciding whether a
+      completed epic achieved its intended result.</li>
+      <li><strong>Scheduled jobs and standing agents</strong> read thresholds and trends to detect
+      anomalies and file work.</li>
+      <li><strong>The execution-policy router</strong> reads agent performance to decide which
+      configuration receives the next card.</li>
+    </ul>
+    <p>The major views are <strong>Strategy</strong> (mission, quarterly goals and KPIs, projects,
+    epics and the strategic Gantt), <strong>Agent performance</strong> (the quarterly agent OKRs),
+    plus <strong>business and product</strong>, <strong>engineering and delivery</strong>, and
+    <strong>anomalies</strong>.</p>
+    <div class="mock" role="img" aria-label="The dashboard, shown across its five major views. Strategy: mission on track at month 7 of 12, a quarterly goal at 62 percent with a sparkline, three persistent projects, epics at 4 running and 2 awaiting metrics, and the strategic Gantt spanning Q1 to Q4. Agent performance: 6 configurations scored, 41 cards completed per week, first-attempt success 78 percent, average verification score 86 with 1.4 rework loops per card, cost per accepted card 1.90 dollars with a declining sparkline, 3 human interventions, and KPI contribution split into direct, modeled and correlated. Business and product: revenue 4.2K MRR, user growth 748 with a sparkline, traffic 9,690 sessions. Engineering and delivery: 3 releases this week, deployments healthy at p75 LCP 1.69 seconds, zero type errors, instrumentation complete at 100 percent of goal-bearing cards. Anomalies: z-score over 3 against baseline, alerts routed to email, Telegram and SMS.">
+      <div class="bar"><b>Dashboard</b><span>Strategy</span><span>Agent performance</span><span>Business</span><span>Engineering</span><span>Anomalies</span></div>
+
+      <div class="grp">Strategy</div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="lbl">Mission</div>
+          <div class="val">On track</div>
+          <div class="sub">month 7 of 12 · human-owned</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Goal · signups +25%</div>
+          <div class="val">62%</div>
+          <div class="sub up">▲ on pace · Q3</div>
+          <svg viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true">
+            <path class="sparkfill" d="M0 24 L12 20 L25 21 L38 16 L52 17 L65 12 L78 10 L100 5 L100 26 L0 26 Z"></path>
+            <path class="spark" d="M0 24 L12 20 L25 21 L38 16 L52 17 L65 12 L78 10 L100 5"></path>
+          </svg>
+        </div>
+        <div class="tile">
+          <div class="lbl">Projects</div>
+          <div class="val">3</div>
+          <div class="sub">persistent · 2 span the next cycle</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Epics</div>
+          <div class="val">4 / 2</div>
+          <div class="sub">running / awaiting outcome metrics</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Strategic Gantt</div>
+          <div class="val">Q1 – Q4</div>
+          <div class="sub">mission · goals · projects · epics</div>
+        </div>
+      </div>
+
+      <div class="grp">Agent performance · quarterly OKRs</div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="lbl">Configurations scored</div>
+          <div class="val">6</div>
+          <div class="sub">model × harness × policy</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Cards completed</div>
+          <div class="val">41</div>
+          <div class="sub">per week · 12 epics contributed to</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">First-attempt success</div>
+          <div class="val">78%</div>
+          <div class="sub">no rework loop needed</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Verification score</div>
+          <div class="val">86</div>
+          <div class="sub">avg · 1.4 rework loops / card</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Cost / accepted card</div>
+          <div class="val">$1.90</div>
+          <div class="sub up">▼ 30% vs last quarter</div>
+          <svg viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true">
+            <path class="sparkfill" d="M0 6 L16 9 L33 8 L50 14 L66 15 L83 19 L100 22 L100 26 L0 26 Z"></path>
+            <path class="spark" d="M0 6 L16 9 L33 8 L50 14 L66 15 L83 19 L100 22"></path>
+          </svg>
+        </div>
+        <div class="tile">
+          <div class="lbl">Human interventions</div>
+          <div class="val">3</div>
+          <div class="sub">this week · 0 incidents introduced</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">KPI contribution</div>
+          <div class="val">Split</div>
+          <div class="sub">direct · modeled · correlated — never one number</div>
+        </div>
+      </div>
+
+      <div class="grp">Business and product</div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="lbl">Revenue</div>
+          <div class="val">$4.2K</div>
+          <div class="sub">MRR · workshops + memberships</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">User growth</div>
+          <div class="val">748</div>
+          <div class="sub">active · new vs returning</div>
+          <svg viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true">
+            <path class="sparkfill" d="M0 22 L14 21 L28 18 L42 19 L56 14 L70 15 L84 9 L100 6 L100 26 L0 26 Z"></path>
+            <path class="spark" d="M0 22 L14 21 L28 18 L42 19 L56 14 L70 15 L84 9 L100 6"></path>
+          </svg>
+        </div>
+        <div class="tile">
+          <div class="lbl">Traffic</div>
+          <div class="val">9,690</div>
+          <div class="sub">sessions · 68% direct · 22% referral</div>
+        </div>
+      </div>
+
+      <div class="grp">Engineering and delivery</div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="lbl">Releases</div>
+          <div class="val">3</div>
+          <div class="sub">this week · all production-verified</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Deployments</div>
+          <div class="val">Healthy</div>
+          <div class="sub">p75 LCP 1.69s · error rate flat</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Code quality</div>
+          <div class="val">0</div>
+          <div class="sub">type errors · lint + tests green</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Instrumentation</div>
+          <div class="val">100%</div>
+          <div class="sub">of goal-bearing cards report a metric</div>
+        </div>
+      </div>
+
+      <div class="grp">Anomalies</div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="lbl">Charts</div>
+          <div class="val">z &gt; 3</div>
+          <div class="sub">latest vs baseline, all sources</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Alerts</div>
+          <div class="val">Routed</div>
+          <div class="sub">email · Telegram · SMS</div>
+        </div>
+      </div>
+    </div>
+    <p class="caption">One surface, five views, two audiences. Humans read it to decide direction; the
+    planning, evaluation, monitoring and routing agents read the same numbers through the API to decide
+    work. <strong>Instrumentation</strong> is itself a tracked metric — an outcome nobody measured
+    cannot be evaluated.</p>
+    <p>Two properties make it trustworthy enough for agents to act on unattended. First,
+    <strong>instrumentation is part of the work</strong>: a card expected to move a measurable
+    outcome is not complete until the metric that would prove it exists and reports, and missing
+    instrumentation is itself a ticket. Second, <strong>attribution is explicit</strong> — metric
+    movement is labelled direct, modeled or correlated rather than collapsed into a single causal
+    number. Goals sit beside the metrics that measure them, so "are we winning" and "is the machine
+    healthy" become the same glance.</p>
+  </section>

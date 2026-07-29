@@ -1,8 +1,8 @@
-  <!-- ============ 07 RUN TRACKER ============ -->
+  <!-- ============ 09 RUN TRACKER ============ -->
   <section class="comp">
-    <h2><span class="num">07</span>Run tracker</h2>
+    <h2><span class="num">09</span>Run tracker</h2>
     <p class="role">Every unit of agent work is a tracked, stateful run.</p>
-    <p>Runs form a tree in Postgres — orchestrator → wave → task — and each run moves through
+    <p>Runs form a tree in Postgres — orchestrator → epoch → task — and each run moves through
     an explicit state machine with a heartbeat. A run that stops beating goes
     <strong>stale</strong> and can be revived or reaped; a run that hits a question a human
     must answer pauses in <strong>needs-feedback</strong> rather than guessing. Nothing an

@@ -9,8 +9,7 @@ already installed, and adds **no new runtime dependency and no new build step**.
 repo gains is one skill — `.claude/skills/flow-agent-orchestrator/` — plus (for integrated
 installs) board routes and tables inside the app that is already there.
 
-- Full system spec: `flow.md`
-- Visual spec: `flow.html`
+- System design spec: `flow.html`
 
 ---
 
@@ -83,7 +82,7 @@ Rules:
   it; drop what fails and say so in the report.
 - A missing command is fine — record `null`. Agents skip verification steps they don't have.
 - These commands are the verification hooks. `goal_percentage` / `loop_limit` re-work loops
-  (`flow.md` §3, §5) score against their output.
+  (`flow.html` §03, §14) score against their output.
 
 ---
 
@@ -91,7 +90,7 @@ Rules:
 
 ```
 .claude/skills/flow-agent-orchestrator/
-├── SKILL.md            # read board → plan waves → dispatch → PR → merge/wait
+├── SKILL.md            # read board → plan epochs → dispatch → PR → merge/wait
 ├── detected.json       # written in step 2
 ├── install.md          # this file, for re-runs and audits
 └── scripts/
@@ -102,9 +101,9 @@ Rules:
 - Write the CLIs in the **language the repo already runs** (TS if there's a `package.json` and a TS
   toolchain, Python if it's a Python repo, and so on). Use only the standard library plus what the
   repo already depends on.
-- `SKILL.md` must encode the Workflow Graph invariants (`flow.md` §3, §4): one graph per epic, task
+- `SKILL.md` must encode the Workflow Graph invariants (`flow.html` §03, §04): one graph per epic, task
   deps never cross an epic, epic-to-epic links live at the project layer, cycles rejected, and
-  dispatch takes the leftmost unfinished wave of an epic.
+  dispatch takes the leftmost unfinished epoch of an epic.
 - If `.claude/skills/agent-todo/` already exists, keep it and have the new skill delegate to it
   rather than duplicating it.
 
@@ -120,14 +119,14 @@ is the whole install of the repo side — the panel and database live in a separ
 Share what the platform already has. Nothing here should introduce a second identity system.
 
 1. **Database** — add the orchestrator tables to the existing database via the project's own
-   migration tool. Per `flow.md` §2: `todos`, `todo_comments`, `agents`, `card_assignments`,
+   migration tool. Per `flow.html` §03: `todos`, `todo_comments`, `agents`, `card_assignments`,
    `agent_runs`, `agent_memories` / `user_agent_memories`, `releases`. Prefix them if the schema is
    crowded; keep FKs to the existing users table.
 2. **Auth** — mount every route inside the existing admin/authenticated area and behind the
    existing guard (e.g. `requireAdminAuth()`). Reuse the platform's roles/permissions; add at most
    one permission (`flow:admin`) if the RBAC model needs a named capability.
 3. **Routes** — board UI at the app's admin path (e.g. `/admin/todo`) with the three views: Board,
-   List, and Workflow Graph. API per `flow.md` §3: `todos`, `todos/[id]`, `todos/reorder`,
+   List, and Workflow Graph. API per `flow.html` §03: `todos`, `todos/[id]`, `todos/reorder`,
    `todos/version`, `todos/[id]/comments`, plus the agents/runs endpoints.
 4. **Knowledge** — point agent memory at the repo's existing docs (`CLAUDE.md`, `docs/`, ADRs) so
    agents inherit domain knowledge instead of rediscovering it.
@@ -155,7 +154,7 @@ Write defaults into `detected.json` (or the platform's config table for integrat
 |---|---|---|
 | `max_parallel` | 3 | concurrent worktree agents; raise only after a clean first week |
 | `worktree_dir` | `../.flow-worktrees` | **outside** the repo, so it never lands in a diff |
-| `model` / `effort` | repo policy or `high` / `mid` | per-card override wins (`flow.md` §3) |
+| `model` / `effort` | repo policy or `high` / `mid` | per-card override wins (`flow.html` §03) |
 | `automerge` | `false` | first run must be human-reviewed |
 | `goal_percentage` | 90 | verification threshold |
 | `loop_limit` | 3 | max re-work cycles per card |
@@ -171,10 +170,10 @@ inside the repo.
 1. Create one epic with two independent tasks and one task depending on both:
    `todo-cli create` ×3, then set `dependencies`.
 2. Open the **Workflow Graph** view. Assert: one graph for the epic, the two independent tasks in
-   wave 1, the dependent task in wave 2, no edge leaving the epic.
+   epoch 1, the dependent task in epoch 2, no edge leaving the epic.
 3. Attempt a task dependency across two different epics. Assert it is **rejected at write time**
    with the reason written to the card log.
-4. Move one real, low-risk card to Todo and let the orchestrator run a single wave. Assert:
+4. Move one real, low-risk card to Todo and let the orchestrator run a single epoch. Assert:
    `agent_runs` row created, heartbeat updating, the recorded verification commands executed, a
    branch pushed and a PR opened.
 5. Review that PR yourself and confirm CI ran your existing checks — not Flow's.

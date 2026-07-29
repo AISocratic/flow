@@ -338,6 +338,18 @@
     border: 1px solid var(--hair);
   }
 
+  /* the install one-liner — a command you copy, so it wraps rather than
+     scrolls, and carries the accent rule the notes use */
+  pre.cmd {
+    font-family: var(--font-mono);
+    font-size: 12.5px; line-height: 1.75; color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line); border-left: 2px solid var(--accent);
+    border-radius: 0; padding: 16px 20px; margin: 16px 0 0;
+    max-width: 66ch; box-sizing: border-box;
+    white-space: pre-wrap; overflow-wrap: anywhere;
+  }
+
   /* spec lists get primeintellect.ai's dim mono index in place of
      a bullet — 01, 02, 03 hanging in the left margin */
   ul.tight {
@@ -475,7 +487,7 @@
       KPIs, traffic, logs, spend.</li>
       <li><strong>Give the agents a mission.</strong> They decompose it into projects, epics and
       tasks on the board.</li>
-      <li><strong>Let the orchestrator run them</strong> — waves of agents working that board until
+      <li><strong>Let the orchestrator run them</strong> — epochs of agents working that board until
       the metric moves.</li>
     </ol>
     <p>All of it on <strong>your AI subscriptions</strong> rather than metered API credits — with an
@@ -491,172 +503,282 @@
   </div>
 
   <!-- ============ MASTER LOOP ============ -->
-  <div class="diagram dg" role="img" aria-label="Master loop: a human sets direction into goals; goals flow to projects, board, then an orchestrator and worktree agents grouped inside interchangeable harnesses — Claude Code, Codex, or API — then pull request, verification, deploy and metrics, with monitoring feeding bugs back to the board and insights back to goals. Five data-store cylinders — Agent.md, Skills.md, Code Knowledge (code hierarchy, cache), Company Knowledge (RAG), Memory — sit beneath the agents, linked by a self-improvement loop, and a communication layer — email, text, Slack — underpins everything.">
-  <svg viewBox="-152 0 1052 398">
-    <!-- agents & harnesses enclosure: orchestrator + agents -->
-    <rect class="ghost" x="420" y="4" width="294" height="148" rx="12"></rect>
-    <text x="567" y="19" text-anchor="middle" class="mono mut">Agents and Harnesses</text>
+  <div class="diagram dg" role="img" aria-label="Master operating loop, updated: a band reading Email · Slack runs along the top of the plate. Below it, a dashed boundary labelled Human encloses the human, the annual mission, and the quarterly goals and KPIs. The forward path continues through projects, epics and tasks on the board, and the orchestrator, drawn as a group holding two interchangeable execution lanes — Claude Code and Codex on subscription, and AI agents on API inference — each opening pull requests, then task verification, epic result evaluation, deploy, and metrics. Monitoring agents read the metrics from the dashboard and file new work onto the board, and a dashed return edge carries insights back to goals and KPIs — labelled: the return stops here, metrics never rewrite the mission. Beneath the main flow, five knowledge cylinders — agent.md, skills.md, code knowledge, company knowledge, and memory — sit in a shared enclosure that every agent reads on boot and writes back to after each run.">
+  <svg viewBox="0 0 1010 544">
+    <!-- communication layer, above the diagram -->
+    <rect x="16" y="6" width="978" height="34" rx="10" fill="none" stroke="var(--line-strong)" stroke-width="1.2" stroke-dasharray="2 5" stroke-linecap="round"></rect>
+    <text x="506" y="28" text-anchor="middle" class="sm">Email · Slack</text>
 
-    <!-- memory layer, below the agents enclosure; linked by a self-improvement loop -->
-    <path class="nd" d="M 308 184 v 22 a 30 6 0 0 0 60 0 v -22"></path>
-    <ellipse class="nd" cx="338" cy="184" rx="30" ry="6"></ellipse>
-    <text x="338" y="224" text-anchor="middle" class="sm">Agent.md</text>
-    <path class="nd" d="M 392 184 v 22 a 30 6 0 0 0 60 0 v -22"></path>
-    <ellipse class="nd" cx="422" cy="184" rx="30" ry="6"></ellipse>
-    <text x="422" y="224" text-anchor="middle" class="sm">Skills.md</text>
-    <path class="nd" d="M 480 184 v 22 a 30 6 0 0 0 60 0 v -22"></path>
-    <ellipse class="nd" cx="510" cy="184" rx="30" ry="6"></ellipse>
-    <text x="510" y="224" text-anchor="middle" class="sm">Code knowledge</text>
-    <text x="510" y="236" text-anchor="middle" class="sm">code hierarchy, cache</text>
-    <path class="nd" d="M 584 184 v 22 a 30 6 0 0 0 60 0 v -22"></path>
-    <ellipse class="nd" cx="614" cy="184" rx="30" ry="6"></ellipse>
-    <text x="614" y="224" text-anchor="middle" class="sm">Company</text>
-    <text x="614" y="236" text-anchor="middle" class="sm">Knowledge (RAG)</text>
-    <path class="nd" d="M 666 184 v 22 a 30 6 0 0 0 60 0 v -22"></path>
-    <ellipse class="nd" cx="696" cy="184" rx="30" ry="6"></ellipse>
-    <text x="696" y="224" text-anchor="middle" class="sm">Memory</text>
-    <line class="edge back" x1="528" y1="152" x2="528" y2="172" marker-start="url(#arr)" marker-end="url(#arr)"></line>
-    <text x="539" y="166" class="sm">self-improvement</text>
+    <!-- human, standalone above the zone it controls -->
+    <rect class="nh" x="276" y="48" width="88" height="46" rx="9"></rect>
+    <text x="320" y="67" text-anchor="middle">Human</text>
+    <text x="320" y="82" text-anchor="middle" class="sm">sets direction</text>
+    <line class="edge" x1="320" y1="94" x2="320" y2="108" marker-end="url(#arr)"></line>
 
-    <!-- communication layer, below everything -->
-    <rect x="-148" y="336" width="962" height="46" rx="12" fill="none" stroke="var(--line-strong)" stroke-width="1.2" stroke-dasharray="2 5" stroke-linecap="round"></rect>
-    <text x="344" y="356" text-anchor="middle">Communication</text>
-    <text x="344" y="372" text-anchor="middle" class="sm">email · text · Slack</text>
-    <line class="edge back" x1="249" y1="310" x2="249" y2="332" marker-start="url(#arr)" marker-end="url(#arr)"></line>
+    <g transform="translate(0, 106)">
+    <!-- human-only control boundary -->
+    <rect x="124" y="6" width="392" height="96" rx="12" fill="none" stroke="var(--hu-ln)" stroke-dasharray="3 3" stroke-width="1"></rect>
+    <text x="320" y="24" text-anchor="middle" class="mono mut">Plan</text>
 
-    <!-- human, left of goals -->
-    <rect class="nh" x="-148" y="40" width="130" height="48" rx="9"></rect>
-    <text x="-83" y="56" text-anchor="middle">Human</text>
-    <text x="-83" y="70" text-anchor="middle" class="sm">sets direction and</text>
-    <text x="-83" y="82" text-anchor="middle" class="sm">monitors the company</text>
-    <line class="edge" x1="-18" y1="62" x2="4" y2="62" marker-end="url(#arr)"></line>
-    <line class="edge back" x1="-83" y1="92" x2="-83" y2="332" marker-start="url(#arr)" marker-end="url(#arr)"></line>
+    <rect class="nh" x="136" y="42" width="92" height="46" rx="9"></rect>
+    <text x="182" y="61" text-anchor="middle">Mission</text>
+    <text x="182" y="76" text-anchor="middle" class="sm">~1 year</text>
+    <line class="edge" x1="228" y1="65" x2="250" y2="65" marker-end="url(#arr)"></line>
+
+    <rect class="nh" x="254" y="42" width="112" height="46" rx="9"></rect>
+    <text x="310" y="61" text-anchor="middle">Goals + KPIs</text>
+    <text x="310" y="76" text-anchor="middle" class="sm">quarterly</text>
 
     <!-- forward path -->
-    <rect class="nh" x="10"  y="40" width="92" height="44" rx="9"></rect>
-    <text x="56" y="59" text-anchor="middle">Goals</text>
-    <text x="56" y="74" text-anchor="middle" class="sm">targets + trends</text>
+    <line class="edge" x1="378" y1="65" x2="400" y2="65" marker-end="url(#arr)"></line>
+    <rect class="na" x="404" y="42" width="100" height="46" rx="9"></rect>
+    <text x="454" y="61" text-anchor="middle">Projects</text>
+    <text x="454" y="76" text-anchor="middle" class="sm">persistent</text>
 
-    <rect class="na" x="140" y="40" width="104" height="44" rx="9"></rect>
-    <text x="192" y="59" text-anchor="middle">Projects</text>
-    <text x="192" y="74" text-anchor="middle" class="sm">weekly ritual</text>
+    <line class="edge" x1="504" y1="65" x2="526" y2="65" marker-end="url(#arr)"></line>
+    <rect class="ns" x="530" y="42" width="108" height="46" rx="9"></rect>
+    <text x="584" y="61" text-anchor="middle">Board</text>
+    <text x="584" y="76" text-anchor="middle" class="sm">epics · tasks</text>
+    <line class="edge" x1="638" y1="65" x2="660" y2="65" marker-end="url(#arr)"></line>
 
-    <rect class="ns" x="282" y="40" width="110" height="44" rx="9"></rect>
-    <text x="337" y="59" text-anchor="middle">Kanban board</text>
-    <text x="337" y="74" text-anchor="middle" class="sm">epics · tasks · bugs</text>
+    <!-- the orchestrator, and the two lanes it dispatches into -->
+    <rect class="ghost" x="664" y="6" width="204" height="128" rx="12"></rect>
+    <text x="766" y="24" text-anchor="middle" class="mono mut">Orchestrator</text>
+    <rect class="na" x="676" y="34" width="180" height="42" rx="8"></rect>
+    <text x="766" y="51" text-anchor="middle">Claude Code · Codex</text>
+    <text x="766" y="66" text-anchor="middle" class="sm">subscription</text>
+    <rect class="na" x="676" y="86" width="180" height="42" rx="8"></rect>
+    <text x="766" y="103" text-anchor="middle">AI agents</text>
+    <text x="766" y="118" text-anchor="middle" class="sm">API inference</text>
 
-    <rect class="na" x="430" y="70" width="112" height="44" rx="9"></rect>
-    <text x="486" y="89" text-anchor="middle">Orchestrator</text>
-    <text x="486" y="104" text-anchor="middle" class="sm">waves from a DAG</text>
+    <rect class="ns" x="916" y="42" width="76" height="46" rx="9"></rect>
+    <text x="954" y="70" text-anchor="middle">PR</text>
+    <line class="edge" x1="856" y1="55" x2="910" y2="60" marker-end="url(#arr)"></line>
+    <line class="edge" x1="856" y1="107" x2="910" y2="72" marker-end="url(#arr)"></line>
 
-    <rect class="na" x="556" y="26" width="156" height="34" rx="8"></rect>
-    <text x="634" y="47" text-anchor="middle">Claude Code - Docker</text>
-    <rect class="na" x="556" y="68" width="156" height="34" rx="8"></rect>
-    <text x="634" y="89" text-anchor="middle">Codex - Local</text>
-    <rect class="na" x="556" y="110" width="156" height="34" rx="8"></rect>
-    <text x="634" y="131" text-anchor="middle">OpenRouter</text>
+    <!-- right column -->
+    <rect class="na" x="886" y="118" width="116" height="48" rx="9"></rect>
+    <text x="944" y="138" text-anchor="middle">Verify task</text>
+    <text x="944" y="153" text-anchor="middle" class="sm">gates · before merge</text>
+    <line class="edge" x1="954" y1="88" x2="948" y2="112" marker-end="url(#arr)"></line>
 
-    <rect class="ns" x="738" y="40" width="70" height="44" rx="9"></rect>
-    <text x="773" y="66" text-anchor="middle">PR</text>
+    <rect class="na" x="886" y="196" width="116" height="48" rx="9"></rect>
+    <text x="944" y="216" text-anchor="middle">Evaluate epic</text>
+    <text x="944" y="231" text-anchor="middle" class="sm">outcome vs intent</text>
+    <line class="edge" x1="944" y1="166" x2="944" y2="190" marker-end="url(#arr)"></line>
 
-    <line class="edge" x1="102" y1="62" x2="134" y2="62" marker-end="url(#arr)"></line>
-    <line class="edge" x1="244" y1="62" x2="276" y2="62" marker-end="url(#arr)"></line>
-    <line class="edge" x1="392" y1="62" x2="424" y2="86" marker-end="url(#arr)"></line>
-    <line class="edge" x1="542" y1="82" x2="550" y2="46" marker-end="url(#arr)"></line>
-    <line class="edge" x1="542" y1="92" x2="550" y2="85" marker-end="url(#arr)"></line>
-    <line class="edge" x1="542" y1="102" x2="550" y2="124" marker-end="url(#arr)"></line>
-    <line class="edge" x1="710" y1="43" x2="732" y2="54" marker-end="url(#arr)"></line>
-    <line class="edge" x1="710" y1="85" x2="732" y2="63" marker-end="url(#arr)"></line>
-    <line class="edge" x1="710" y1="127" x2="732" y2="74" marker-end="url(#arr)"></line>
+    <rect class="ns" x="886" y="274" width="116" height="48" rx="9"></rect>
+    <text x="944" y="294" text-anchor="middle">Deploy</text>
+    <text x="944" y="309" text-anchor="middle" class="sm">release · verify</text>
+    <line class="edge" x1="944" y1="244" x2="944" y2="268" marker-end="url(#arr)"></line>
 
-    <!-- down the right side: verify -> merge -->
-    <rect class="na" x="728" y="128" width="90" height="44" rx="9"></rect>
-    <text x="773" y="147" text-anchor="middle">Verify</text>
-    <text x="773" y="162" text-anchor="middle" class="sm">score vs goal</text>
-    <line class="edge" x1="773" y1="84" x2="773" y2="122" marker-end="url(#arr)"></line>
+    <!-- bottom row -->
+    <rect class="nd" x="560" y="276" width="160" height="46" rx="9"></rect>
+    <text x="640" y="295" text-anchor="middle">Dashboard</text>
+    <text x="640" y="310" text-anchor="middle" class="sm">every number lands here</text>
+    <line class="edge" x1="880" y1="299" x2="726" y2="299" marker-end="url(#arr)"></line>
+    <line class="edge" x1="554" y1="299" x2="486" y2="299" marker-end="url(#arr)"></line>
 
-    <rect class="ns" x="728" y="200" width="90" height="44" rx="9"></rect>
-    <text x="773" y="219" text-anchor="middle">Deploy</text>
-    <text x="773" y="234" text-anchor="middle" class="sm">merged · live</text>
-    <line class="edge" x1="773" y1="172" x2="773" y2="194" marker-end="url(#arr)"></line>
+    <rect class="na" x="320" y="276" width="160" height="46" rx="9"></rect>
+    <text x="400" y="295" text-anchor="middle">Monitoring agents</text>
+    <text x="400" y="310" text-anchor="middle" class="sm">cron + standing</text>
 
-    <!-- bottom row: deploy -> metrics -> monitoring -->
-    <rect class="nd" x="380" y="262" width="118" height="44" rx="9"></rect>
-    <text x="439" y="281" text-anchor="middle">Metrics</text>
-    <text x="439" y="296" text-anchor="middle" class="sm">dashboards</text>
-    <path class="edge" d="M 745 244 C 680 292, 580 288, 504 285" marker-end="url(#arr)"></path>
+    <!-- return edges -->
+    <path class="edge back" d="M 400 270 C 430 190, 520 120, 570 92" marker-end="url(#arr)"></path>
+    <text x="444" y="212" class="sm">files new work</text>
+    <path class="edge back" d="M 320 292 C 170 278, 140 178, 296 94" marker-end="url(#arr)"></path>
+    <text x="16" y="200" class="sm">insights reshape goals —</text>
+    <text x="16" y="214" class="sm">the return stops here,</text>
+    <text x="16" y="228" class="sm">never at the mission</text>
 
-    <rect class="na" x="180" y="262" width="138" height="44" rx="9"></rect>
-    <text x="249" y="281" text-anchor="middle">Monitoring agents</text>
-    <text x="249" y="296" text-anchor="middle" class="sm">sweeps · anomalies</text>
-    <line class="edge" x1="374" y1="284" x2="324" y2="284" marker-end="url(#arr)"></line>
+    <!-- knowledge the agents read on boot and write back after every run -->
+    <rect class="ghost" x="150" y="342" width="712" height="86" rx="10"></rect>
+    <text x="506" y="360" text-anchor="middle" class="mono mut">knowledge · read on boot, written back after every run</text>
+    <path class="nd" d="M 180 376 v 20 a 28 6 0 0 0 56 0 v -20"></path>
+    <ellipse class="nd" cx="208" cy="376" rx="28" ry="6"></ellipse>
+    <text x="208" y="414" text-anchor="middle" class="sm">agent.md</text>
+    <path class="nd" d="M 320 376 v 20 a 28 6 0 0 0 56 0 v -20"></path>
+    <ellipse class="nd" cx="348" cy="376" rx="28" ry="6"></ellipse>
+    <text x="348" y="414" text-anchor="middle" class="sm">skills.md</text>
+    <path class="nd" d="M 460 376 v 20 a 28 6 0 0 0 56 0 v -20"></path>
+    <ellipse class="nd" cx="488" cy="376" rx="28" ry="6"></ellipse>
+    <text x="488" y="414" text-anchor="middle" class="sm">code knowledge</text>
+    <path class="nd" d="M 620 376 v 20 a 28 6 0 0 0 56 0 v -20"></path>
+    <ellipse class="nd" cx="648" cy="376" rx="28" ry="6"></ellipse>
+    <text x="648" y="414" text-anchor="middle" class="sm">company knowledge</text>
+    <path class="nd" d="M 780 376 v 20 a 28 6 0 0 0 56 0 v -20"></path>
+    <ellipse class="nd" cx="808" cy="376" rx="28" ry="6"></ellipse>
+    <text x="808" y="414" text-anchor="middle" class="sm">memory</text>
 
-    <!-- feedback edges -->
-    <path class="edge back" d="M 249 262 C 249 190, 300 120, 330 92" marker-end="url(#arr)"></path>
-    <text x="222" y="170" class="sm">files bugs +</text>
-    <text x="222" y="184" class="sm">improvements</text>
-
-    <path class="edge back" d="M 180 284 C 70 284, 40 180, 52 92" marker-end="url(#arr)"></path>
-    <text x="52" y="200" class="sm">insights reshape</text>
-    <text x="52" y="214" class="sm">the goals</text>
+    </g>
   </svg>
   </div>
-  <p class="caption">The loop. A human sets direction; the orchestrator dispatches agents that run anywhere — docker, local, or plain API — on interchangeable harnesses (Claude Code, Codex, or a direct model like GLM via OpenRouter). The forward path runs along the top and right, the product feeds metrics, and monitoring agents close the circle by filing new work and informing new goals. Nothing in the loop requires a human — every human touchpoint is optional policy.</p>
+  <p class="caption">The loop, with Email · Slack — where human/agent touchpoints happen — moved to the top of the plate. Humans own the mission and approve the quarterly goals — the dashed violet boundary is the human-only zone. Everything right of it is agent work under policy: the orchestrator dispatches agents onto interchangeable harnesses, task verification gates the merge, and epic result evaluation asks whether the finished work achieved its intent. The dashboard is where every number lands, and the monitoring return arrows stop at the board and at Goals + KPIs — never at the mission.</p>
 
-  <!-- ============ 01 GOALS ============ -->
+  <!-- ============ 01 MISSION ============ -->
   <section class="comp">
-    <h2><span class="num">01</span>Goals</h2>
-    <p class="role">Why the company exists, as numbers.</p>
-    <p>Goals are the top of the system: each one pairs a business intent with a measurable
-    target and its current trend — <em>"grow newsletter signups 20%"</em>, <em>"p75 LCP under
-    2s"</em>. Once a week, a planning agent reads the goals and their metric gaps and creates a
-    <strong>project</strong>: a scoped body of work aimed at the largest gap. Goals live beside
-    the metrics that measure them, so progress is visible as both a moving number and moving
-    cards.</p>
-    <div class="diagram dg" role="img" aria-label="A goal with a target metric flows through a weekly planning agent into a project, which decomposes into epics and tasks; each run of that work produces a release.">
-    <svg viewBox="0 0 1010 170">
-      <rect class="nh" x="10" y="52" width="150" height="60" rx="9"></rect>
-      <text x="85" y="76" text-anchor="middle">Goal</text>
-      <text x="85" y="93" text-anchor="middle" class="mono">signups +20% · 62%</text>
+    <h2><span class="num">01</span>Mission</h2>
+    <p class="role">The highest-level object. Only a human may change it.</p>
+    <p>The mission defines what the company exists to accomplish, and it is the long-term
+    constraint under which every goal, project and agent operates. Unlike everything downstream,
+    it can only be created or changed by the human operator. Agents may read it, plan against it,
+    ask clarifying questions and flag conflicts — but they cannot rewrite it, and no metric,
+    anomaly or evaluation is allowed to.</p>
+    <p>A mission should stay stable for roughly a year. It is not measured directly: humans
+    translate it into the quarterly goals and KPIs the system can actually act on, and every
+    goal, project, epic and task must be traceable back to it.</p>
+    <div class="note">
+      <span class="note-title">Missions look like this</span>
+      <ul class="tight">
+        <li>Ensure everyone can own and benefit from AI.</li>
+        <li>Make professional software development accessible to any small team.</li>
+        <li>Build the most trusted technical community for frontier AI.</li>
+      </ul>
+    </div>
+    <div class="diagram dg" role="img" aria-label="Planning horizons, replacing the old weekly goal-to-project diagram. One annual mission sits at the top, human-owned. Below it, two quarterly goals with KPIs. Below one goal, two persistent projects that stay open while they remain a valid route to the goal; each project holds successive epics, and each epic holds tasks lasting hours to days. A bracket on the right marks the approximate duration of every level: mission about one year, goals about one quarter, projects open-ended across cycles, epics bounded, tasks short.">
+    <svg viewBox="0 0 990 340">
+      <!-- durations rail -->
+      <text x="836" y="26" class="mono mut">horizon</text>
+      <line class="ghost" x1="820" y1="34" x2="820" y2="316"></line>
 
-      <rect class="na" x="230" y="52" width="160" height="60" rx="9"></rect>
-      <text x="310" y="76" text-anchor="middle">Planning agent</text>
-      <text x="310" y="93" text-anchor="middle" class="sm">weekly · reads metric gaps</text>
+      <!-- mission -->
+      <rect class="nh" x="330" y="34" width="240" height="44" rx="9"></rect>
+      <text x="450" y="53" text-anchor="middle">Mission</text>
+      <text x="450" y="68" text-anchor="middle" class="sm">human-owned · not measured directly</text>
+      <text x="836" y="60" class="mono mut">~ 1 year</text>
 
-      <rect class="ns" x="460" y="52" width="140" height="60" rx="9"></rect>
-      <text x="530" y="76" text-anchor="middle">Project</text>
-      <text x="530" y="93" text-anchor="middle" class="sm">scoped, dated</text>
+      <!-- goals -->
+      <line class="edge" x1="450" y1="78" x2="450" y2="96" marker-end="url(#arr)"></line>
+      <path class="edge" d="M 450 96 L 220 96 L 220 112" marker-end="url(#arr)"></path>
+      <path class="edge" d="M 450 96 L 680 96 L 680 112" marker-end="url(#arr)"></path>
 
-      <rect class="ns" x="670" y="14" width="176" height="34" rx="8"></rect>
-      <text x="758" y="35" text-anchor="middle" class="sm">Epic — referral program</text>
-      <rect class="ns" x="670" y="64" width="176" height="34" rx="8"></rect>
-      <text x="758" y="85" text-anchor="middle" class="sm">Epic — signup funnel v2</text>
-      <rect class="ns" x="670" y="114" width="176" height="34" rx="8"></rect>
-      <text x="758" y="135" text-anchor="middle" class="sm">Tasks — ordered by deps</text>
+      <rect class="nh" x="120" y="114" width="200" height="42" rx="9"></rect>
+      <text x="220" y="132" text-anchor="middle" class="sm">Goal + KPI</text>
+      <text x="220" y="147" text-anchor="middle" class="mono mut">signups +25%</text>
+      <rect class="nh" x="580" y="114" width="200" height="42" rx="9"></rect>
+      <text x="680" y="132" text-anchor="middle" class="sm">Goal + KPI</text>
+      <text x="680" y="147" text-anchor="middle" class="mono mut">p75 LCP &lt; 2s</text>
+      <text x="836" y="138" class="mono mut">~ 1 quarter</text>
 
-      <line class="edge" x1="160" y1="82" x2="224" y2="82" marker-end="url(#arr)"></line>
-      <line class="edge" x1="390" y1="82" x2="454" y2="82" marker-end="url(#arr)"></line>
-      <line class="edge" x1="600" y1="70" x2="664" y2="36" marker-end="url(#arr)"></line>
-      <line class="edge" x1="600" y1="82" x2="664" y2="81" marker-end="url(#arr)"></line>
-      <line class="edge" x1="600" y1="94" x2="664" y2="126" marker-end="url(#arr)"></line>
+      <!-- projects -->
+      <path class="edge" d="M 220 156 L 130 156 L 130 176" marker-end="url(#arr)"></path>
+      <path class="edge" d="M 220 156 L 340 156 L 340 176" marker-end="url(#arr)"></path>
 
-      <rect class="nd" x="880" y="52" width="120" height="60" rx="9"></rect>
-      <text x="940" y="76" text-anchor="middle">Releases</text>
-      <text x="940" y="93" text-anchor="middle" class="sm">result of each run</text>
-      <line class="edge" x1="846" y1="31" x2="874" y2="66" marker-end="url(#arr)"></line>
-      <line class="edge" x1="846" y1="81" x2="874" y2="82" marker-end="url(#arr)"></line>
-      <line class="edge" x1="846" y1="131" x2="874" y2="98" marker-end="url(#arr)"></line>
+      <rect class="ns" x="40" y="178" width="180" height="42" rx="9"></rect>
+      <text x="130" y="196" text-anchor="middle" class="sm">Project</text>
+      <text x="130" y="211" text-anchor="middle" class="mono mut">referral engine</text>
+      <rect class="ns" x="250" y="178" width="180" height="42" rx="9"></rect>
+      <text x="340" y="196" text-anchor="middle" class="sm">Project</text>
+      <text x="340" y="211" text-anchor="middle" class="mono mut">signup funnel</text>
+      <text x="836" y="196" class="mono mut">open while valid</text>
+      <text x="836" y="210" class="mono mut">— spans cycles</text>
+
+      <!-- epics -->
+      <path class="edge" d="M 130 220 L 90 220 L 90 240" marker-end="url(#arr)"></path>
+      <path class="edge" d="M 130 220 L 210 220 L 210 240" marker-end="url(#arr)"></path>
+      <rect class="na" x="30" y="242" width="120" height="38" rx="8"></rect>
+      <text x="90" y="259" text-anchor="middle" class="sm">Epic 1</text>
+      <text x="90" y="273" text-anchor="middle" class="mono mut">done</text>
+      <rect class="na" x="160" y="242" width="120" height="38" rx="8"></rect>
+      <text x="220" y="259" text-anchor="middle" class="sm">Epic 2</text>
+      <text x="220" y="273" text-anchor="middle" class="mono mut">running</text>
+      <text x="300" y="266" class="sm">→ successive epics, created as metrics change</text>
+      <text x="836" y="266" class="mono mut">bounded</text>
+
+      <!-- tasks -->
+      <path class="edge" d="M 220 280 L 180 280 L 180 296" marker-end="url(#arr)"></path>
+      <path class="edge" d="M 220 280 L 260 280 L 260 296" marker-end="url(#arr)"></path>
+      <rect class="ns" x="120" y="298" width="120" height="30" rx="7"></rect>
+      <text x="180" y="317" text-anchor="middle" class="mono mut">task</text>
+      <rect class="ns" x="250" y="298" width="120" height="30" rx="7"></rect>
+      <text x="310" y="317" text-anchor="middle" class="mono mut">task · bug</text>
+      <text x="836" y="318" class="mono mut">hours – days</text>
     </svg>
     </div>
+    <p class="caption">This replaces the assumption that a planning agent creates a new project every
+    week. A weekly ritual may still create or prioritise work, but a project is a persistent strategic
+    container holding successive epics — not a disposable weekly plan.</p>
   </section>
 
-  <!-- ============ 02 KANBAN BOARD ============ -->
+  <!-- ============ 02 GOALS, KPIs & PLANNING HORIZONS ============ -->
   <section class="comp">
-    <h2><span class="num">02</span>Kanban board</h2>
+    <h2><span class="num">02</span>Goals, KPIs &amp; planning horizons</h2>
+    <p class="role">The mission, translated into numbers the system can act on.</p>
+    <p>Humans define the company's <strong>goals and KPIs</strong>, normally once per quarter. Each
+    goal connects a strategic outcome to one or more measurable indicators — <em>"grow newsletter
+    signups 25%"</em>, <em>"p75 LCP under 2s"</em>. Agents can recommend goals, surface metric gaps
+    and propose changes, but the final goals and targets stay human-controlled. Each goal also
+    carries <strong>guardrail metrics</strong>, so the system cannot improve one number by quietly
+    damaging another: a signup-growth goal watches unsubscribe rate, spam complaints, signup
+    quality, acquisition cost and page performance alongside the number it is trying to move.</p>
+    <p>Below the goals, work is decomposed by agents and the horizons get shorter at every level:</p>
+    <ul class="tight">
+      <li><strong>Mission</strong> — approximately one year.</li>
+      <li><strong>Goals and KPIs</strong> — approximately one quarter.</li>
+      <li><strong>Projects and features</strong> — open for as long as they remain a valid way of
+      reaching a goal.</li>
+      <li><strong>Epics</strong> — bounded bodies of work inside a project.</li>
+      <li><strong>Tasks and bugs</strong> — short execution units an agent can claim and finish.</li>
+    </ul>
+    <div class="note">
+      <span class="note-title">Projects are containers, not weekly plans</span>
+      A planning agent does <em>not</em> create a new project every week. A weekly ritual may still
+      create or reprioritise work, but a project is a persistent strategic container that can hold
+      many successive epics and outlive several goal cycles. As metrics change, agents create new
+      epics, revise planned ones, or recommend closing the project outright.
+    </div>
+    <div class="diagram dg" role="img" aria-label="Decomposition and traceability: an approved goal becomes projects, then epics, then tasks, then dependencies that determine ready epochs in the Workflow Graph. Two rules are drawn beneath — task dependencies stay inside their epic, and dependencies between epics remain project-level gates. A dashed return edge runs from a deployed change all the way back to the goal that caused it to exist, labelled traceable both ways.">
+    <svg viewBox="0 0 990 230">
+      <rect class="nh" x="16" y="56" width="150" height="52" rx="9"></rect>
+      <text x="91" y="77" text-anchor="middle">Approved goal</text>
+      <text x="91" y="94" text-anchor="middle" class="sm">human-controlled</text>
+
+      <rect class="ns" x="216" y="56" width="150" height="52" rx="9"></rect>
+      <text x="291" y="77" text-anchor="middle">Projects</text>
+      <text x="291" y="94" text-anchor="middle" class="sm">how we intend to reach it</text>
+
+      <rect class="ns" x="416" y="56" width="150" height="52" rx="9"></rect>
+      <text x="491" y="77" text-anchor="middle">Epics</text>
+      <text x="491" y="94" text-anchor="middle" class="sm">measurable increments</text>
+
+      <rect class="na" x="616" y="56" width="150" height="52" rx="9"></rect>
+      <text x="691" y="77" text-anchor="middle">Tasks</text>
+      <text x="691" y="94" text-anchor="middle" class="sm">claimable · executable</text>
+
+      <rect class="nd" x="816" y="56" width="158" height="52" rx="9"></rect>
+      <text x="895" y="77" text-anchor="middle">Dependencies</text>
+      <text x="895" y="94" text-anchor="middle" class="sm">determine ready epochs</text>
+
+      <line class="edge" x1="166" y1="82" x2="210" y2="82" marker-end="url(#arr)"></line>
+      <line class="edge" x1="366" y1="82" x2="410" y2="82" marker-end="url(#arr)"></line>
+      <line class="edge" x1="566" y1="82" x2="610" y2="82" marker-end="url(#arr)"></line>
+      <line class="edge" x1="766" y1="82" x2="810" y2="82" marker-end="url(#arr)"></line>
+
+      <text x="16" y="36" class="mono mut">agents decompose · the DAG stays the execution model</text>
+
+      <rect class="ghost" x="416" y="140" width="558" height="62" rx="10"></rect>
+      <text x="434" y="162" class="sm">task → task dependencies stay inside one epic</text>
+      <text x="434" y="184" class="sm">epic → epic dependencies remain project-level gates</text>
+
+      <path class="edge back" d="M 895 108 C 895 130, 200 140, 91 112" marker-end="url(#arr)"></path>
+      <text x="140" y="150" class="sm">projects stay linked to the goals they influence —</text>
+      <text x="140" y="166" class="sm">epics and tasks inherit it, so a deployed change</text>
+      <text x="140" y="182" class="sm">traces back to the goal that caused it to exist</text>
+    </svg>
+    </div>
+    <p>That traceability is what lets the evaluator ask, months after a change shipped, whether it
+    actually moved the number it was created to move.</p>
+  </section>
+
+  <!-- ============ 03 KANBAN BOARD ============ -->
+  <section class="comp">
+    <h2><span class="num">03</span>Kanban board</h2>
     <p class="role">The single interface between humans and agents.</p>
-    <p>All work is a card. The hierarchy runs goal → project → epic → task/bug; cards
-    cross-link with dependencies, and every card carries its own <strong>execution
-    policy</strong> — which model runs it, at what effort, and how much autonomy it gets.
+    <p>All work is a card. The hierarchy runs <strong>mission → goal → project → epic →
+    task/bug</strong>; cards cross-link with dependencies, and every card carries its own
+    <strong>execution policy</strong> — which model runs it, at what effort, and how much
+    autonomy it gets. Mission and goals are visible on a card as linked strategic context, but
+    they do not travel through the execution columns — only epics, tasks and bugs do.
     Humans and agents use the same board: drag a card, and an agent picks it up; an agent
     finishes, and the card moves under your cursor. A card that can't proceed right now —
     blocked on an answer, an external event, or something to revisit later — parks in
@@ -683,9 +805,9 @@
         <rect class="ghost" x="258" y="14" width="112" height="200" rx="10"></rect>
         <text x="314" y="36" text-anchor="middle" class="sm">Doing</text>
         <rect class="na" x="262" y="48" width="104" height="26" rx="6"></rect>
-        <text x="314" y="65" text-anchor="middle" class="mono mut">agent · wave 1</text>
+        <text x="314" y="65" text-anchor="middle" class="mono mut">agent · epoch 1</text>
         <rect class="na" x="262" y="82" width="104" height="26" rx="6"></rect>
-        <text x="314" y="99" text-anchor="middle" class="mono mut">agent · wave 1</text>
+        <text x="314" y="99" text-anchor="middle" class="mono mut">agent · epoch 1</text>
       </g>
       <g>
         <rect class="ghost" x="382" y="14" width="112" height="200" rx="10"></rect>
@@ -723,130 +845,155 @@
     </div>
   </section>
 
-  <!-- ============ 03 WORKFLOW GRAPH / AGENT ORCHESTRATOR ============ -->
+  <!-- ============ 04 WORKFLOW GRAPH / AGENT ORCHESTRATOR ============ -->
   <section class="comp">
-    <h2><span class="num">03</span>Workflow Graph / Agent Orchestrator</h2>
+    <h2><span class="num">04</span>Workflow Graph / Agent Orchestrator</h2>
     <p class="role">A third board view that <em>is</em> the execution plan.</p>
     <p>Board and List answer <em>what is on the plate</em>. <strong>Workflow Graph</strong> answers
     <em>in what order it can run</em> — and it is the same structure the orchestrator executes, not a
     drawing of it. Every epic renders as its own self-contained DAG (nodes are tasks, edges are
-    <code>dependencies</code>) laid out against a shared <strong>ready-wave</strong> axis, so
+    <code>dependencies</code>) laid out against a shared <strong>ready-epoch</strong> axis, so
     horizontal position <em>is</em> execution order rather than layout aesthetics. Task edges never
     leave their epic: an epic graph is complete on its own, which is exactly what lets the
-    orchestrator dispatch one wave of one epic without reasoning about the rest of the board. The
+    orchestrator dispatch one epoch of one epic without reasoning about the rest of the board. The
     only place two epics touch is the <strong>project</strong> layer, drawn here as the left-hand
     rail — a project-level edge from epic A to epic B is a <strong>gate</strong>, and when it opens,
-    B's whole graph becomes ready and therefore starts further right on the wave axis.</p>
-    <div class="diagram dg" role="img" aria-label="Workflow Graph view: a project rail on the left holds three epic cards, with a project-level gate edge from epic A to epic B; each epic card expands to the right into its own self-contained task DAG laid out across six ready-wave columns. Epic A runs in waves 1 to 3, epic B is gated by A and starts at wave 4, epic C is independent and starts at wave 1. A dashed red edge from a task in epic A to a task in epic B is marked with a cross and labelled not allowed.">
-    <svg viewBox="0 0 990 420">
-      <!-- project rail header -->
-      <text x="6" y="18" class="mono">project · atlas</text>
+    B's whole graph becomes ready and therefore starts further right on the epoch axis.</p>
+        <div class="diagram dg" role="img" aria-label="Workflow Graph view: a project rail on the left holds three epic cards, with a project-level gate edge from epic A to epic B; each epic card expands to the right into its own self-contained task DAG laid out across six ready-epoch columns. Epic A runs in epochs 1 to 3, epic B is gated by A and starts at epoch 4, epic C is independent and starts at epoch 1. A dashed red edge from a task in epic A to a task in epic B is marked with a cross and labelled not allowed. New in this revision: after epic A's final epoch, an epic-complete state feeds an Outcome evaluator, which resolves to successful, awaiting metrics, or a follow-up epic — and a dashed edge carries that follow-up epic back to the project rail rather than reopening completed tasks.">
+        <svg viewBox="0 0 990 420">
+          <!-- project rail header -->
+          <text x="6" y="18" class="mono">project · atlas</text>
 
-      <!-- ready-wave axis -->
-      <path class="edge" d="M 120 26 L 974 26" marker-end="url(#arr)"></path>
-      <text x="191" y="18" text-anchor="middle" class="mono mut">wave 1</text>
-      <text x="334" y="18" text-anchor="middle" class="mono mut">wave 2</text>
-      <text x="477" y="18" text-anchor="middle" class="mono mut">wave 3</text>
-      <text x="620" y="18" text-anchor="middle" class="mono mut">wave 4</text>
-      <text x="763" y="18" text-anchor="middle" class="mono mut">wave 5</text>
-      <text x="906" y="18" text-anchor="middle" class="mono mut">wave 6</text>
-      <line class="ghost" x1="263" y1="26" x2="263" y2="38"></line>
-      <line class="ghost" x1="406" y1="26" x2="406" y2="38"></line>
-      <line class="ghost" x1="692" y1="26" x2="692" y2="38"></line>
-      <line class="ghost" x1="835" y1="26" x2="835" y2="38"></line>
-      <!-- the gate boundary: epic B cannot start left of this line -->
-      <line class="ghost" x1="549" y1="26" x2="549" y2="286"></line>
+          <!-- ready-epoch axis -->
+          <path class="edge" d="M 120 26 L 974 26" marker-end="url(#arr)"></path>
+          <text x="191" y="18" text-anchor="middle" class="mono mut">epoch 1</text>
+          <text x="334" y="18" text-anchor="middle" class="mono mut">epoch 2</text>
+          <text x="477" y="18" text-anchor="middle" class="mono mut">epoch 3</text>
+          <text x="620" y="18" text-anchor="middle" class="mono mut">epoch 4</text>
+          <text x="763" y="18" text-anchor="middle" class="mono mut">epoch 5</text>
+          <text x="906" y="18" text-anchor="middle" class="mono mut">epoch 6</text>
+          <line class="ghost" x1="263" y1="26" x2="263" y2="38"></line>
+          <line class="ghost" x1="406" y1="26" x2="406" y2="38"></line>
+          <line class="ghost" x1="692" y1="26" x2="692" y2="38"></line>
+          <line class="ghost" x1="835" y1="26" x2="835" y2="38"></line>
+          <!-- the gate boundary: epic B cannot start left of this line -->
+          <line class="ghost" x1="549" y1="26" x2="549" y2="286"></line>
 
-      <!-- ---------- project rail: epics + the only epic-to-epic edge ---------- -->
-      <rect class="na" x="6" y="78" width="104" height="34" rx="8"></rect>
-      <text x="58" y="93" text-anchor="middle" class="mono">epic · A</text>
-      <text x="58" y="106" text-anchor="middle" class="sm">schema + auth</text>
+          <!-- ---------- project rail: epics + the only epic-to-epic edge ---------- -->
+          <rect class="na" x="6" y="78" width="104" height="34" rx="8"></rect>
+          <text x="58" y="93" text-anchor="middle" class="mono">epic · A</text>
+          <text x="58" y="106" text-anchor="middle" class="sm">schema + auth</text>
 
-      <rect class="nd" x="6" y="206" width="104" height="34" rx="8"></rect>
-      <text x="58" y="221" text-anchor="middle" class="mono">epic · B</text>
-      <text x="58" y="234" text-anchor="middle" class="sm">billing API</text>
+          <rect class="nd" x="6" y="206" width="104" height="34" rx="8"></rect>
+          <text x="58" y="221" text-anchor="middle" class="mono">epic · B</text>
+          <text x="58" y="234" text-anchor="middle" class="sm">billing API</text>
 
-      <rect class="na" x="6" y="334" width="104" height="34" rx="8"></rect>
-      <text x="58" y="349" text-anchor="middle" class="mono">epic · C</text>
-      <text x="58" y="362" text-anchor="middle" class="sm">docs site</text>
-      <text x="6" y="384" class="sm">no epic dep</text>
+          <rect class="na" x="6" y="334" width="104" height="34" rx="8"></rect>
+          <text x="58" y="349" text-anchor="middle" class="mono">epic · C</text>
+          <text x="58" y="362" text-anchor="middle" class="sm">docs site</text>
+          <text x="6" y="384" class="sm">no epic dep</text>
 
-      <path class="edge" d="M 58 112 L 58 202" marker-end="url(#arr)"></path>
-      <text x="64" y="162" class="mono mut">epic dep</text>
+          <path class="edge" d="M 58 112 L 58 202" marker-end="url(#arr)"></path>
+          <text x="64" y="162" class="mono mut">epic dep</text>
 
-      <!-- gate propagating from the project rail into epic B's graph -->
-      <path class="edge back" d="M 110 223 L 545 223" marker-end="url(#arr)"></path>
-      <text x="330" y="216" text-anchor="middle" class="sm">gate opens when A is done → B's graph becomes ready</text>
+          <!-- gate propagating from the project rail into epic B's graph -->
+          <path class="edge back" d="M 110 223 L 545 223" marker-end="url(#arr)"></path>
+          <text x="330" y="216" text-anchor="middle" class="sm">gate opens when A is done → B's graph becomes ready</text>
 
-      <!-- ---------- epic A · waves 1-3 ---------- -->
-      <rect class="ghost" x="124" y="40" width="423" height="110" rx="10"></rect>
-      <rect class="ns" x="136" y="77" width="110" height="36" rx="7"></rect>
-      <text x="191" y="94" text-anchor="middle" class="sm">migrate schema</text>
-      <text x="191" y="107" text-anchor="middle" class="mono mut">done</text>
-      <rect class="na" x="279" y="54" width="110" height="36" rx="7"></rect>
-      <text x="334" y="71" text-anchor="middle" class="sm">auth service</text>
-      <text x="334" y="84" text-anchor="middle" class="mono mut">agent · running</text>
-      <rect class="na" x="279" y="100" width="110" height="36" rx="7"></rect>
-      <text x="334" y="117" text-anchor="middle" class="sm">session store</text>
-      <text x="334" y="130" text-anchor="middle" class="mono mut">agent · running</text>
-      <rect class="nd" x="422" y="77" width="110" height="36" rx="7"></rect>
-      <text x="477" y="94" text-anchor="middle" class="sm">integration test</text>
-      <text x="477" y="107" text-anchor="middle" class="mono mut">waits on 2</text>
-      <path class="edge" d="M 246 95 C 262 95, 264 72, 275 72" marker-end="url(#arr)"></path>
-      <path class="edge" d="M 246 95 C 262 95, 264 118, 275 118" marker-end="url(#arr)"></path>
-      <path class="edge" d="M 389 72 C 405 72, 407 95, 418 95" marker-end="url(#arr)"></path>
-      <path class="edge" d="M 389 118 C 405 118, 407 95, 418 95" marker-end="url(#arr)"></path>
+          <!-- ---------- epic A · epochs 1-3 ---------- -->
+          <rect class="ghost" x="124" y="40" width="423" height="110" rx="10"></rect>
+          <rect class="ns" x="136" y="77" width="110" height="36" rx="7"></rect>
+          <text x="191" y="94" text-anchor="middle" class="sm">migrate schema</text>
+          <text x="191" y="107" text-anchor="middle" class="mono mut">done</text>
+          <rect class="na" x="279" y="54" width="110" height="36" rx="7"></rect>
+          <text x="334" y="71" text-anchor="middle" class="sm">auth service</text>
+          <text x="334" y="84" text-anchor="middle" class="mono mut">agent · running</text>
+          <rect class="na" x="279" y="100" width="110" height="36" rx="7"></rect>
+          <text x="334" y="117" text-anchor="middle" class="sm">session store</text>
+          <text x="334" y="130" text-anchor="middle" class="mono mut">agent · running</text>
+          <rect class="nd" x="422" y="77" width="110" height="36" rx="7"></rect>
+          <text x="477" y="94" text-anchor="middle" class="sm">integration test</text>
+          <text x="477" y="107" text-anchor="middle" class="mono mut">waits on 2</text>
+          <path class="edge" d="M 246 95 C 262 95, 264 72, 275 72" marker-end="url(#arr)"></path>
+          <path class="edge" d="M 246 95 C 262 95, 264 118, 275 118" marker-end="url(#arr)"></path>
+          <path class="edge" d="M 389 72 C 405 72, 407 95, 418 95" marker-end="url(#arr)"></path>
+          <path class="edge" d="M 389 118 C 405 118, 407 95, 418 95" marker-end="url(#arr)"></path>
 
-      <!-- ---------- epic B · gated, waves 4-5 ---------- -->
-      <rect class="ghost" x="553" y="168" width="278" height="110" rx="10"></rect>
-      <rect class="nd" x="565" y="182" width="110" height="36" rx="7"></rect>
-      <text x="620" y="199" text-anchor="middle" class="sm">invoice model</text>
-      <text x="620" y="212" text-anchor="middle" class="mono mut">gated by epic A</text>
-      <rect class="nd" x="565" y="228" width="110" height="36" rx="7"></rect>
-      <text x="620" y="245" text-anchor="middle" class="sm">webhook intake</text>
-      <text x="620" y="258" text-anchor="middle" class="mono mut">gated by epic A</text>
-      <rect class="nd" x="708" y="205" width="110" height="36" rx="7"></rect>
-      <text x="763" y="222" text-anchor="middle" class="sm">billing e2e</text>
-      <text x="763" y="235" text-anchor="middle" class="mono mut">waits on 2</text>
-      <path class="edge" d="M 675 200 C 691 200, 693 223, 704 223" marker-end="url(#arr)"></path>
-      <path class="edge" d="M 675 246 C 691 246, 693 223, 704 223" marker-end="url(#arr)"></path>
+          <!-- ---------- epic B · gated, epochs 4-5 ---------- -->
+          <rect class="ghost" x="553" y="168" width="278" height="110" rx="10"></rect>
+          <rect class="nd" x="565" y="182" width="110" height="36" rx="7"></rect>
+          <text x="620" y="199" text-anchor="middle" class="sm">invoice model</text>
+          <text x="620" y="212" text-anchor="middle" class="mono mut">gated by epic A</text>
+          <rect class="nd" x="565" y="228" width="110" height="36" rx="7"></rect>
+          <text x="620" y="245" text-anchor="middle" class="sm">webhook intake</text>
+          <text x="620" y="258" text-anchor="middle" class="mono mut">gated by epic A</text>
+          <rect class="nd" x="708" y="205" width="110" height="36" rx="7"></rect>
+          <text x="763" y="222" text-anchor="middle" class="sm">billing e2e</text>
+          <text x="763" y="235" text-anchor="middle" class="mono mut">waits on 2</text>
+          <path class="edge" d="M 675 200 C 691 200, 693 223, 704 223" marker-end="url(#arr)"></path>
+          <path class="edge" d="M 675 246 C 691 246, 693 223, 704 223" marker-end="url(#arr)"></path>
 
-      <!-- ---------- epic C · independent, waves 1-2 ---------- -->
-      <rect class="ghost" x="124" y="296" width="280" height="110" rx="10"></rect>
-      <rect class="ns" x="136" y="310" width="110" height="36" rx="7"></rect>
-      <text x="191" y="327" text-anchor="middle" class="sm">MDX pipeline</text>
-      <text x="191" y="340" text-anchor="middle" class="mono mut">done</text>
-      <rect class="na" x="136" y="356" width="110" height="36" rx="7"></rect>
-      <text x="191" y="373" text-anchor="middle" class="sm">theme tokens</text>
-      <text x="191" y="386" text-anchor="middle" class="mono mut">agent · running</text>
-      <rect class="nd" x="279" y="333" width="110" height="36" rx="7"></rect>
-      <text x="334" y="350" text-anchor="middle" class="sm">publish preview</text>
-      <text x="334" y="363" text-anchor="middle" class="mono mut">waits on 2</text>
-      <path class="edge" d="M 246 328 C 262 328, 264 351, 275 351" marker-end="url(#arr)"></path>
-      <path class="edge" d="M 246 374 C 262 374, 264 351, 275 351" marker-end="url(#arr)"></path>
+          <!-- ---------- epic C · independent, epochs 1-2 ---------- -->
+          <rect class="ghost" x="124" y="296" width="280" height="110" rx="10"></rect>
+          <rect class="ns" x="136" y="310" width="110" height="36" rx="7"></rect>
+          <text x="191" y="327" text-anchor="middle" class="sm">MDX pipeline</text>
+          <text x="191" y="340" text-anchor="middle" class="mono mut">done</text>
+          <rect class="na" x="136" y="356" width="110" height="36" rx="7"></rect>
+          <text x="191" y="373" text-anchor="middle" class="sm">theme tokens</text>
+          <text x="191" y="386" text-anchor="middle" class="mono mut">agent · running</text>
+          <rect class="nd" x="279" y="333" width="110" height="36" rx="7"></rect>
+          <text x="334" y="350" text-anchor="middle" class="sm">publish preview</text>
+          <text x="334" y="363" text-anchor="middle" class="mono mut">waits on 2</text>
+          <path class="edge" d="M 246 328 C 262 328, 264 351, 275 351" marker-end="url(#arr)"></path>
+          <path class="edge" d="M 246 374 C 262 374, 264 351, 275 351" marker-end="url(#arr)"></path>
 
-      <!-- ---------- the rejected edge: task deps may not cross an epic ---------- -->
-      <path class="edge back no" d="M 389 118 C 470 118, 480 200, 561 200" marker-end="url(#arrno)"></path>
-      <circle class="nb" cx="475" cy="159" r="11.5"></circle>
-      <text x="475" y="164" text-anchor="middle" class="xmark">×</text>
-      <text x="458" y="163" text-anchor="end" class="sm no">not allowed</text>
+          <!-- ---------- the rejected edge: task deps may not cross an epic ---------- -->
+          <path class="edge back no" d="M 389 118 C 470 118, 480 200, 561 200" marker-end="url(#arrno)"></path>
+          <circle class="nb" cx="475" cy="159" r="11.5"></circle>
+          <text x="475" y="164" text-anchor="middle" class="xmark">×</text>
+          <text x="458" y="163" text-anchor="end" class="sm no">not allowed</text>
 
-      <!-- ---------- invariants ---------- -->
-      <rect class="ns" x="440" y="296" width="535" height="110" rx="10"></rect>
-      <text x="458" y="320" class="mono">invariants</text>
-      <text x="458" y="342" class="sm">task → task edges stay inside one epic; every epic graph is self-contained</text>
-      <text x="458" y="361" class="sm">epic → epic edges exist only at the project layer (the left rail)</text>
-      <text x="458" y="380" class="sm">x-axis = ready wave: a task enters wave N once every dep cleared by N−1</text>
-      <text x="458" y="399" class="sm">a gated epic shifts right as a whole; independent epics start at wave 1</text>
-    </svg>
-    </div>
+          <!-- ---------- new in v2: epic completion state -> outcome evaluator ---------- -->
+          <rect class="ns" x="560" y="58" width="116" height="34" rx="7"></rect>
+          <text x="618" y="74" text-anchor="middle" class="sm">epic A complete</text>
+          <text x="618" y="87" text-anchor="middle" class="mono mut">final epoch merged</text>
+          <path class="edge" d="M 532 95 C 546 95, 548 76, 556 76" marker-end="url(#arr)"></path>
+
+          <rect class="na" x="700" y="58" width="140" height="34" rx="7"></rect>
+          <text x="770" y="74" text-anchor="middle" class="sm">Outcome evaluator</text>
+          <text x="770" y="87" text-anchor="middle" class="mono mut">result vs intent</text>
+          <line class="edge" x1="676" y1="75" x2="696" y2="75" marker-end="url(#arr)"></line>
+
+          <rect class="ns" x="856" y="34" width="124" height="26" rx="6"></rect>
+          <text x="918" y="51" text-anchor="middle" class="mono mut">successful</text>
+          <rect class="nd" x="856" y="66" width="124" height="26" rx="6"></rect>
+          <text x="918" y="83" text-anchor="middle" class="mono mut">awaiting metrics</text>
+          <rect class="nd" x="856" y="98" width="124" height="26" rx="6"></rect>
+          <text x="918" y="115" text-anchor="middle" class="mono mut">follow-up epic</text>
+          <line class="edge ok" x1="840" y1="72" x2="852" y2="47" marker-end="url(#arrok)"></line>
+          <line class="edge" x1="840" y1="75" x2="852" y2="79" marker-end="url(#arr)"></line>
+          <line class="edge" x1="840" y1="79" x2="852" y2="111" marker-end="url(#arr)"></line>
+
+          <!-- a follow-up epic is created on the project rail, never by reopening tasks -->
+          <text x="974" y="146" text-anchor="end" class="sm">a follow-up epic joins the project rail —</text>
+          <text x="974" y="160" text-anchor="end" class="sm">completed tasks are never reopened</text>
+
+          <!-- ---------- invariants ---------- -->
+          <rect class="ns" x="440" y="296" width="535" height="110" rx="10"></rect>
+          <text x="458" y="320" class="mono">invariants</text>
+          <text x="458" y="342" class="sm">task → task edges stay inside one epic; every epic graph is self-contained</text>
+          <text x="458" y="361" class="sm">cross-epic coordination happens at the project layer: gates + artifacts</text>
+          <text x="458" y="380" class="sm">x-axis = ready epoch — computed from dependencies at read time, never stored</text>
+          <text x="458" y="399" class="sm">the final epoch promotes the epic to complete, then to outcome evaluation</text>
+        </svg>
+        </div>
     <p class="caption">Node fill is card state — grey <em>done</em>, green <em>an agent is running it</em>,
-    amber <em>waiting on a dependency</em>. Epic A occupies waves 1–3; epic B is gated by A at the
-    project layer, so its own wave 1 lands on the board's wave 4; epic C shares no edge with either
+    amber <em>waiting on a dependency</em>. Epic A occupies epochs 1–3; epic B is gated by A at the
+    project layer, so its own epoch 1 lands on the board's epoch 4; epic C shares no edge with either
     and starts immediately.</p>
     <ul class="tight">
-      <li><strong>The ready set is a column.</strong> Everything in the leftmost unfinished wave of an
-      epic is dispatchable right now — that <em>is</em> the orchestrator's next wave, read straight off
+      <li><strong>The ready set is a column.</strong> Everything in the leftmost unfinished epoch of an
+      epic is dispatchable right now — that <em>is</em> the orchestrator's next epoch, read straight off
       the chart instead of inferred from a plan.</li>
       <li><strong>Critical path is visible.</strong> The longest chain inside an epic graph is that
       epic's floor on wall-clock; adding agents widens the columns, it never shortens the chain.</li>
@@ -866,16 +1013,16 @@
     <h3 class="sub">Executing it</h3>
     <p>An agent picks its own scope: <strong>a whole epic</strong>, or <strong>a few tasks inside
     one</strong>. Both are safe precisely because the epic graph is self-contained — taking the epic
-    means owning its waves end to end; taking a slice means claiming individual cards out of the
-    current ready wave and leaving the rest of the graph to whoever else shows up. The orchestrator
-    walks each epic graph, takes the leftmost unfinished wave, and dispatches one agent per card into
+    means owning its epochs end to end; taking a slice means claiming individual cards out of the
+    current ready epoch and leaving the rest of the graph to whoever else shows up. The orchestrator
+    walks each epic graph, takes the leftmost unfinished epoch, and dispatches one agent per card into
     its own git worktree. It is harness-agnostic: each card goes to whichever coding agent its policy
     names (Claude Code, Codex, or an API-driven worker). Approved-but-unmerged PRs are merged first
     on every cycle, so finished work never queues behind new work — and merging is what clears the
-    deps that promote the next wave.</p>
-    <div class="diagram dg" role="img" aria-label="A ready wave of two cards dispatches to one agent per card in separate worktrees, the merged results unlock the next wave's task, and a dashed edge loops back to the start for the next orchestrator cycle.">
+    deps that promote the next epoch.</p>
+    <div class="diagram dg" role="img" aria-label="A ready epoch of two cards dispatches to one agent per card in separate worktrees, the merged results unlock the next epoch's task, and a dashed edge loops back to the start for the next orchestrator cycle.">
     <svg viewBox="0 0 940 190">
-      <text x="16" y="30" class="mono">ready set · epic A, wave 2</text>
+      <text x="16" y="30" class="mono">ready set · epic A, epoch 2</text>
       <rect class="ghost" x="16" y="40" width="190" height="104" rx="10"></rect>
       <rect class="ns" x="28" y="56" width="166" height="30" rx="7"></rect>
       <text x="111" y="75" text-anchor="middle" class="sm">auth service</text>
@@ -905,7 +1052,7 @@
       <line class="edge ok" x1="716" y1="92" x2="760" y2="92" marker-end="url(#arrok)"></line>
       <text x="738" y="84" text-anchor="middle" class="sm">unlocks</text>
 
-      <text x="766" y="30" class="mono">wave 3</text>
+      <text x="766" y="30" class="mono">epoch 3</text>
       <rect class="na" x="766" y="74" width="158" height="36" rx="7"></rect>
       <text x="845" y="91" text-anchor="middle" class="sm">integration test</text>
       <text x="845" y="104" text-anchor="middle" class="mono mut">now dispatchable</text>
@@ -923,7 +1070,7 @@
     <strong>lowest claim timestamp</strong> decides: keep the card, or leave it to the other agent.
     The decision is explicit and logged; nobody silently steals work, and no card ends up with two
     agents editing it.</p>
-    <div class="diagram dg" role="img" aria-label="Two agents claim the same card within milliseconds; both claims are recorded in a two-slot assignment field with timestamps; the lowest timestamp arbitrates, so agent A either keeps the card or yields it; the card then moves to in progress with a single owner while the other agent takes the next card in the wave.">
+    <div class="diagram dg" role="img" aria-label="Two agents claim the same card within milliseconds; both claims are recorded in a two-slot assignment field with timestamps; the lowest timestamp arbitrates, so agent A either keeps the card or yields it; the card then moves to in progress with a single owner while the other agent takes the next card in the epoch.">
     <svg viewBox="0 0 940 180">
       <text x="16" y="44" class="mono">both claim the card</text>
       <rect class="ghost" x="16" y="56" width="200" height="110" rx="10"></rect>
@@ -972,7 +1119,7 @@
       <li><strong>Earliest claim arbitrates.</strong> Lowest timestamp holds the decision right, which
       makes the outcome deterministic and replayable from the log.</li>
       <li><strong>Stale claims expire.</strong> A worker that stops heartbeating loses its slot, and
-      the card returns to the ready wave rather than sitting occupied.</li>
+      the card returns to the ready epoch rather than sitting occupied.</li>
     </ul>
 
     <h3 class="sub">Agent signaling — TBD</h3>
@@ -1001,9 +1148,9 @@
     </div>
   </section>
 
-  <!-- ============ 04 AGENTS ============ -->
+  <!-- ============ 05 AGENTS ============ -->
   <section class="comp">
-    <h2><span class="num">04</span>Agents — engineers, operators, QA &amp; judges</h2>
+    <h2><span class="num">05</span>Agents — engineers, operators, QA &amp; judges</h2>
     <p class="role">The workforce. One isolated workspace each.</p>
     <p><strong>Engineer agents</strong> build: each gets a fresh git worktree (a full checkout
     with dependencies linked in), so parallel agents never collide on files. The pipeline is
@@ -1096,9 +1243,9 @@
     the only addition.</p>
   </section>
 
-  <!-- ============ 05 VERIFICATION ============ -->
+  <!-- ============ 06 VERIFICATION ============ -->
   <section class="comp">
-    <h2><span class="num">05</span>Verification loop</h2>
+    <h2><span class="num">06</span>Verification loop</h2>
     <p class="role">Quality as a number, enforced by a loop.</p>
     <p>A card can declare a <strong>goal percentage</strong>. When it does, an independent
     verification agent scores the finished work 0–100 against the card's intent. Below the
@@ -1132,11 +1279,154 @@
       <text x="300" y="150" text-anchor="middle" class="sm">no — rework with critique · while attempts &lt; loop limit</text>
     </svg>
     </div>
+
+    <h3 class="sub">Two levels of evaluation</h3>
+    <p>Verification is not the only judgment the system makes. <strong>Task or PR
+    verification</strong> runs before merge and asks whether the implementation satisfies the card.
+    <strong>Epic result evaluation</strong> runs after all the work is complete — and, where the
+    completion policy requires it, after deployment metrics have arrived — and asks whether the
+    finished body of work achieved its intended result. A card can pass every gate in the first
+    level and still belong to an epic that failed the second.</p>
+    <div class="diagram dg" role="img" aria-label="The two evaluation levels, drawn as separate controls. Level one, task or PR verification before merge: the agent's work passes lint, tests and build, then a judge score against the card, then merge under the autonomy policy; work below the bar loops back to rework on the same branch. A dashed divider separates the levels, labelled: verification asks did we build the card right, evaluation asks did the work achieve the intended result. Level two, epic result evaluation, runs after all work is complete and, where required, after deployment metrics arrive: an outcome evaluator compares the delivered work against the epic's intent and returns completed successfully, awaiting metrics, or a follow-up epic.">
+    <svg viewBox="0 0 990 340">
+      <!-- level 1 -->
+      <text x="16" y="30" class="mono">01 · task / PR verification — before merge</text>
+      <rect class="na" x="16" y="50" width="130" height="48" rx="9"></rect>
+      <text x="81" y="70" text-anchor="middle" class="sm">Agent's work</text>
+      <text x="81" y="86" text-anchor="middle" class="mono mut">PR diff + card</text>
+
+      <rect class="ns" x="196" y="50" width="140" height="48" rx="9"></rect>
+      <text x="266" y="70" text-anchor="middle" class="sm">Lint · tests · build</text>
+      <text x="266" y="86" text-anchor="middle" class="mono mut">deterministic</text>
+
+      <rect class="na" x="386" y="50" width="130" height="48" rx="9"></rect>
+      <text x="451" y="70" text-anchor="middle" class="sm">Judge score</text>
+      <text x="451" y="86" text-anchor="middle" class="mono">0–100 vs card</text>
+
+      <rect class="ns" x="566" y="50" width="140" height="48" rx="9"></rect>
+      <text x="636" y="70" text-anchor="middle" class="sm">Merge</text>
+      <text x="636" y="86" text-anchor="middle" class="mono mut">per autonomy policy</text>
+
+      <line class="edge" x1="146" y1="74" x2="190" y2="74" marker-end="url(#arr)"></line>
+      <line class="edge" x1="336" y1="74" x2="380" y2="74" marker-end="url(#arr)"></line>
+      <line class="edge ok" x1="516" y1="74" x2="560" y2="74" marker-end="url(#arrok)"></line>
+
+      <!-- rework loop: the curve dips well clear of its own label -->
+      <path class="edge no" d="M 451 98 C 451 142, 170 146, 88 100" marker-end="url(#arrno)"></path>
+      <text x="270" y="166" text-anchor="middle" class="sm">below the bar — rework on the same branch</text>
+
+      <!-- divider -->
+      <line class="ghost" x1="16" y1="192" x2="974" y2="192"></line>
+      <text x="16" y="212" class="sm">verification asks: did we build the card right?&#160;&#160;·&#160;&#160;evaluation asks: did the work achieve the intended result?</text>
+
+      <!-- level 2 -->
+      <text x="16" y="244" class="mono">02 · epic result evaluation — after all work, and after deployment metrics where required</text>
+      <rect class="ns" x="16" y="264" width="150" height="48" rx="9"></rect>
+      <text x="91" y="284" text-anchor="middle" class="sm">Epic complete</text>
+      <text x="91" y="300" text-anchor="middle" class="mono mut">all tasks merged</text>
+
+      <rect class="ns" x="216" y="264" width="150" height="48" rx="9"></rect>
+      <text x="291" y="284" text-anchor="middle" class="sm">Deployed</text>
+      <text x="291" y="300" text-anchor="middle" class="mono mut">metrics arriving</text>
+
+      <rect class="na" x="416" y="264" width="160" height="48" rx="9"></rect>
+      <text x="496" y="284" text-anchor="middle" class="sm">Outcome evaluator</text>
+      <text x="496" y="300" text-anchor="middle" class="mono mut">result vs epic intent</text>
+
+      <line class="edge" x1="166" y1="288" x2="210" y2="288" marker-end="url(#arr)"></line>
+      <line class="edge" x1="366" y1="288" x2="410" y2="288" marker-end="url(#arr)"></line>
+
+      <rect class="ns" x="656" y="238" width="180" height="26" rx="6"></rect>
+      <text x="746" y="255" text-anchor="middle" class="mono mut">completed successfully</text>
+      <rect class="nd" x="656" y="276" width="180" height="26" rx="6"></rect>
+      <text x="746" y="293" text-anchor="middle" class="mono mut">awaiting metrics</text>
+      <rect class="nd" x="656" y="314" width="180" height="26" rx="6"></rect>
+      <text x="746" y="331" text-anchor="middle" class="mono mut">follow-up epic</text>
+      <line class="edge ok" x1="576" y1="282" x2="650" y2="252" marker-end="url(#arrok)"></line>
+      <line class="edge" x1="576" y1="288" x2="650" y2="289" marker-end="url(#arr)"></line>
+      <line class="edge" x1="576" y1="294" x2="650" y2="326" marker-end="url(#arr)"></line>
+    </svg>
+    </div>
   </section>
 
-  <!-- ============ 06 AUTONOMY GATE ============ -->
+  <!-- ============ 07 EPIC COMPLETION & RESULT EVALUATION ============ -->
   <section class="comp">
-    <h2><span class="num">06</span>Autonomy — automerge vs. review</h2>
+    <h2><span class="num">07</span>Epic completion &amp; result evaluation</h2>
+    <p class="role">Finishing the tasks is not the same as achieving the result.</p>
+    <p>Completing every task in an epic does not mean the epic succeeded. When the last task
+    lands, an independent <strong>evaluation agent</strong> reviews the epic's original intent, the
+    completed tasks and merged PRs, the verification scores and test results, the deployment
+    status, the relevant product or business metrics, and any regressions or incidents that
+    appeared along the way. It then records a completion assessment.</p>
+    <ul class="tight">
+      <li><strong>Completed successfully</strong> — the intended result was delivered.</li>
+      <li><strong>Completed, awaiting metrics</strong> — the implementation is finished, but the
+      outcome needs more data before it can be judged.</li>
+      <li><strong>Partially completed</strong> — the work shipped, but the intended result was not
+      fully achieved.</li>
+      <li><strong>Needs improvement</strong> — the evaluator creates a follow-up epic.</li>
+      <li><strong>Invalidated</strong> — the underlying assumption was wrong, and the project
+      itself should be reconsidered.</li>
+    </ul>
+    <p>When improvement is required the evaluator creates a <em>new</em> epic or proposes a change
+    to the project. It does not silently reopen completed tasks — an epic that stays permanently
+    open because optional improvements were discovered tells you nothing about whether the original
+    intent was met.</p>
+    <div class="diagram dg" role="img" aria-label="Epic completion evaluation: when the last task is done, an independent evaluation agent reviews the epic's intent, merged PRs, verification scores, deployment status and relevant metrics, and records one of five assessments: completed successfully; completed, awaiting metrics; partially completed; needs improvement, which creates a follow-up epic; or invalidated, which sends the project back for reconsideration. A note underneath: the evaluator never silently reopens completed tasks.">
+    <svg viewBox="0 0 940 270">
+      <rect class="ns" x="16" y="106" width="150" height="54" rx="9"></rect>
+      <text x="91" y="128" text-anchor="middle">All tasks done</text>
+      <text x="91" y="145" text-anchor="middle" class="sm">last epoch merged</text>
+
+      <rect class="na" x="226" y="106" width="180" height="54" rx="9"></rect>
+      <text x="316" y="128" text-anchor="middle">Evaluation agent</text>
+      <text x="316" y="145" text-anchor="middle" class="sm">intent · PRs · scores · metrics</text>
+
+      <path class="ns" d="M 550 98 L 630 133 L 550 168 L 470 133 Z"></path>
+      <text x="550" y="129" text-anchor="middle" class="sm">intended result</text>
+      <text x="550" y="144" text-anchor="middle" class="sm">achieved?</text>
+
+      <line class="edge" x1="166" y1="133" x2="220" y2="133" marker-end="url(#arr)"></line>
+      <line class="edge" x1="406" y1="133" x2="464" y2="133" marker-end="url(#arr)"></line>
+
+      <rect class="ns" x="700" y="18" width="224" height="36" rx="8"></rect>
+      <text x="812" y="33" text-anchor="middle" class="sm">completed successfully</text>
+      <text x="812" y="47" text-anchor="middle" class="mono mut">intended result delivered</text>
+      <rect class="nd" x="700" y="66" width="224" height="36" rx="8"></rect>
+      <text x="812" y="81" text-anchor="middle" class="sm">completed · awaiting metrics</text>
+      <text x="812" y="95" text-anchor="middle" class="mono mut">outcome needs more data</text>
+      <rect class="nd" x="700" y="114" width="224" height="36" rx="8"></rect>
+      <text x="812" y="129" text-anchor="middle" class="sm">partially completed</text>
+      <text x="812" y="143" text-anchor="middle" class="mono mut">shipped · result not fully reached</text>
+      <rect class="nd" x="700" y="162" width="224" height="36" rx="8"></rect>
+      <text x="812" y="177" text-anchor="middle" class="sm">needs improvement</text>
+      <text x="812" y="191" text-anchor="middle" class="mono mut">creates a follow-up epic</text>
+      <rect class="nb" x="700" y="210" width="224" height="36" rx="8"></rect>
+      <text x="812" y="225" text-anchor="middle" class="sm">invalidated</text>
+      <text x="812" y="239" text-anchor="middle" class="mono mut">reconsider the project</text>
+
+      <line class="edge ok" x1="630" y1="133" x2="694" y2="38" marker-end="url(#arrok)"></line>
+      <line class="edge" x1="630" y1="133" x2="694" y2="85" marker-end="url(#arr)"></line>
+      <line class="edge" x1="630" y1="133" x2="694" y2="132" marker-end="url(#arr)"></line>
+      <line class="edge" x1="630" y1="133" x2="694" y2="180" marker-end="url(#arr)"></line>
+      <line class="edge no" x1="630" y1="133" x2="694" y2="228" marker-end="url(#arrno)"></line>
+
+      <text x="16" y="216" class="sm">improvement means a new epic or a project change —</text>
+      <text x="16" y="232" class="sm">the evaluator never silently reopens completed tasks</text>
+    </svg>
+    </div>
+    <div class="note">
+      <span class="note-title">Two separate controls</span>
+      <strong>Task verification</strong> asks whether the implementation satisfies the card, and it
+      runs before merge. <strong>Epic evaluation</strong> asks whether the completed body of work
+      achieved its intended result, and it runs after all the work is done and — where the card's
+      completion policy requires it — after deployment metrics have arrived.
+    </div>
+  </section>
+
+  <!-- ============ 08 AUTONOMY GATE ============ -->
+  <section class="comp">
+    <h2><span class="num">08</span>Autonomy — automerge vs. review</h2>
     <p class="role">Trust is a per-card dial, not a global switch.</p>
     <p>Every card decides how much freedom its agent gets. Marked <strong>automerge</strong>,
     the agent squash-merges its own passing PR and the card lands in Done untouched by human
@@ -1180,11 +1470,11 @@
     </div>
   </section>
 
-  <!-- ============ 07 RUN TRACKER ============ -->
+  <!-- ============ 09 RUN TRACKER ============ -->
   <section class="comp">
-    <h2><span class="num">07</span>Run tracker</h2>
+    <h2><span class="num">09</span>Run tracker</h2>
     <p class="role">Every unit of agent work is a tracked, stateful run.</p>
-    <p>Runs form a tree in Postgres — orchestrator → wave → task — and each run moves through
+    <p>Runs form a tree in Postgres — orchestrator → epoch → task — and each run moves through
     an explicit state machine with a heartbeat. A run that stops beating goes
     <strong>stale</strong> and can be revived or reaped; a run that hits a question a human
     must answer pauses in <strong>needs-feedback</strong> rather than guessing. Nothing an
@@ -1218,32 +1508,32 @@
     </div>
   </section>
 
-  <!-- ============ 08 MANAGER UI ============ -->
+  <!-- ============ 10 MANAGER UI ============ -->
   <section class="comp">
-    <h2><span class="num">08</span>Agents Manager UI</h2>
+    <h2><span class="num">10</span>Agents Manager UI</h2>
     <p class="role">Watch the fleet work, live.</p>
-    <p>A real-time view of the run tree: which orchestrator is active, which waves are open,
+    <p>A real-time view of the run tree: which orchestrator is active, which epochs are open,
     what every task agent is doing right now, and where a run is waiting on you. This is where
     a human answers a paused run's question, inspects a live console, or kills something —
     fleet observability in one screen.</p>
-    <div class="mock" role="img" aria-label="Manager UI mock: a live run tree with an orchestrator, two waves, and task runs carrying status chips.">
+    <div class="mock" role="img" aria-label="Manager UI mock: a live run tree with an orchestrator, two epochs, and task runs carrying status chips.">
       <div class="bar"><b>Agents Manager</b><span>Agents</span><span>Runs</span><span>DAG</span><span>Memory</span></div>
       <div class="tree">
         <div>▾ orchestrator · board-run #142 <span class="chip run">running</span></div>
-        <div class="lvl1">▾ wave 1 <span class="chip run">2 / 3 live</span></div>
+        <div class="lvl1">▾ epoch 1 <span class="chip run">2 / 3 live</span></div>
         <div class="lvl2">task a3f2 · referral-page <span class="chip done">done · PR ↗</span></div>
         <div class="lvl2">task 9c41 · signup-funnel <span class="chip run">implement</span></div>
         <div class="lvl2">task 77be · email-capture <span class="chip wait">needs-feedback</span></div>
-        <div class="lvl1">▸ wave 2 · 2 tasks <span class="chip done">queued</span></div>
-        <div class="lvl1">▸ wave 0 · merge queue <span class="chip done">merged 2</span></div>
+        <div class="lvl1">▸ epoch 2 · 2 tasks <span class="chip done">queued</span></div>
+        <div class="lvl1">▸ epoch 0 · merge queue <span class="chip done">merged 2</span></div>
       </div>
     </div>
     <p class="caption">The <span class="chip wait" style="margin-left:0">needs-feedback</span> chip is the human inbox: click it, answer the agent's question, and the run resumes.</p>
   </section>
 
-  <!-- ============ 09 CLIS ============ -->
+  <!-- ============ 11 CLIS ============ -->
   <section class="comp">
-    <h2><span class="num">09</span>Two CLIs</h2>
+    <h2><span class="num">11</span>Two CLIs</h2>
     <p class="role">Headless hands for agents working in isolated worktrees.</p>
     <p>Worktrees don't carry the app's runtime, so all reads and writes go through two small
     command-line tools. <code>todo-cli</code> is the board: read the plan, update a card,
@@ -1280,9 +1570,9 @@
     </div>
   </section>
 
-  <!-- ============ 10 SWEEPS ============ -->
+  <!-- ============ 12 SWEEPS ============ -->
   <section class="comp">
-    <h2><span class="num">10</span>Self-feeding sweeps</h2>
+    <h2><span class="num">12</span>Self-feeding sweeps</h2>
     <p class="role">The system finds its own bugs while everyone sleeps.</p>
     <p>Nightly, a <strong>visual-QA sweep</strong> screenshots every route on desktop and
     mobile and has a vision model judge them; a <strong>performance sweep</strong> scores the
@@ -1320,9 +1610,9 @@
     </div>
   </section>
 
-  <!-- ============ 11 RUNNER DAEMON ============ -->
+  <!-- ============ 13 RUNNER DAEMON ============ -->
   <section class="comp">
-    <h2><span class="num">11</span>Runner daemon</h2>
+    <h2><span class="num">13</span>Runner daemon</h2>
     <p class="role">The always-on autopilot.</p>
     <p>A long-running process that makes the loop continuous instead of on-demand. It scans
     the board, claims ready cards race-safely (two daemons never grab the same card), executes
@@ -1357,27 +1647,111 @@
     </div>
   </section>
 
-  <!-- ============ 12 DASHBOARDS ============ -->
+  <!-- ============ 14 DASHBOARD ============ -->
   <section class="comp">
-    <h2><span class="num">12</span>Dashboards</h2>
-    <p class="role">The company's instrument panel — business and machine on one screen.</p>
-    <p>Every observable thing lands here: audience, growth, revenue-side metrics beside
-    engineering health, error rates, performance, agent throughput, and cost per shipped card.
-    Goals sit next to the metrics that measure them, so "are we winning" and "is the machine
-    healthy" are the same glance. This is also what the monitoring agents read — the dashboard
-    is an API for agents as much as a page for humans.</p>
+    <h2><span class="num">14</span>Dashboard</h2>
+    <p class="role">A core component, not a reporting page attached to one.</p>
+    <p>The dashboard is the single surface where every measurable thing the company produces
+    lands: business results, product usage, engineering health, delivery throughput, cost, and
+    agent performance. Humans read it to decide direction. Agents read it to decide work. Because
+    both audiences share one set of numbers, a goal, the work created to move it, and the evidence
+    that it moved are never held in separate systems.</p>
+    <p>It is an <strong>API as much as a page</strong> — the data behind every view is queryable,
+    and most of its readers are not human:</p>
     <ul class="tight">
-      <li><strong>Business</strong> — revenue, user growth, campaign open rates.</li>
-      <li><strong>Audience</strong> — page views (SEO), traffic, GEO score, SEO score.</li>
-      <li><strong>Product</strong> — goals, releases, cards.</li>
-      <li><strong>Agents</strong> — agent health, token usage / cost, token budget, errors.</li>
-      <li><strong>Engineering</strong> — errors, project health, performance, code quality.</li>
-      <li><strong>Anomalies</strong> — charts, alerts.</li>
+      <li><strong>Planning agents</strong> read KPI gaps, guardrails and historical project impact
+      when proposing projects and epics.</li>
+      <li><strong>The evaluation agent</strong> reads outcome metrics when deciding whether a
+      completed epic achieved its intended result.</li>
+      <li><strong>Scheduled jobs and standing agents</strong> read thresholds and trends to detect
+      anomalies and file work.</li>
+      <li><strong>The execution-policy router</strong> reads agent performance to decide which
+      configuration receives the next card.</li>
     </ul>
-    <div class="mock" role="img" aria-label="Dashboard mock with six groups: Business (revenue, user growth, campaign open), Audience (page views, traffic, GEO score, SEO score), Product (goal, releases, cards), Agents (agent health, token usage and cost, token budget, errors), Engineering (errors, project health, performance, code quality) and Anomalies (charts, alerts).">
-      <div class="bar"><b>Dashboard</b><span>All</span><span>Business</span><span>Audience</span><span>Product</span><span>Agents</span><span>Engineering</span><span>Anomalies</span></div>
+    <p>The major views are <strong>Strategy</strong> (mission, quarterly goals and KPIs, projects,
+    epics and the strategic Gantt), <strong>Agent performance</strong> (the quarterly agent OKRs),
+    plus <strong>business and product</strong>, <strong>engineering and delivery</strong>, and
+    <strong>anomalies</strong>.</p>
+    <div class="mock" role="img" aria-label="The dashboard, shown across its five major views. Strategy: mission on track at month 7 of 12, a quarterly goal at 62 percent with a sparkline, three persistent projects, epics at 4 running and 2 awaiting metrics, and the strategic Gantt spanning Q1 to Q4. Agent performance: 6 configurations scored, 41 cards completed per week, first-attempt success 78 percent, average verification score 86 with 1.4 rework loops per card, cost per accepted card 1.90 dollars with a declining sparkline, 3 human interventions, and KPI contribution split into direct, modeled and correlated. Business and product: revenue 4.2K MRR, user growth 748 with a sparkline, traffic 9,690 sessions. Engineering and delivery: 3 releases this week, deployments healthy at p75 LCP 1.69 seconds, zero type errors, instrumentation complete at 100 percent of goal-bearing cards. Anomalies: z-score over 3 against baseline, alerts routed to email, Telegram and SMS.">
+      <div class="bar"><b>Dashboard</b><span>Strategy</span><span>Agent performance</span><span>Business</span><span>Engineering</span><span>Anomalies</span></div>
 
-      <div class="grp">Business</div>
+      <div class="grp">Strategy</div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="lbl">Mission</div>
+          <div class="val">On track</div>
+          <div class="sub">month 7 of 12 · human-owned</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Goal · signups +25%</div>
+          <div class="val">62%</div>
+          <div class="sub up">▲ on pace · Q3</div>
+          <svg viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true">
+            <path class="sparkfill" d="M0 24 L12 20 L25 21 L38 16 L52 17 L65 12 L78 10 L100 5 L100 26 L0 26 Z"></path>
+            <path class="spark" d="M0 24 L12 20 L25 21 L38 16 L52 17 L65 12 L78 10 L100 5"></path>
+          </svg>
+        </div>
+        <div class="tile">
+          <div class="lbl">Projects</div>
+          <div class="val">3</div>
+          <div class="sub">persistent · 2 span the next cycle</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Epics</div>
+          <div class="val">4 / 2</div>
+          <div class="sub">running / awaiting outcome metrics</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Strategic Gantt</div>
+          <div class="val">Q1 – Q4</div>
+          <div class="sub">mission · goals · projects · epics</div>
+        </div>
+      </div>
+
+      <div class="grp">Agent performance · quarterly OKRs</div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="lbl">Configurations scored</div>
+          <div class="val">6</div>
+          <div class="sub">model × harness × policy</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Cards completed</div>
+          <div class="val">41</div>
+          <div class="sub">per week · 12 epics contributed to</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">First-attempt success</div>
+          <div class="val">78%</div>
+          <div class="sub">no rework loop needed</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Verification score</div>
+          <div class="val">86</div>
+          <div class="sub">avg · 1.4 rework loops / card</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Cost / accepted card</div>
+          <div class="val">$1.90</div>
+          <div class="sub up">▼ 30% vs last quarter</div>
+          <svg viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true">
+            <path class="sparkfill" d="M0 6 L16 9 L33 8 L50 14 L66 15 L83 19 L100 22 L100 26 L0 26 Z"></path>
+            <path class="spark" d="M0 6 L16 9 L33 8 L50 14 L66 15 L83 19 L100 22"></path>
+          </svg>
+        </div>
+        <div class="tile">
+          <div class="lbl">Human interventions</div>
+          <div class="val">3</div>
+          <div class="sub">this week · 0 incidents introduced</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">KPI contribution</div>
+          <div class="val">Split</div>
+          <div class="sub">direct · modeled · correlated — never one number</div>
+        </div>
+      </div>
+
+      <div class="grp">Business and product</div>
       <div class="tiles">
         <div class="tile">
           <div class="lbl">Revenue</div>
@@ -1394,108 +1768,33 @@
           </svg>
         </div>
         <div class="tile">
-          <div class="lbl">Campaign open</div>
-          <div class="val">38.1%</div>
-          <div class="sub">open rate · 12.8% click</div>
-        </div>
-      </div>
-
-      <div class="grp">Audience</div>
-      <div class="tiles">
-        <div class="tile">
-          <div class="lbl">Page views</div>
-          <div class="val">3,064</div>
-          <div class="sub">SEO entry pages · top posts</div>
-        </div>
-        <div class="tile">
           <div class="lbl">Traffic</div>
           <div class="val">9,690</div>
           <div class="sub">sessions · 68% direct · 22% referral</div>
         </div>
-        <div class="tile">
-          <div class="lbl">GEO score</div>
-          <div class="val">76</div>
-          <div class="sub">generative-engine visibility</div>
-        </div>
-        <div class="tile">
-          <div class="lbl">SEO score</div>
-          <div class="val">98</div>
-          <div class="sub">audit · links · meta · impressions</div>
-        </div>
       </div>
 
-      <div class="grp">Product</div>
+      <div class="grp">Engineering and delivery</div>
       <div class="tiles">
-        <div class="tile">
-          <div class="lbl">Goal · signups +20%</div>
-          <div class="val">62%</div>
-          <div class="sub up">▲ on pace</div>
-          <svg viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true">
-            <path class="sparkfill" d="M0 24 L12 20 L25 21 L38 16 L52 17 L65 12 L78 10 L100 5 L100 26 L0 26 Z"></path>
-            <path class="spark" d="M0 24 L12 20 L25 21 L38 16 L52 17 L65 12 L78 10 L100 5"></path>
-          </svg>
-        </div>
         <div class="tile">
           <div class="lbl">Releases</div>
-          <div class="val">Per deploy</div>
-          <div class="sub">text · summary · PRs</div>
+          <div class="val">3</div>
+          <div class="sub">this week · all production-verified</div>
         </div>
         <div class="tile">
-          <div class="lbl">Cards</div>
-          <div class="val">41</div>
-          <div class="sub">shipped / wk · 37 agents · 4 humans</div>
-        </div>
-      </div>
-
-      <div class="grp">Agents</div>
-      <div class="tiles">
-        <div class="tile">
-          <div class="lbl">Agent health</div>
-          <div class="val">96.2%</div>
-          <div class="sub">runs ending done · none stale</div>
-        </div>
-        <div class="tile">
-          <div class="lbl">Token usage / cost</div>
-          <div class="val">35.2M</div>
-          <div class="sub">Claude 19.5M · Codex 15.6M · $312</div>
-          <svg viewBox="0 0 100 26" preserveAspectRatio="none" aria-hidden="true">
-            <path class="sparkfill" d="M0 24 L16 22 L33 23 L50 17 L66 12 L83 10 L100 4 L100 26 L0 26 Z"></path>
-            <path class="spark" d="M0 24 L16 22 L33 23 L50 17 L66 12 L83 10 L100 4"></path>
-          </svg>
-        </div>
-        <div class="tile">
-          <div class="lbl">Token budget</div>
-          <div class="val">72%</div>
-          <div class="sub">of weekly allowance used · 28% left</div>
-        </div>
-        <div class="tile">
-          <div class="lbl">Errors</div>
-          <div class="val">Live</div>
-          <div class="sub">failed runs · stale · needs-feedback</div>
-        </div>
-      </div>
-
-      <div class="grp">Engineering</div>
-      <div class="tiles">
-        <div class="tile">
-          <div class="lbl">Errors</div>
-          <div class="val">Live</div>
-          <div class="sub">unhandled API errors + trend</div>
-        </div>
-        <div class="tile">
-          <div class="lbl">Project health</div>
-          <div class="val">99.9%</div>
-          <div class="sub">uptime · API p95 210ms · build 3m 40s</div>
-        </div>
-        <div class="tile">
-          <div class="lbl">Performance</div>
-          <div class="val">1.69s</div>
-          <div class="sub">p75 LCP · Lighthouse 64 mob / 96 desk</div>
+          <div class="lbl">Deployments</div>
+          <div class="val">Healthy</div>
+          <div class="sub">p75 LCP 1.69s · error rate flat</div>
         </div>
         <div class="tile">
           <div class="lbl">Code quality</div>
           <div class="val">0</div>
-          <div class="sub">type errors · lint + tests green · bundle in budget</div>
+          <div class="sub">type errors · lint + tests green</div>
+        </div>
+        <div class="tile">
+          <div class="lbl">Instrumentation</div>
+          <div class="val">100%</div>
+          <div class="sub">of goal-bearing cards report a metric</div>
         </div>
       </div>
 
@@ -1513,11 +1812,104 @@
         </div>
       </div>
     </div>
+    <p class="caption">One surface, five views, two audiences. Humans read it to decide direction; the
+    planning, evaluation, monitoring and routing agents read the same numbers through the API to decide
+    work. <strong>Instrumentation</strong> is itself a tracked metric — an outcome nobody measured
+    cannot be evaluated.</p>
+    <p>Two properties make it trustworthy enough for agents to act on unattended. First,
+    <strong>instrumentation is part of the work</strong>: a card expected to move a measurable
+    outcome is not complete until the metric that would prove it exists and reports, and missing
+    instrumentation is itself a ticket. Second, <strong>attribution is explicit</strong> — metric
+    movement is labelled direct, modeled or correlated rather than collapsed into a single causal
+    number. Goals sit beside the metrics that measure them, so "are we winning" and "is the machine
+    healthy" become the same glance.</p>
   </section>
 
-  <!-- ============ 13 MONITORING AGENT ============ -->
+  <!-- ============ 15 STRATEGIC GANTT ============ -->
   <section class="comp">
-    <h2><span class="num">13</span>Monitoring &amp; improvement agents</h2>
+    <h2><span class="num">15</span>Strategic Gantt view</h2>
+    <p class="role">The long-range view of the company, over time.</p>
+    <p>The Workflow Graph answers <em>what can run next</em>. The Gantt answers <em>where the
+    company is against its year</em>. It covers mission, quarterly goals and KPIs, projects and
+    epics — tasks stay in the Kanban and Workflow Graph views, where they belong, and generally do
+    not appear here at all.</p>
+    <ul class="tight">
+      <li><strong>Planned and actual dates</strong> — start and end, side by side, so slippage is
+      visible rather than inferred.</li>
+      <li><strong>Status and percent complete</strong> — on track, at risk, blocked, or complete.</li>
+      <li><strong>Relationships</strong> — which projects serve which goal, and which epics sit
+      inside which project.</li>
+      <li><strong>Project-level gates</strong> — the epic-to-epic dependencies that decide when a
+      gated epic can start.</li>
+      <li><strong>The metric trend for each goal</strong>, beside the bar that claims to move it.</li>
+      <li><strong>Projects that span more than one cycle</strong>, drawn crossing the boundary
+      rather than truncated at it.</li>
+      <li><strong>Epics awaiting outcome data</strong> — deployed, but not yet judged.</li>
+    </ul>
+    <div class="diagram dg" role="img" aria-label="Strategic Gantt mock covering mission, goals, projects and epics — no task rows. Quarter columns Q1 to Q4 with a dashed today line in Q3. The mission bar spans the year at 58 percent blended progress. A quarterly goal bar sits in Q3 marked on track, with a small metric trend sparkline beside it. A persistent project bar runs from Q2 across the year boundary at 46 percent. Epic A is deployed and awaiting outcome metrics; epic B is gated by A and marked at risk, its start linked from epic A by a project-level gate arrow.">
+    <svg viewBox="0 0 990 320">
+      <!-- quarter grid -->
+      <text x="16" y="24" class="mono">strategic timeline · 2026</text>
+      <line class="ghost" x1="250" y1="34" x2="250" y2="300"></line>
+      <line class="ghost" x1="435" y1="34" x2="435" y2="300"></line>
+      <line class="ghost" x1="620" y1="34" x2="620" y2="300"></line>
+      <line class="ghost" x1="805" y1="34" x2="805" y2="300"></line>
+      <text x="342" y="48" text-anchor="middle" class="mono mut">Q1</text>
+      <text x="527" y="48" text-anchor="middle" class="mono mut">Q2</text>
+      <text x="712" y="48" text-anchor="middle" class="mono mut">Q3</text>
+      <text x="897" y="48" text-anchor="middle" class="mono mut">Q4</text>
+
+      <!-- today: drawn with the grid so the bars paint over it, never through a label -->
+      <line class="edge back" x1="668" y1="34" x2="668" y2="300"></line>
+      <text x="662" y="316" text-anchor="end" class="mono mut">today</text>
+
+      <!-- mission row -->
+      <text x="16" y="86" class="sm">mission</text>
+      <rect class="nh" x="250" y="70" width="740" height="24" rx="4"></rect>
+      <rect x="250" y="70" width="429" height="24" fill="var(--hu-bg)" stroke="none"></rect>
+      <text x="262" y="87" class="mono mut">annual · 58% blended progress · on track</text>
+
+      <!-- goal row + metric trend -->
+      <text x="16" y="136" class="sm">goal · Q3</text>
+      <rect class="nh" x="620" y="120" width="185" height="24" rx="4"></rect>
+      <text x="632" y="137" class="mono mut">signups +25% · 62% · on track</text>
+      <polyline points="826,142 844,138 862,139 880,132 898,133 916,127 934,122" fill="none" stroke="var(--da)" stroke-width="1.3"></polyline>
+      <text x="944" y="136" class="mono mut">kpi</text>
+
+      <!-- project row: persists across the year boundary -->
+      <text x="16" y="186" class="sm">project</text>
+      <rect class="ns" x="435" y="170" width="555" height="24" rx="4"></rect>
+      <rect x="435" y="170" width="255" height="24" fill="var(--sy-bg)" stroke="none"></rect>
+      <text x="447" y="187" class="mono mut">community platform · 46% · persists into next cycle →</text>
+
+      <!-- epic rows -->
+      <text x="16" y="236" class="sm">epic · A</text>
+      <rect class="na" x="510" y="220" width="200" height="24" rx="4"></rect>
+      <text x="522" y="237" class="mono mut">onboarding · deployed</text>
+      <text x="720" y="237" class="mono mut">awaiting outcome metrics</text>
+
+      <text x="16" y="286" class="sm">epic · B</text>
+      <rect class="nd" x="740" y="270" width="180" height="24" rx="4"></rect>
+      <text x="752" y="287" class="mono mut">referrals · at risk</text>
+      <path class="edge back" d="M 710 232 C 726 232, 726 282, 736 282" marker-end="url(#arr)"></path>
+      <text x="704" y="264" text-anchor="end" class="mono mut">gate</text>
+    </svg>
+    </div>
+    <p class="caption">Mission, goals, projects, epics — tasks stay in the Kanban and Workflow Graph
+    views. Percent complete blends task completion, epic evaluation scores, deployment status and
+    observed KPI impact; the Workflow Graph remains the authority on what can actually run.</p>
+    <div class="note">
+      <span class="note-title">Percent complete is not card count</span>
+      A project can read as 90% done while having moved nothing. Progress at every level blends
+      task completion with the epic evaluation score, the deployment status and the observed KPI
+      impact — which is why an epic can sit at <em>deployed, awaiting metrics</em> instead of
+      jumping straight to complete.
+    </div>
+  </section>
+
+  <!-- ============ 16 MONITORING AGENT ============ -->
+  <section class="comp">
+    <h2><span class="num">16</span>Monitoring &amp; improvement agents</h2>
     <p class="role">The part of the company that never stops paying attention.</p>
     <p>Standing watchers evaluate trigger conditions against the metric stream — error spikes,
     metric anomalies, degrading trends. When one fires, an <strong>investigate agent</strong>
@@ -1557,9 +1949,72 @@
     </div>
   </section>
 
-  <!-- ============ 14 AGENT KNOWLEDGE, MEMORY & SELF-IMPROVEMENT ============ -->
+  <!-- ============ 17 AGENT OKRs ============ -->
   <section class="comp">
-    <h2><span class="num">14</span>Agent knowledge, memory &amp; self-improvement</h2>
+    <h2><span class="num">17</span>Agent OKRs &amp; performance</h2>
+    <p class="role">Scorecards for the fleet — not company goals for agents.</p>
+    <p>Agent OKRs are quarterly scorecards used to understand which models, harnesses, agent
+    configurations and execution policies actually perform. Their purpose is routing and
+    accountability across the fleet; they do not give agents independent objectives of their own.
+    An agent identity is the whole configuration — model, version, harness, system prompt, skills,
+    tool permissions, effort level and memory setup — because that is the unit whose performance
+    you can actually act on.</p>
+    <ul class="tight">
+      <li><strong>Throughput</strong> — cards completed, epics contributed to, cycle time.</li>
+      <li><strong>Quality</strong> — first-attempt success rate, verification scores, number of
+      rework loops, PR approval versus rejection.</li>
+      <li><strong>Consequences</strong> — regressions or incidents introduced, merge reverts,
+      test, lint and build outcomes, code-quality signals where measurable.</li>
+      <li><strong>Cost</strong> — token usage and cost per accepted card.</li>
+      <li><strong>Independence</strong> — how many human interventions the work required.</li>
+    </ul>
+    <div class="diagram dg" role="img" aria-label="Agent OKR loop: run outcomes — verification scores, rework loops, incidents, cost — accumulate into a quarterly scorecard per model, harness and agent configuration. KPI impact is split into direct, modeled, and correlated attribution. The scorecard feeds the execution-policy router, which promotes strong configurations to harder work and higher autonomy, or routes weak ones to simpler work with mandatory verification. Over time the router learns which configuration is most reliable per work category — migrations, frontend, debugging, planning, review, content.">
+    <svg viewBox="0 0 940 240">
+      <rect class="nd" x="16" y="70" width="180" height="56" rx="9"></rect>
+      <text x="106" y="93" text-anchor="middle">Run outcomes</text>
+      <text x="106" y="110" text-anchor="middle" class="sm">scores · rework · cost · incidents</text>
+
+      <rect class="nd" x="256" y="70" width="180" height="56" rx="9"></rect>
+      <text x="346" y="93" text-anchor="middle">Agent scorecard</text>
+      <text x="346" y="110" text-anchor="middle" class="sm">per configuration · quarterly</text>
+
+      <rect class="ns" x="496" y="70" width="150" height="56" rx="9"></rect>
+      <text x="571" y="93" text-anchor="middle">Policy router</text>
+      <text x="571" y="110" text-anchor="middle" class="sm">learns per category</text>
+
+      <line class="edge" x1="196" y1="98" x2="250" y2="98" marker-end="url(#arr)"></line>
+      <line class="edge" x1="436" y1="98" x2="490" y2="98" marker-end="url(#arr)"></line>
+      <text x="346" y="150" text-anchor="middle" class="mono mut">kpi impact: direct · modeled · correlated</text>
+
+      <rect class="na" x="716" y="24" width="208" height="60" rx="9"></rect>
+      <text x="820" y="46" text-anchor="middle" class="sm">promote</text>
+      <text x="820" y="62" text-anchor="middle" class="mono mut">harder work · higher autonomy</text>
+      <text x="820" y="76" text-anchor="middle" class="mono mut">preferred for its category</text>
+
+      <rect class="nb" x="716" y="112" width="208" height="60" rx="9"></rect>
+      <text x="820" y="134" text-anchor="middle" class="sm">demote</text>
+      <text x="820" y="150" text-anchor="middle" class="mono mut">simpler work · mandatory verify</text>
+      <text x="820" y="164" text-anchor="middle" class="mono mut">fewer categories routed</text>
+
+      <line class="edge ok" x1="646" y1="86" x2="710" y2="58" marker-end="url(#arrok)"></line>
+      <line class="edge no" x1="646" y1="110" x2="710" y2="138" marker-end="url(#arrno)"></line>
+
+      <path class="edge back" d="M 820 172 C 820 206, 250 210, 110 130" marker-end="url(#arr)"></path>
+      <text x="470" y="230" text-anchor="middle" class="sm">next quarter's runs update the scorecard — categories: migrations · frontend · debugging · planning · review · content</text>
+    </svg>
+    </div>
+    <p>KPI impact needs care. A card or epic may contribute to a metric change without being its
+    sole cause, so Flow distinguishes <strong>direct</strong> attribution, <strong>modeled</strong>
+    attribution and simple <strong>correlation</strong> rather than presenting all metric movement
+    as agent-created. Performance then feeds back into the execution-policy router: over time the
+    system learns which configuration is most reliable for migrations, frontend work, debugging,
+    planning, review and content — and routes accordingly. Promotion and demotion are policy, and
+    both are recorded and reversible.</p>
+  </section>
+
+  <!-- ============ 18 AGENT KNOWLEDGE, MEMORY & SELF-IMPROVEMENT ============ -->
+  <section class="comp">
+    <h2><span class="num">18</span>Agent knowledge, memory &amp; self-improvement</h2>
     <p class="role">What the system learns, it keeps — and uses.</p>
     <p>Every agent boots with the <strong>system prompt</strong> — the constitution: who the
     company is, what it values, the rules that never change. Beyond that, knowledge lives in
@@ -1637,10 +2092,111 @@
     </figure>
   </section>
 
-  <!-- ============ 15 INSTALLATION ============ -->
+  <!-- ============ 19 INSTALLATION ============ -->
   <section class="comp">
-    <h2><span class="num">15</span>Installation — orchestrator &amp; AI project manager</h2>
-    <p class="role">Drop it into any repo. One skill, no new code.</p>
+    <h2><span class="num">19</span>Installation</h2>
+    <p class="role">One line, pasted into Claude Code. The agent does the rest.</p>
+    <p>Flow installs by instruction, not by package manager. There is nothing to download and no
+    dependency to add. You paste a single line into a coding agent already running in your
+    project, and that agent performs the installation itself — reading the repository, creating
+    the skill, mounting the board, building the dashboard, and proving it works before it stops:</p>
+    <pre class="cmd">claude "Install Flow in this project: read github.com/AISocratic/flow, then follow install.md top to bottom."</pre>
+    <p>The same line works with any other coding agent:</p>
+    <pre class="cmd">codex "Install Flow in this project: read github.com/AISocratic/flow, then follow install.md top to bottom."</pre>
+
+    <h3 class="sub">How it works</h3>
+    <p>There is no Flow package to add and no Flow runtime to run. The repository carries an
+    <code>install.md</code> written for the agent rather than for a human, and the agent executes
+    it as a sequence of checked steps:</p>
+    <ul class="tight">
+      <li><strong>Read the repository.</strong> The agent fetches the repo, reads
+      <code>install.md</code>, and reads the spec it references before changing anything.</li>
+      <li><strong>Check preconditions.</strong> A git repo, a clean working tree, and — if you are
+      integrating rather than running standalone — an existing authenticated admin area.</li>
+      <li><strong>Cut a snapshot branch.</strong> <code>flow/pre-install</code> is created before
+      the first edit, so a complete revert always exists.</li>
+      <li><strong>Detect the stack.</strong> It reads <code>package.json</code>,
+      <code>pyproject.toml</code>, <code>Cargo.toml</code> or <code>go.mod</code> and records the
+      test, lint and build commands you already have. It records your commands; it does not add
+      its own.</li>
+      <li><strong>Install the skill.</strong> <code>flow-agent-orchestrator</code> is the only
+      mandatory change to your repo — it is what teaches any agent to read the board, plan epochs,
+      dispatch work and merge.</li>
+      <li><strong>Mount the board and orchestrator</strong>, integrated behind your auth or as a
+      standalone panel.</li>
+      <li><strong>Create the dashboard.</strong> Metric tables, views and collectors are wired to
+      whatever the project already emits, so the strategy and agent-performance views have data
+      from the first cycle.</li>
+      <li><strong>Configure execution policy</strong> — default model, effort, autonomy,
+      verification thresholds and merge policy, all overridable per card.</li>
+      <li><strong>Run a smoke test.</strong> Installation is not finished until one real card has
+      travelled from Todo to an open PR under your own CI.</li>
+      <li><strong>Report</strong> what it created, what it skipped, and how to remove it.</li>
+    </ul>
+    <p>If a step cannot be satisfied, the agent stops and reports rather than improvising around
+    it.</p>
+    <div class="diagram dg" role="img" aria-label="Installation as an agent-executed sequence. One pasted line reaches a coding agent — Claude Code, Codex, or any other — which reads the repository and its install.md, then runs ten checked steps in order: preconditions, snapshot branch, stack detection, skill install, board and orchestrator mount, dashboard creation, execution policy, smoke test, and report. The result is your project plus one skill, a board, an orchestrator and a live dashboard. Two rules are marked: a step that cannot be satisfied stops and reports rather than improvising, and the pre-install snapshot branch makes a complete revert always available.">
+    <svg viewBox="0 0 990 300">
+      <!-- the pasted line -->
+      <rect class="nh" x="16" y="40" width="200" height="52" rx="9"></rect>
+      <text x="116" y="61" text-anchor="middle">One pasted line</text>
+      <text x="116" y="78" text-anchor="middle" class="mono mut">claude "install Flow…"</text>
+
+      <rect class="na" x="266" y="40" width="180" height="52" rx="9"></rect>
+      <text x="356" y="61" text-anchor="middle">Coding agent</text>
+      <text x="356" y="78" text-anchor="middle" class="sm">Claude Code · Codex · any</text>
+      <line class="edge" x1="216" y1="66" x2="260" y2="66" marker-end="url(#arr)"></line>
+
+      <rect class="nd" x="496" y="40" width="200" height="52" rx="9"></rect>
+      <text x="596" y="61" text-anchor="middle">Reads the repo</text>
+      <text x="596" y="78" text-anchor="middle" class="mono mut">github.com/AISocratic/flow</text>
+      <line class="edge" x1="446" y1="66" x2="490" y2="66" marker-end="url(#arr)"></line>
+
+      <rect class="nd" x="746" y="40" width="180" height="52" rx="9"></rect>
+      <text x="836" y="61" text-anchor="middle">install.md</text>
+      <text x="836" y="78" text-anchor="middle" class="sm">written for the agent</text>
+      <line class="edge" x1="696" y1="66" x2="740" y2="66" marker-end="url(#arr)"></line>
+
+      <!-- the executed steps -->
+      <line class="edge" x1="836" y1="92" x2="836" y2="118" marker-end="url(#arr)"></line>
+      <rect class="ghost" x="16" y="122" width="910" height="76" rx="10"></rect>
+      <text x="32" y="142" class="mono mut">executed step by step · each one checked</text>
+
+      <rect class="ns" x="30" y="152" width="98" height="34" rx="7"></rect>
+      <text x="79" y="173" text-anchor="middle" class="mono mut">preconditions</text>
+      <rect class="nh" x="140" y="152" width="98" height="34" rx="7"></rect>
+      <text x="189" y="173" text-anchor="middle" class="mono mut">snapshot</text>
+      <rect class="ns" x="250" y="152" width="98" height="34" rx="7"></rect>
+      <text x="299" y="173" text-anchor="middle" class="mono mut">detect stack</text>
+      <rect class="na" x="360" y="152" width="98" height="34" rx="7"></rect>
+      <text x="409" y="173" text-anchor="middle" class="mono mut">skill</text>
+      <rect class="na" x="470" y="152" width="98" height="34" rx="7"></rect>
+      <text x="519" y="173" text-anchor="middle" class="mono mut">board</text>
+      <rect class="nd" x="580" y="152" width="98" height="34" rx="7"></rect>
+      <text x="629" y="173" text-anchor="middle" class="mono mut">dashboard</text>
+      <rect class="ns" x="690" y="152" width="98" height="34" rx="7"></rect>
+      <text x="739" y="173" text-anchor="middle" class="mono mut">policy</text>
+      <rect class="na" x="800" y="152" width="112" height="34" rx="7"></rect>
+      <text x="856" y="173" text-anchor="middle" class="mono mut">smoke test</text>
+
+      <!-- result -->
+      <line class="edge ok" x1="466" y1="198" x2="466" y2="224" marker-end="url(#arrok)"></line>
+      <rect class="na" x="296" y="228" width="340" height="52" rx="9"></rect>
+      <text x="466" y="249" text-anchor="middle">Board · orchestrator · dashboard live</text>
+      <text x="466" y="266" text-anchor="middle" class="sm">your project, plus one skill</text>
+
+      <!-- the two rules -->
+      <rect class="nb" x="16" y="228" width="252" height="52" rx="9"></rect>
+      <text x="32" y="249" class="mono no">a blocked step stops</text>
+      <text x="32" y="266" class="sm">and reports — never improvises</text>
+
+      <rect class="nh" x="664" y="228" width="262" height="52" rx="9"></rect>
+      <text x="680" y="249" class="mono mut">flow/pre-install</text>
+      <text x="680" y="266" class="sm">a complete revert always exists</text>
+    </svg>
+    </div>
+
+    <h3 class="sub">What it drops into</h3>
     <p>The goal is that Flow drops into <em>any</em> project and runs on the toolchain that is
     already installed — JS, Python, Rust, Go, whatever the repo speaks. It adds no runtime
     dependency and no build step of its own: it discovers your test, lint, and build commands and
@@ -1706,28 +2262,6 @@
     deployment shape is the only real decision. Uninstalling removes the orchestrator, not the work
     it did — that lives in git like any other commit.</p>
 
-    <h3 class="sub">Installing into your platform</h3>
-    <p>Drop the code in and ask the agent to run <code>install.md</code>. That file carries
-    everything the agent needs: preconditions, the snapshot branch it must cut first, stack and
-    command detection, the integrated-vs-standalone branch, the schema it creates, the routes it
-    mounts behind <em>your</em> existing auth, the skill and CLI wiring, and a smoke test that ends
-    with one real card driven to a PR. If a step can't be satisfied, the agent stops and reports
-    instead of improvising.</p>
-    <ul class="tight">
-      <li><strong>Preconditions</strong> — a git repo, a clean working tree, and an existing admin
-      or authenticated area if you're integrating.</li>
-      <li><strong>Snapshot first</strong> — the installer cuts <code>flow/pre-install</code> before
-      touching anything, so a full revert always exists.</li>
-      <li><strong>Detection, not configuration</strong> — the installer reads
-      <code>package.json</code> / <code>pyproject.toml</code> / <code>Cargo.toml</code> /
-      <code>go.mod</code> and records your existing test, lint, and build commands as the
-      verification hooks agents call.</li>
-      <li><strong>Reuse, don't re-implement</strong> — integrated installs mount the board and its
-      API under your auth middleware and your database; no second identity system.</li>
-      <li><strong>Smoke test is part of install</strong> — install isn't done until one card has
-      gone from Todo to a PR under your own CI.</li>
-    </ul>
-
     <h3 class="sub">Uninstall</h3>
     <p>Removal is easy: delete the skill, drop the board routes, drop (or keep) the orchestrator
     tables. What removal does <em>not</em> undo is the work the agents did — those are ordinary
@@ -1742,9 +2276,9 @@
     </div>
   </section>
 
-  <!-- ============ 16 PROBLEMS ============ -->
+  <!-- ============ 20 PROBLEMS ============ -->
   <section class="comp">
-    <h2><span class="num">16</span>Problems &amp; Solutions</h2>
+    <h2><span class="num">20</span>Problems &amp; Solutions</h2>
     <p class="role">Known failure modes — and the design's answer to each.</p>
     <ul class="tight">
       <li><strong>Hallucinations &amp; agent drift</strong> — small hallucinations are expected and compound over time, and agents drift the longer they run. The answer is twofold: <strong>scout agents</strong> run regularly overnight, fixing bugs and re-verifying the code before drift becomes debt; and the user periodically makes sure the projects are in a good state, so drift gets corrected before it spreads.</li>
@@ -1782,7 +2316,7 @@
     <figcaption class="caption" style="text-align:center; margin-top:10px;">The whole design in one picture: the LLM, the harness that tames it, the agent at the reins — and your code coming out.</figcaption>
   </figure>
 
-  <!-- ============ 18 REFERENCES ============ -->
+  <!-- ============ 23 REFERENCES ============ -->
   <section class="comp">
     <h2>References</h2>
     <p class="role">The reading behind this design — 56 posts, papers, and threads, grouped by theme.</p>

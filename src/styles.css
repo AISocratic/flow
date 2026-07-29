@@ -334,6 +334,18 @@
     border: 1px solid var(--hair);
   }
 
+  /* the install one-liner — a command you copy, so it wraps rather than
+     scrolls, and carries the accent rule the notes use */
+  pre.cmd {
+    font-family: var(--font-mono);
+    font-size: 12.5px; line-height: 1.75; color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line); border-left: 2px solid var(--accent);
+    border-radius: 0; padding: 16px 20px; margin: 16px 0 0;
+    max-width: 66ch; box-sizing: border-box;
+    white-space: pre-wrap; overflow-wrap: anywhere;
+  }
+
   /* spec lists get primeintellect.ai's dim mono index in place of
      a bullet — 01, 02, 03 hanging in the left margin */
   ul.tight {

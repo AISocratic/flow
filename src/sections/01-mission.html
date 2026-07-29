@@ -1,0 +1,84 @@
+  <!-- ============ 01 MISSION ============ -->
+  <section class="comp">
+    <h2><span class="num">01</span>Mission</h2>
+    <p class="role">The highest-level object. Only a human may change it.</p>
+    <p>The mission defines what the company exists to accomplish, and it is the long-term
+    constraint under which every goal, project and agent operates. Unlike everything downstream,
+    it can only be created or changed by the human operator. Agents may read it, plan against it,
+    ask clarifying questions and flag conflicts — but they cannot rewrite it, and no metric,
+    anomaly or evaluation is allowed to.</p>
+    <p>A mission should stay stable for roughly a year. It is not measured directly: humans
+    translate it into the quarterly goals and KPIs the system can actually act on, and every
+    goal, project, epic and task must be traceable back to it.</p>
+    <div class="note">
+      <span class="note-title">Missions look like this</span>
+      <ul class="tight">
+        <li>Ensure everyone can own and benefit from AI.</li>
+        <li>Make professional software development accessible to any small team.</li>
+        <li>Build the most trusted technical community for frontier AI.</li>
+      </ul>
+    </div>
+    <div class="diagram dg" role="img" aria-label="Planning horizons, replacing the old weekly goal-to-project diagram. One annual mission sits at the top, human-owned. Below it, two quarterly goals with KPIs. Below one goal, two persistent projects that stay open while they remain a valid route to the goal; each project holds successive epics, and each epic holds tasks lasting hours to days. A bracket on the right marks the approximate duration of every level: mission about one year, goals about one quarter, projects open-ended across cycles, epics bounded, tasks short.">
+    <svg viewBox="0 0 990 340">
+      <!-- durations rail -->
+      <text x="836" y="26" class="mono mut">horizon</text>
+      <line class="ghost" x1="820" y1="34" x2="820" y2="316"></line>
+
+      <!-- mission -->
+      <rect class="nh" x="330" y="34" width="240" height="44" rx="9"></rect>
+      <text x="450" y="53" text-anchor="middle">Mission</text>
+      <text x="450" y="68" text-anchor="middle" class="sm">human-owned · not measured directly</text>
+      <text x="836" y="60" class="mono mut">~ 1 year</text>
+
+      <!-- goals -->
+      <line class="edge" x1="450" y1="78" x2="450" y2="96" marker-end="url(#arr)"></line>
+      <path class="edge" d="M 450 96 L 220 96 L 220 112" marker-end="url(#arr)"></path>
+      <path class="edge" d="M 450 96 L 680 96 L 680 112" marker-end="url(#arr)"></path>
+
+      <rect class="nh" x="120" y="114" width="200" height="42" rx="9"></rect>
+      <text x="220" y="132" text-anchor="middle" class="sm">Goal + KPI</text>
+      <text x="220" y="147" text-anchor="middle" class="mono mut">signups +25%</text>
+      <rect class="nh" x="580" y="114" width="200" height="42" rx="9"></rect>
+      <text x="680" y="132" text-anchor="middle" class="sm">Goal + KPI</text>
+      <text x="680" y="147" text-anchor="middle" class="mono mut">p75 LCP &lt; 2s</text>
+      <text x="836" y="138" class="mono mut">~ 1 quarter</text>
+
+      <!-- projects -->
+      <path class="edge" d="M 220 156 L 130 156 L 130 176" marker-end="url(#arr)"></path>
+      <path class="edge" d="M 220 156 L 340 156 L 340 176" marker-end="url(#arr)"></path>
+
+      <rect class="ns" x="40" y="178" width="180" height="42" rx="9"></rect>
+      <text x="130" y="196" text-anchor="middle" class="sm">Project</text>
+      <text x="130" y="211" text-anchor="middle" class="mono mut">referral engine</text>
+      <rect class="ns" x="250" y="178" width="180" height="42" rx="9"></rect>
+      <text x="340" y="196" text-anchor="middle" class="sm">Project</text>
+      <text x="340" y="211" text-anchor="middle" class="mono mut">signup funnel</text>
+      <text x="836" y="196" class="mono mut">open while valid</text>
+      <text x="836" y="210" class="mono mut">— spans cycles</text>
+
+      <!-- epics -->
+      <path class="edge" d="M 130 220 L 90 220 L 90 240" marker-end="url(#arr)"></path>
+      <path class="edge" d="M 130 220 L 210 220 L 210 240" marker-end="url(#arr)"></path>
+      <rect class="na" x="30" y="242" width="120" height="38" rx="8"></rect>
+      <text x="90" y="259" text-anchor="middle" class="sm">Epic 1</text>
+      <text x="90" y="273" text-anchor="middle" class="mono mut">done</text>
+      <rect class="na" x="160" y="242" width="120" height="38" rx="8"></rect>
+      <text x="220" y="259" text-anchor="middle" class="sm">Epic 2</text>
+      <text x="220" y="273" text-anchor="middle" class="mono mut">running</text>
+      <text x="300" y="266" class="sm">→ successive epics, created as metrics change</text>
+      <text x="836" y="266" class="mono mut">bounded</text>
+
+      <!-- tasks -->
+      <path class="edge" d="M 220 280 L 180 280 L 180 296" marker-end="url(#arr)"></path>
+      <path class="edge" d="M 220 280 L 260 280 L 260 296" marker-end="url(#arr)"></path>
+      <rect class="ns" x="120" y="298" width="120" height="30" rx="7"></rect>
+      <text x="180" y="317" text-anchor="middle" class="mono mut">task</text>
+      <rect class="ns" x="250" y="298" width="120" height="30" rx="7"></rect>
+      <text x="310" y="317" text-anchor="middle" class="mono mut">task · bug</text>
+      <text x="836" y="318" class="mono mut">hours – days</text>
+    </svg>
+    </div>
+    <p class="caption">This replaces the assumption that a planning agent creates a new project every
+    week. A weekly ritual may still create or prioritise work, but a project is a persistent strategic
+    container holding successive epics — not a disposable weekly plan.</p>
+  </section>

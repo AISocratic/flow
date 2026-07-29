@@ -4,7 +4,7 @@
   Main components:
   — Goals — define what's the business purpose. Agents once a week create a project.
   - Kanban board (/admin/todo) — human ↔ agent interface; drag-drop, goals, projects, epics, tasks, bugs, dependencies, per-card execution policy.
-  - Agent orchestrator — coding agents read the board (claude code, codex) → plans waves of independent tasks → dispatches agents.
+  - Agent orchestrator — coding agents read the board (claude code, codex) → plans epochs of independent tasks → dispatches agents.
   - Agents (engineers, operators) — one git worktree for agent; implement, lint, test, push, open PR — run in parallel, no collisions. Agents track their memory: agents/memory.md,
   track their steps agents/{id}/steps.md
   —
@@ -12,7 +12,7 @@
 
   - Verification loop — scores work 0–100 against goal_percentage, re-runs until met.
   - Automerge vs. Review — per-card autonomy: agent merges itself, or parks for a human verdict.
-  - agent_runs tracker — live run tree (orchestrator → wave → task) in Postgres, heartbeats + state machine.
+  - agent_runs tracker — live run tree (orchestrator → epoch → task) in Postgres, heartbeats + state machine.
   - Agents Manager UI — real-time DAG/runs view.
   - Two CLIs — todo-cli (board r/w) + agent-cli (run lifecycle + memory) for headless DB access from worktrees.
   - Nightly self-feeding sweeps — visual-QA + performance scans auto-file bug cards.

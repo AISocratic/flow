@@ -1,0 +1,183 @@
+  <!-- ============ 19 INSTALLATION ============ -->
+  <section class="comp">
+    <h2><span class="num">19</span>Installation</h2>
+    <p class="role">One line, pasted into Claude Code. The agent does the rest.</p>
+    <p>Flow installs by instruction, not by package manager. There is nothing to download and no
+    dependency to add. You paste a single line into a coding agent already running in your
+    project, and that agent performs the installation itself — reading the repository, creating
+    the skill, mounting the board, building the dashboard, and proving it works before it stops:</p>
+    <pre class="cmd">claude "Install Flow in this project: read github.com/AISocratic/flow, then follow install.md top to bottom."</pre>
+    <p>The same line works with any other coding agent:</p>
+    <pre class="cmd">codex "Install Flow in this project: read github.com/AISocratic/flow, then follow install.md top to bottom."</pre>
+
+    <h3 class="sub">How it works</h3>
+    <p>There is no Flow package to add and no Flow runtime to run. The repository carries an
+    <code>install.md</code> written for the agent rather than for a human, and the agent executes
+    it as a sequence of checked steps:</p>
+    <ul class="tight">
+      <li><strong>Read the repository.</strong> The agent fetches the repo, reads
+      <code>install.md</code>, and reads the spec it references before changing anything.</li>
+      <li><strong>Check preconditions.</strong> A git repo, a clean working tree, and — if you are
+      integrating rather than running standalone — an existing authenticated admin area.</li>
+      <li><strong>Cut a snapshot branch.</strong> <code>flow/pre-install</code> is created before
+      the first edit, so a complete revert always exists.</li>
+      <li><strong>Detect the stack.</strong> It reads <code>package.json</code>,
+      <code>pyproject.toml</code>, <code>Cargo.toml</code> or <code>go.mod</code> and records the
+      test, lint and build commands you already have. It records your commands; it does not add
+      its own.</li>
+      <li><strong>Install the skill.</strong> <code>flow-agent-orchestrator</code> is the only
+      mandatory change to your repo — it is what teaches any agent to read the board, plan epochs,
+      dispatch work and merge.</li>
+      <li><strong>Mount the board and orchestrator</strong>, integrated behind your auth or as a
+      standalone panel.</li>
+      <li><strong>Create the dashboard.</strong> Metric tables, views and collectors are wired to
+      whatever the project already emits, so the strategy and agent-performance views have data
+      from the first cycle.</li>
+      <li><strong>Configure execution policy</strong> — default model, effort, autonomy,
+      verification thresholds and merge policy, all overridable per card.</li>
+      <li><strong>Run a smoke test.</strong> Installation is not finished until one real card has
+      travelled from Todo to an open PR under your own CI.</li>
+      <li><strong>Report</strong> what it created, what it skipped, and how to remove it.</li>
+    </ul>
+    <p>If a step cannot be satisfied, the agent stops and reports rather than improvising around
+    it.</p>
+    <div class="diagram dg" role="img" aria-label="Installation as an agent-executed sequence. One pasted line reaches a coding agent — Claude Code, Codex, or any other — which reads the repository and its install.md, then runs ten checked steps in order: preconditions, snapshot branch, stack detection, skill install, board and orchestrator mount, dashboard creation, execution policy, smoke test, and report. The result is your project plus one skill, a board, an orchestrator and a live dashboard. Two rules are marked: a step that cannot be satisfied stops and reports rather than improvising, and the pre-install snapshot branch makes a complete revert always available.">
+    <svg viewBox="0 0 990 300">
+      <!-- the pasted line -->
+      <rect class="nh" x="16" y="40" width="200" height="52" rx="9"></rect>
+      <text x="116" y="61" text-anchor="middle">One pasted line</text>
+      <text x="116" y="78" text-anchor="middle" class="mono mut">claude "install Flow…"</text>
+
+      <rect class="na" x="266" y="40" width="180" height="52" rx="9"></rect>
+      <text x="356" y="61" text-anchor="middle">Coding agent</text>
+      <text x="356" y="78" text-anchor="middle" class="sm">Claude Code · Codex · any</text>
+      <line class="edge" x1="216" y1="66" x2="260" y2="66" marker-end="url(#arr)"></line>
+
+      <rect class="nd" x="496" y="40" width="200" height="52" rx="9"></rect>
+      <text x="596" y="61" text-anchor="middle">Reads the repo</text>
+      <text x="596" y="78" text-anchor="middle" class="mono mut">github.com/AISocratic/flow</text>
+      <line class="edge" x1="446" y1="66" x2="490" y2="66" marker-end="url(#arr)"></line>
+
+      <rect class="nd" x="746" y="40" width="180" height="52" rx="9"></rect>
+      <text x="836" y="61" text-anchor="middle">install.md</text>
+      <text x="836" y="78" text-anchor="middle" class="sm">written for the agent</text>
+      <line class="edge" x1="696" y1="66" x2="740" y2="66" marker-end="url(#arr)"></line>
+
+      <!-- the executed steps -->
+      <line class="edge" x1="836" y1="92" x2="836" y2="118" marker-end="url(#arr)"></line>
+      <rect class="ghost" x="16" y="122" width="910" height="76" rx="10"></rect>
+      <text x="32" y="142" class="mono mut">executed step by step · each one checked</text>
+
+      <rect class="ns" x="30" y="152" width="98" height="34" rx="7"></rect>
+      <text x="79" y="173" text-anchor="middle" class="mono mut">preconditions</text>
+      <rect class="nh" x="140" y="152" width="98" height="34" rx="7"></rect>
+      <text x="189" y="173" text-anchor="middle" class="mono mut">snapshot</text>
+      <rect class="ns" x="250" y="152" width="98" height="34" rx="7"></rect>
+      <text x="299" y="173" text-anchor="middle" class="mono mut">detect stack</text>
+      <rect class="na" x="360" y="152" width="98" height="34" rx="7"></rect>
+      <text x="409" y="173" text-anchor="middle" class="mono mut">skill</text>
+      <rect class="na" x="470" y="152" width="98" height="34" rx="7"></rect>
+      <text x="519" y="173" text-anchor="middle" class="mono mut">board</text>
+      <rect class="nd" x="580" y="152" width="98" height="34" rx="7"></rect>
+      <text x="629" y="173" text-anchor="middle" class="mono mut">dashboard</text>
+      <rect class="ns" x="690" y="152" width="98" height="34" rx="7"></rect>
+      <text x="739" y="173" text-anchor="middle" class="mono mut">policy</text>
+      <rect class="na" x="800" y="152" width="112" height="34" rx="7"></rect>
+      <text x="856" y="173" text-anchor="middle" class="mono mut">smoke test</text>
+
+      <!-- result -->
+      <line class="edge ok" x1="466" y1="198" x2="466" y2="224" marker-end="url(#arrok)"></line>
+      <rect class="na" x="296" y="228" width="340" height="52" rx="9"></rect>
+      <text x="466" y="249" text-anchor="middle">Board · orchestrator · dashboard live</text>
+      <text x="466" y="266" text-anchor="middle" class="sm">your project, plus one skill</text>
+
+      <!-- the two rules -->
+      <rect class="nb" x="16" y="228" width="252" height="52" rx="9"></rect>
+      <text x="32" y="249" class="mono no">a blocked step stops</text>
+      <text x="32" y="266" class="sm">and reports — never improvises</text>
+
+      <rect class="nh" x="664" y="228" width="262" height="52" rx="9"></rect>
+      <text x="680" y="249" class="mono mut">flow/pre-install</text>
+      <text x="680" y="266" class="sm">a complete revert always exists</text>
+    </svg>
+    </div>
+
+    <h3 class="sub">What it drops into</h3>
+    <p>The goal is that Flow drops into <em>any</em> project and runs on the toolchain that is
+    already installed — JS, Python, Rust, Go, whatever the repo speaks. It adds no runtime
+    dependency and no build step of its own: it discovers your test, lint, and build commands and
+    calls them. An agent already running on your machine should know what to do after
+    <strong>one</strong> addition to the repo — the <code>flow-agent-orchestrator</code> skill.
+    Nothing else.</p>
+    <p>Where the orchestrator <em>lives</em> is a separate choice. It can run as a
+    <strong>standalone admin panel</strong> beside your platform, or be <strong>integrated into
+    it</strong>. Integrated is the better solution: it inherits your RBAC/ACL — the same users,
+    roles, and permissions — sits on the same database, and shares the general knowledge your
+    platform already encodes, so agents read your domain instead of guessing at it.</p>
+    <div class="diagram dg" role="img" aria-label="Installation flow: your untouched project, plus one skill, an agent runs install.md, and the board plus orchestrator go live. Below, two deployment shapes side by side — a standalone admin panel, and integration with your platform, marked recommended. At the bottom, the uninstall path: removing the skill and panel leaves the agents' commits in git history, and a full revert means checking out the pre-install snapshot branch.">
+    <svg viewBox="0 0 940 380">
+      <text x="16" y="44" class="mono">install · one skill, no new code</text>
+      <rect class="ns" x="16" y="56" width="196" height="46" rx="8"></rect>
+      <text x="114" y="74" text-anchor="middle" class="sm">your project</text>
+      <text x="114" y="89" text-anchor="middle" class="mono mut">js · py · rs — untouched</text>
+      <line class="edge" x1="212" y1="79" x2="248" y2="79" marker-end="url(#arr)"></line>
+      <rect class="nh" x="252" y="56" width="196" height="46" rx="8"></rect>
+      <text x="350" y="74" text-anchor="middle" class="sm">drop one skill</text>
+      <text x="350" y="89" text-anchor="middle" class="mono mut">flow-agent-orchestrator</text>
+      <line class="edge" x1="448" y1="79" x2="484" y2="79" marker-end="url(#arr)"></line>
+      <rect class="na" x="488" y="56" width="196" height="46" rx="8"></rect>
+      <text x="586" y="74" text-anchor="middle" class="sm">agent runs install.md</text>
+      <text x="586" y="89" text-anchor="middle" class="mono mut">detect stack · wire routes</text>
+      <line class="edge" x1="684" y1="79" x2="720" y2="79" marker-end="url(#arr)"></line>
+      <rect class="na" x="724" y="56" width="196" height="46" rx="8"></rect>
+      <text x="822" y="74" text-anchor="middle" class="sm">board + orchestrator live</text>
+      <text x="822" y="89" text-anchor="middle" class="mono mut">zero new runtime deps</text>
+
+      <text x="16" y="136" class="mono">two deployment shapes</text>
+      <rect class="ghost" x="16" y="148" width="440" height="126" rx="10"></rect>
+      <text x="32" y="172" class="sm">standalone admin panel — beside your platform</text>
+      <text x="32" y="198" class="sm">its own app, its own login, its own database</text>
+      <text x="32" y="218" class="sm">reads the repo, opens PRs, merges — nothing else shared</text>
+      <text x="32" y="238" class="sm">zero coupling: the quickest way to trial Flow</text>
+      <text x="32" y="258" class="sm">cost: a second user model and a second source of truth</text>
+
+      <rect class="ghost" x="484" y="148" width="436" height="126" rx="10"></rect>
+      <rect class="na" x="800" y="156" width="104" height="20" rx="6"></rect>
+      <text x="852" y="170" text-anchor="middle" class="mono">recommended</text>
+      <text x="500" y="172" class="sm">integrated with your platform</text>
+      <text x="500" y="198" class="sm">shares RBAC / ACL — one user, role and permission model</text>
+      <text x="500" y="218" class="sm">shares the database — cards sit next to product data</text>
+      <text x="500" y="238" class="sm">shares general knowledge — agents read your domain</text>
+      <text x="500" y="258" class="sm">one deploy, one login, one audit trail</text>
+
+      <text x="16" y="302" class="mono">uninstall</text>
+      <rect class="ns" x="16" y="312" width="250" height="46" rx="8"></rect>
+      <text x="141" y="330" text-anchor="middle" class="sm">remove skill + panel</text>
+      <text x="141" y="345" text-anchor="middle" class="mono mut">orchestrator gone</text>
+      <line class="edge back" x1="266" y1="335" x2="312" y2="335" marker-end="url(#arr)"></line>
+      <rect class="ns" x="316" y="312" width="280" height="46" rx="8"></rect>
+      <text x="456" y="330" text-anchor="middle" class="sm">agent-made commits remain</text>
+      <text x="456" y="345" text-anchor="middle" class="mono mut">they are just your git history</text>
+      <line class="edge back" x1="596" y1="335" x2="642" y2="335" marker-end="url(#arr)"></line>
+      <rect class="nd" x="646" y="312" width="274" height="46" rx="8"></rect>
+      <text x="783" y="330" text-anchor="middle" class="sm">full revert = git checkout</text>
+      <text x="783" y="345" text-anchor="middle" class="mono mut">the pre-install snapshot</text>
+    </svg>
+    </div>
+    <p class="caption">The install is one skill plus an agent-executed <code>install.md</code>; the
+    deployment shape is the only real decision. Uninstalling removes the orchestrator, not the work
+    it did — that lives in git like any other commit.</p>
+
+    <h3 class="sub">Uninstall</h3>
+    <p>Removal is easy: delete the skill, drop the board routes, drop (or keep) the orchestrator
+    tables. What removal does <em>not</em> undo is the work the agents did — those are ordinary
+    commits in your repo, and the only way to fully revert them is
+    <code>git checkout flow/pre-install</code>.</p>
+    <div class="note">
+      <span class="note-title">Test it thoroughly — and be ready to revert</span>
+      Run it on a real but non-critical part of the backlog first, with automerge off, and read the
+      PRs. Keep the snapshot branch until you're satisfied, and revert everything if it isn't
+      working for you. We strongly believe that once you've tried the orchestrator, you won't roll
+      back.
+    </div>
+  </section>

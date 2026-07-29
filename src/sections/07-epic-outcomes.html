@@ -1,0 +1,74 @@
+  <!-- ============ 07 EPIC COMPLETION & RESULT EVALUATION ============ -->
+  <section class="comp">
+    <h2><span class="num">07</span>Epic completion &amp; result evaluation</h2>
+    <p class="role">Finishing the tasks is not the same as achieving the result.</p>
+    <p>Completing every task in an epic does not mean the epic succeeded. When the last task
+    lands, an independent <strong>evaluation agent</strong> reviews the epic's original intent, the
+    completed tasks and merged PRs, the verification scores and test results, the deployment
+    status, the relevant product or business metrics, and any regressions or incidents that
+    appeared along the way. It then records a completion assessment.</p>
+    <ul class="tight">
+      <li><strong>Completed successfully</strong> — the intended result was delivered.</li>
+      <li><strong>Completed, awaiting metrics</strong> — the implementation is finished, but the
+      outcome needs more data before it can be judged.</li>
+      <li><strong>Partially completed</strong> — the work shipped, but the intended result was not
+      fully achieved.</li>
+      <li><strong>Needs improvement</strong> — the evaluator creates a follow-up epic.</li>
+      <li><strong>Invalidated</strong> — the underlying assumption was wrong, and the project
+      itself should be reconsidered.</li>
+    </ul>
+    <p>When improvement is required the evaluator creates a <em>new</em> epic or proposes a change
+    to the project. It does not silently reopen completed tasks — an epic that stays permanently
+    open because optional improvements were discovered tells you nothing about whether the original
+    intent was met.</p>
+    <div class="diagram dg" role="img" aria-label="Epic completion evaluation: when the last task is done, an independent evaluation agent reviews the epic's intent, merged PRs, verification scores, deployment status and relevant metrics, and records one of five assessments: completed successfully; completed, awaiting metrics; partially completed; needs improvement, which creates a follow-up epic; or invalidated, which sends the project back for reconsideration. A note underneath: the evaluator never silently reopens completed tasks.">
+    <svg viewBox="0 0 940 270">
+      <rect class="ns" x="16" y="106" width="150" height="54" rx="9"></rect>
+      <text x="91" y="128" text-anchor="middle">All tasks done</text>
+      <text x="91" y="145" text-anchor="middle" class="sm">last epoch merged</text>
+
+      <rect class="na" x="226" y="106" width="180" height="54" rx="9"></rect>
+      <text x="316" y="128" text-anchor="middle">Evaluation agent</text>
+      <text x="316" y="145" text-anchor="middle" class="sm">intent · PRs · scores · metrics</text>
+
+      <path class="ns" d="M 550 98 L 630 133 L 550 168 L 470 133 Z"></path>
+      <text x="550" y="129" text-anchor="middle" class="sm">intended result</text>
+      <text x="550" y="144" text-anchor="middle" class="sm">achieved?</text>
+
+      <line class="edge" x1="166" y1="133" x2="220" y2="133" marker-end="url(#arr)"></line>
+      <line class="edge" x1="406" y1="133" x2="464" y2="133" marker-end="url(#arr)"></line>
+
+      <rect class="ns" x="700" y="18" width="224" height="36" rx="8"></rect>
+      <text x="812" y="33" text-anchor="middle" class="sm">completed successfully</text>
+      <text x="812" y="47" text-anchor="middle" class="mono mut">intended result delivered</text>
+      <rect class="nd" x="700" y="66" width="224" height="36" rx="8"></rect>
+      <text x="812" y="81" text-anchor="middle" class="sm">completed · awaiting metrics</text>
+      <text x="812" y="95" text-anchor="middle" class="mono mut">outcome needs more data</text>
+      <rect class="nd" x="700" y="114" width="224" height="36" rx="8"></rect>
+      <text x="812" y="129" text-anchor="middle" class="sm">partially completed</text>
+      <text x="812" y="143" text-anchor="middle" class="mono mut">shipped · result not fully reached</text>
+      <rect class="nd" x="700" y="162" width="224" height="36" rx="8"></rect>
+      <text x="812" y="177" text-anchor="middle" class="sm">needs improvement</text>
+      <text x="812" y="191" text-anchor="middle" class="mono mut">creates a follow-up epic</text>
+      <rect class="nb" x="700" y="210" width="224" height="36" rx="8"></rect>
+      <text x="812" y="225" text-anchor="middle" class="sm">invalidated</text>
+      <text x="812" y="239" text-anchor="middle" class="mono mut">reconsider the project</text>
+
+      <line class="edge ok" x1="630" y1="133" x2="694" y2="38" marker-end="url(#arrok)"></line>
+      <line class="edge" x1="630" y1="133" x2="694" y2="85" marker-end="url(#arr)"></line>
+      <line class="edge" x1="630" y1="133" x2="694" y2="132" marker-end="url(#arr)"></line>
+      <line class="edge" x1="630" y1="133" x2="694" y2="180" marker-end="url(#arr)"></line>
+      <line class="edge no" x1="630" y1="133" x2="694" y2="228" marker-end="url(#arrno)"></line>
+
+      <text x="16" y="216" class="sm">improvement means a new epic or a project change —</text>
+      <text x="16" y="232" class="sm">the evaluator never silently reopens completed tasks</text>
+    </svg>
+    </div>
+    <div class="note">
+      <span class="note-title">Two separate controls</span>
+      <strong>Task verification</strong> asks whether the implementation satisfies the card, and it
+      runs before merge. <strong>Epic evaluation</strong> asks whether the completed body of work
+      achieved its intended result, and it runs after all the work is done and — where the card's
+      completion policy requires it — after deployment metrics have arrived.
+    </div>
+  </section>

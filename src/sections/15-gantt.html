@@ -1,0 +1,81 @@
+  <!-- ============ 15 STRATEGIC GANTT ============ -->
+  <section class="comp">
+    <h2><span class="num">15</span>Strategic Gantt view</h2>
+    <p class="role">The long-range view of the company, over time.</p>
+    <p>The Workflow Graph answers <em>what can run next</em>. The Gantt answers <em>where the
+    company is against its year</em>. It covers mission, quarterly goals and KPIs, projects and
+    epics — tasks stay in the Kanban and Workflow Graph views, where they belong, and generally do
+    not appear here at all.</p>
+    <ul class="tight">
+      <li><strong>Planned and actual dates</strong> — start and end, side by side, so slippage is
+      visible rather than inferred.</li>
+      <li><strong>Status and percent complete</strong> — on track, at risk, blocked, or complete.</li>
+      <li><strong>Relationships</strong> — which projects serve which goal, and which epics sit
+      inside which project.</li>
+      <li><strong>Project-level gates</strong> — the epic-to-epic dependencies that decide when a
+      gated epic can start.</li>
+      <li><strong>The metric trend for each goal</strong>, beside the bar that claims to move it.</li>
+      <li><strong>Projects that span more than one cycle</strong>, drawn crossing the boundary
+      rather than truncated at it.</li>
+      <li><strong>Epics awaiting outcome data</strong> — deployed, but not yet judged.</li>
+    </ul>
+    <div class="diagram dg" role="img" aria-label="Strategic Gantt mock covering mission, goals, projects and epics — no task rows. Quarter columns Q1 to Q4 with a dashed today line in Q3. The mission bar spans the year at 58 percent blended progress. A quarterly goal bar sits in Q3 marked on track, with a small metric trend sparkline beside it. A persistent project bar runs from Q2 across the year boundary at 46 percent. Epic A is deployed and awaiting outcome metrics; epic B is gated by A and marked at risk, its start linked from epic A by a project-level gate arrow.">
+    <svg viewBox="0 0 990 320">
+      <!-- quarter grid -->
+      <text x="16" y="24" class="mono">strategic timeline · 2026</text>
+      <line class="ghost" x1="250" y1="34" x2="250" y2="300"></line>
+      <line class="ghost" x1="435" y1="34" x2="435" y2="300"></line>
+      <line class="ghost" x1="620" y1="34" x2="620" y2="300"></line>
+      <line class="ghost" x1="805" y1="34" x2="805" y2="300"></line>
+      <text x="342" y="48" text-anchor="middle" class="mono mut">Q1</text>
+      <text x="527" y="48" text-anchor="middle" class="mono mut">Q2</text>
+      <text x="712" y="48" text-anchor="middle" class="mono mut">Q3</text>
+      <text x="897" y="48" text-anchor="middle" class="mono mut">Q4</text>
+
+      <!-- today: drawn with the grid so the bars paint over it, never through a label -->
+      <line class="edge back" x1="668" y1="34" x2="668" y2="300"></line>
+      <text x="662" y="316" text-anchor="end" class="mono mut">today</text>
+
+      <!-- mission row -->
+      <text x="16" y="86" class="sm">mission</text>
+      <rect class="nh" x="250" y="70" width="740" height="24" rx="4"></rect>
+      <rect x="250" y="70" width="429" height="24" fill="var(--hu-bg)" stroke="none"></rect>
+      <text x="262" y="87" class="mono mut">annual · 58% blended progress · on track</text>
+
+      <!-- goal row + metric trend -->
+      <text x="16" y="136" class="sm">goal · Q3</text>
+      <rect class="nh" x="620" y="120" width="185" height="24" rx="4"></rect>
+      <text x="632" y="137" class="mono mut">signups +25% · 62% · on track</text>
+      <polyline points="826,142 844,138 862,139 880,132 898,133 916,127 934,122" fill="none" stroke="var(--da)" stroke-width="1.3"></polyline>
+      <text x="944" y="136" class="mono mut">kpi</text>
+
+      <!-- project row: persists across the year boundary -->
+      <text x="16" y="186" class="sm">project</text>
+      <rect class="ns" x="435" y="170" width="555" height="24" rx="4"></rect>
+      <rect x="435" y="170" width="255" height="24" fill="var(--sy-bg)" stroke="none"></rect>
+      <text x="447" y="187" class="mono mut">community platform · 46% · persists into next cycle →</text>
+
+      <!-- epic rows -->
+      <text x="16" y="236" class="sm">epic · A</text>
+      <rect class="na" x="510" y="220" width="200" height="24" rx="4"></rect>
+      <text x="522" y="237" class="mono mut">onboarding · deployed</text>
+      <text x="720" y="237" class="mono mut">awaiting outcome metrics</text>
+
+      <text x="16" y="286" class="sm">epic · B</text>
+      <rect class="nd" x="740" y="270" width="180" height="24" rx="4"></rect>
+      <text x="752" y="287" class="mono mut">referrals · at risk</text>
+      <path class="edge back" d="M 710 232 C 726 232, 726 282, 736 282" marker-end="url(#arr)"></path>
+      <text x="704" y="264" text-anchor="end" class="mono mut">gate</text>
+    </svg>
+    </div>
+    <p class="caption">Mission, goals, projects, epics — tasks stay in the Kanban and Workflow Graph
+    views. Percent complete blends task completion, epic evaluation scores, deployment status and
+    observed KPI impact; the Workflow Graph remains the authority on what can actually run.</p>
+    <div class="note">
+      <span class="note-title">Percent complete is not card count</span>
+      A project can read as 90% done while having moved nothing. Progress at every level blends
+      task completion with the epic evaluation score, the deployment status and the observed KPI
+      impact — which is why an epic can sit at <em>deployed, awaiting metrics</em> instead of
+      jumping straight to complete.
+    </div>
+  </section>

@@ -1,0 +1,62 @@
+  <!-- ============ 17 AGENT OKRs ============ -->
+  <section class="comp">
+    <h2><span class="num">17</span>Agent OKRs &amp; performance</h2>
+    <p class="role">Scorecards for the fleet — not company goals for agents.</p>
+    <p>Agent OKRs are quarterly scorecards used to understand which models, harnesses, agent
+    configurations and execution policies actually perform. Their purpose is routing and
+    accountability across the fleet; they do not give agents independent objectives of their own.
+    An agent identity is the whole configuration — model, version, harness, system prompt, skills,
+    tool permissions, effort level and memory setup — because that is the unit whose performance
+    you can actually act on.</p>
+    <ul class="tight">
+      <li><strong>Throughput</strong> — cards completed, epics contributed to, cycle time.</li>
+      <li><strong>Quality</strong> — first-attempt success rate, verification scores, number of
+      rework loops, PR approval versus rejection.</li>
+      <li><strong>Consequences</strong> — regressions or incidents introduced, merge reverts,
+      test, lint and build outcomes, code-quality signals where measurable.</li>
+      <li><strong>Cost</strong> — token usage and cost per accepted card.</li>
+      <li><strong>Independence</strong> — how many human interventions the work required.</li>
+    </ul>
+    <div class="diagram dg" role="img" aria-label="Agent OKR loop: run outcomes — verification scores, rework loops, incidents, cost — accumulate into a quarterly scorecard per model, harness and agent configuration. KPI impact is split into direct, modeled, and correlated attribution. The scorecard feeds the execution-policy router, which promotes strong configurations to harder work and higher autonomy, or routes weak ones to simpler work with mandatory verification. Over time the router learns which configuration is most reliable per work category — migrations, frontend, debugging, planning, review, content.">
+    <svg viewBox="0 0 940 240">
+      <rect class="nd" x="16" y="70" width="180" height="56" rx="9"></rect>
+      <text x="106" y="93" text-anchor="middle">Run outcomes</text>
+      <text x="106" y="110" text-anchor="middle" class="sm">scores · rework · cost · incidents</text>
+
+      <rect class="nd" x="256" y="70" width="180" height="56" rx="9"></rect>
+      <text x="346" y="93" text-anchor="middle">Agent scorecard</text>
+      <text x="346" y="110" text-anchor="middle" class="sm">per configuration · quarterly</text>
+
+      <rect class="ns" x="496" y="70" width="150" height="56" rx="9"></rect>
+      <text x="571" y="93" text-anchor="middle">Policy router</text>
+      <text x="571" y="110" text-anchor="middle" class="sm">learns per category</text>
+
+      <line class="edge" x1="196" y1="98" x2="250" y2="98" marker-end="url(#arr)"></line>
+      <line class="edge" x1="436" y1="98" x2="490" y2="98" marker-end="url(#arr)"></line>
+      <text x="346" y="150" text-anchor="middle" class="mono mut">kpi impact: direct · modeled · correlated</text>
+
+      <rect class="na" x="716" y="24" width="208" height="60" rx="9"></rect>
+      <text x="820" y="46" text-anchor="middle" class="sm">promote</text>
+      <text x="820" y="62" text-anchor="middle" class="mono mut">harder work · higher autonomy</text>
+      <text x="820" y="76" text-anchor="middle" class="mono mut">preferred for its category</text>
+
+      <rect class="nb" x="716" y="112" width="208" height="60" rx="9"></rect>
+      <text x="820" y="134" text-anchor="middle" class="sm">demote</text>
+      <text x="820" y="150" text-anchor="middle" class="mono mut">simpler work · mandatory verify</text>
+      <text x="820" y="164" text-anchor="middle" class="mono mut">fewer categories routed</text>
+
+      <line class="edge ok" x1="646" y1="86" x2="710" y2="58" marker-end="url(#arrok)"></line>
+      <line class="edge no" x1="646" y1="110" x2="710" y2="138" marker-end="url(#arrno)"></line>
+
+      <path class="edge back" d="M 820 172 C 820 206, 250 210, 110 130" marker-end="url(#arr)"></path>
+      <text x="470" y="230" text-anchor="middle" class="sm">next quarter's runs update the scorecard — categories: migrations · frontend · debugging · planning · review · content</text>
+    </svg>
+    </div>
+    <p>KPI impact needs care. A card or epic may contribute to a metric change without being its
+    sole cause, so Flow distinguishes <strong>direct</strong> attribution, <strong>modeled</strong>
+    attribution and simple <strong>correlation</strong> rather than presenting all metric movement
+    as agent-created. Performance then feeds back into the execution-policy router: over time the
+    system learns which configuration is most reliable for migrations, frontend work, debugging,
+    planning, review and content — and routes accordingly. Promotion and demotion are policy, and
+    both are recorded and reversible.</p>
+  </section>
