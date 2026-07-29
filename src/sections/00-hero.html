@@ -35,22 +35,31 @@
   </div>
 
   <!-- ============ MASTER LOOP ============ -->
-  <div class="diagram dg" role="img" aria-label="Master operating loop, updated: a band reading Email · Slack runs along the top of the plate. Below it, a dashed boundary labelled Human encloses the human, the annual mission, and the quarterly goals and KPIs. The forward path continues through projects, epics and tasks on the board, and the orchestrator, drawn as a group holding two interchangeable execution lanes — Claude Code and Codex on subscription, and AI agents on API inference — each opening pull requests, then task verification, epic result evaluation, deploy, and metrics. Monitoring agents read the metrics from the dashboard and file new work onto the board, and a dashed return edge carries insights back to goals and KPIs — labelled: the return stops here, metrics never rewrite the mission. Beneath the main flow, five knowledge cylinders — agent.md, skills.md, code knowledge, company knowledge, and memory — sit in a shared enclosure that every agent reads on boot and writes back to after each run.">
+  <div class="diagram dg" role="img" aria-label="Master operating loop: a Human node sits top-left and an AI Agent node sits top-right, each with an arrow into a shared Chat node between them, labelled Slack and E-mail. The Human also sends a single arrow down into a dashed boundary labelled Plan Layer, which encloses the annual mission, the quarterly goals and KPIs, projects — coloured as a human-owned node — and the board of epics and tasks. The AI Agent sends a single arrow down into an Execution Layer group holding two interchangeable execution lanes — Claude Code and Codex on subscription, and AI agents on API inference — both opening pull requests on GitHub, which flow through verify, merge and deploy into releases. A Monitor Layer group encloses monitoring agents and the dashboard where every number lands; return edges run from it back to the board, labelled files new work, and back to the Plan Layer — labelled: the return stops here, never at the mission. Beneath the main flow, five knowledge cylinders — agent.md, skills.md, code knowledge, company knowledge, and memory — sit in a shared enclosure that every agent reads on boot and writes back to after each run.">
   <svg viewBox="0 0 1010 544">
-    <!-- communication layer, above the diagram -->
-    <rect x="16" y="6" width="978" height="34" rx="10" fill="none" stroke="var(--line-strong)" stroke-width="1.2" stroke-dasharray="2 5" stroke-linecap="round"></rect>
-    <text x="506" y="28" text-anchor="middle" class="sm">Email · Slack</text>
-
     <!-- human, standalone above the zone it controls -->
     <rect class="nh" x="276" y="48" width="88" height="46" rx="9"></rect>
     <text x="320" y="67" text-anchor="middle">Human</text>
     <text x="320" y="82" text-anchor="middle" class="sm">sets direction</text>
     <line class="edge" x1="320" y1="94" x2="320" y2="108" marker-end="url(#arr)"></line>
 
+    <!-- AI agent, standalone above the Execution Layer it can call directly -->
+    <rect class="na" x="791" y="48" width="88" height="46" rx="9"></rect>
+    <text x="835" y="67" text-anchor="middle">AI Agent</text>
+    <text x="835" y="82" text-anchor="middle" class="sm">on demand</text>
+    <line class="edge" x1="835" y1="94" x2="835" y2="108" marker-end="url(#arr)"></line>
+
+    <!-- chat, sitting between Human and AI Agent -->
+    <rect class="ns" x="498" y="6" width="160" height="40" rx="9"></rect>
+    <text x="578" y="25" text-anchor="middle">Chat</text>
+    <text x="578" y="40" text-anchor="middle" class="sm">Slack, E-mail</text>
+    <line class="edge" x1="352" y1="48" x2="502" y2="44" marker-end="url(#arr)"></line>
+    <line class="edge" x1="805" y1="48" x2="654" y2="44" marker-end="url(#arr)"></line>
+
     <g transform="translate(0, 106)">
-    <!-- human-only control boundary -->
-    <rect x="124" y="6" width="392" height="96" rx="12" fill="none" stroke="var(--hu-ln)" stroke-dasharray="3 3" stroke-width="1"></rect>
-    <text x="320" y="24" text-anchor="middle" class="mono mut">Plan</text>
+    <!-- plan boundary: mission, goals, projects, board -->
+    <rect x="124" y="6" width="528" height="96" rx="12" fill="none" stroke="var(--hu-ln)" stroke-dasharray="3 3" stroke-width="1"></rect>
+    <text x="388" y="24" text-anchor="middle" class="mono mut">Plan Layer</text>
 
     <rect class="nh" x="136" y="42" width="92" height="46" rx="9"></rect>
     <text x="182" y="61" text-anchor="middle">Mission</text>
@@ -63,7 +72,7 @@
 
     <!-- forward path -->
     <line class="edge" x1="378" y1="65" x2="400" y2="65" marker-end="url(#arr)"></line>
-    <rect class="na" x="404" y="42" width="100" height="46" rx="9"></rect>
+    <rect class="nh" x="404" y="42" width="100" height="46" rx="9"></rect>
     <text x="454" y="61" text-anchor="middle">Projects</text>
     <text x="454" y="76" text-anchor="middle" class="sm">persistent</text>
 
@@ -73,9 +82,9 @@
     <text x="584" y="76" text-anchor="middle" class="sm">epics · tasks</text>
     <line class="edge" x1="638" y1="65" x2="660" y2="65" marker-end="url(#arr)"></line>
 
-    <!-- the orchestrator, and the two lanes it dispatches into -->
-    <rect class="ghost" x="664" y="6" width="204" height="128" rx="12"></rect>
-    <text x="766" y="24" text-anchor="middle" class="mono mut">Orchestrator</text>
+    <!-- orchestrator: lanes, PR, and the verify -> merge -> deploy column -->
+    <rect class="ghost" x="664" y="6" width="342" height="324" rx="12" style="stroke: var(--ag-ln)"></rect>
+    <text x="835" y="24" text-anchor="middle" class="mono mut">Execution Layer</text>
     <rect class="na" x="676" y="34" width="180" height="42" rx="8"></rect>
     <text x="766" y="51" text-anchor="middle">Claude Code · Codex</text>
     <text x="766" y="66" text-anchor="middle" class="sm">subscription</text>
@@ -83,48 +92,42 @@
     <text x="766" y="103" text-anchor="middle">AI agents</text>
     <text x="766" y="118" text-anchor="middle" class="sm">API inference</text>
 
-    <rect class="ns" x="916" y="42" width="76" height="46" rx="9"></rect>
-    <text x="954" y="70" text-anchor="middle">PR</text>
-    <line class="edge" x1="856" y1="55" x2="910" y2="60" marker-end="url(#arr)"></line>
-    <line class="edge" x1="856" y1="107" x2="910" y2="72" marker-end="url(#arr)"></line>
+    <rect class="ns" x="886" y="42" width="116" height="48" rx="9"></rect>
+    <text x="944" y="62" text-anchor="middle">PR</text>
+    <text x="944" y="77" text-anchor="middle" class="sm">Code, Github</text>
+    <line class="edge" x1="856" y1="55" x2="880" y2="54" marker-end="url(#arr)"></line>
+    <line class="edge" x1="856" y1="107" x2="880" y2="78" marker-end="url(#arr)"></line>
 
-    <!-- right column -->
-    <rect class="na" x="886" y="118" width="116" height="48" rx="9"></rect>
-    <text x="944" y="138" text-anchor="middle">Verify task</text>
-    <text x="944" y="153" text-anchor="middle" class="sm">gates · before merge</text>
-    <line class="edge" x1="954" y1="88" x2="948" y2="112" marker-end="url(#arr)"></line>
-
-    <rect class="na" x="886" y="196" width="116" height="48" rx="9"></rect>
-    <text x="944" y="216" text-anchor="middle">Evaluate epic</text>
-    <text x="944" y="231" text-anchor="middle" class="sm">outcome vs intent</text>
-    <line class="edge" x1="944" y1="166" x2="944" y2="190" marker-end="url(#arr)"></line>
+    <line class="edge" x1="944" y1="90" x2="944" y2="268" marker-end="url(#arr)" style="stroke-dasharray: 1 5; stroke-linecap: round"></line>
+    <text x="944" y="173" text-anchor="middle" class="sm">Verify,</text>
+    <text x="944" y="187" text-anchor="middle" class="sm">Merge, Deploy</text>
 
     <rect class="ns" x="886" y="274" width="116" height="48" rx="9"></rect>
-    <text x="944" y="294" text-anchor="middle">Deploy</text>
+    <text x="944" y="294" text-anchor="middle">Releases</text>
     <text x="944" y="309" text-anchor="middle" class="sm">release · verify</text>
-    <line class="edge" x1="944" y1="244" x2="944" y2="268" marker-end="url(#arr)"></line>
+    <line class="edge" x1="944" y1="166" x2="944" y2="268" marker-end="url(#arr)"></line>
 
-    <!-- bottom row -->
-    <rect class="nd" x="560" y="276" width="160" height="46" rx="9"></rect>
-    <text x="640" y="295" text-anchor="middle">Dashboard</text>
-    <text x="640" y="310" text-anchor="middle" class="sm">every number lands here</text>
-    <line class="edge" x1="880" y1="299" x2="726" y2="299" marker-end="url(#arr)"></line>
-    <line class="edge" x1="554" y1="299" x2="486" y2="299" marker-end="url(#arr)"></line>
+    <!-- monitor: monitoring agents + dashboard -->
+    <rect class="ghost" x="278" y="250" width="372" height="80" rx="12"></rect>
+    <text x="464" y="268" text-anchor="middle" class="mono mut">Monitor Layer</text>
+    <rect class="na" x="294" y="276" width="160" height="46" rx="9"></rect>
+    <text x="374" y="295" text-anchor="middle">Monitoring agents</text>
+    <text x="374" y="310" text-anchor="middle" class="sm">cron + standing</text>
+    <rect class="nd" x="474" y="276" width="160" height="46" rx="9"></rect>
+    <text x="554" y="295" text-anchor="middle">Dashboard</text>
+    <text x="554" y="310" text-anchor="middle" class="sm">every number lands here</text>
+    <line class="edge" x1="468" y1="299" x2="460" y2="299" marker-end="url(#arr)"></line>
 
-    <rect class="na" x="320" y="276" width="160" height="46" rx="9"></rect>
-    <text x="400" y="295" text-anchor="middle">Monitoring agents</text>
-    <text x="400" y="310" text-anchor="middle" class="sm">cron + standing</text>
-
-    <!-- return edges -->
-    <path class="edge back" d="M 400 270 C 430 190, 520 120, 570 92" marker-end="url(#arr)"></path>
-    <text x="444" y="212" class="sm">files new work</text>
-    <path class="edge back" d="M 320 292 C 170 278, 140 178, 296 94" marker-end="url(#arr)"></path>
+    <!-- return edges, departing from the Monitor group -->
+    <path class="edge back" d="M 374 270 C 404 190, 494 120, 570 92" marker-end="url(#arr)"></path>
+    <text x="325" y="150" class="sm">files new work</text>
+    <path class="edge back" d="M 294 299 C 144 285, 114 185, 296 94" marker-end="url(#arr)"></path>
     <text x="16" y="200" class="sm">insights reshape goals —</text>
     <text x="16" y="214" class="sm">the return stops here,</text>
     <text x="16" y="228" class="sm">never at the mission</text>
 
     <!-- knowledge the agents read on boot and write back after every run -->
-    <rect class="ghost" x="150" y="342" width="712" height="86" rx="10"></rect>
+    <rect class="ghost" x="150" y="342" width="712" height="86" rx="10" style="stroke: var(--da)"></rect>
     <text x="506" y="360" text-anchor="middle" class="mono mut">knowledge · read on boot, written back after every run</text>
     <path class="nd" d="M 180 376 v 20 a 28 6 0 0 0 56 0 v -20"></path>
     <ellipse class="nd" cx="208" cy="376" rx="28" ry="6"></ellipse>
@@ -145,4 +148,4 @@
     </g>
   </svg>
   </div>
-  <p class="caption">The loop, with Email · Slack — where human/agent touchpoints happen — moved to the top of the plate. Humans own the mission and approve the quarterly goals — the dashed violet boundary is the human-only zone. Everything right of it is agent work under policy: the orchestrator dispatches agents onto interchangeable harnesses, task verification gates the merge, and epic result evaluation asks whether the finished work achieved its intent. The dashboard is where every number lands, and the monitoring return arrows stop at the board and at Goals + KPIs — never at the mission.</p>
+  <p class="caption">Three layers, and Chat — Slack and e-mail, where every human/agent touchpoint happens — sitting above them. Humans set direction into the <em>Plan Layer</em>: mission, quarterly goals and KPIs, the persistent projects under them, and the board those projects decompose into. An agent can also be addressed directly, straight into the <em>Execution Layer</em>, where interchangeable harnesses — Claude Code and Codex on subscription, AI agents on API inference — open PRs that run through verify, merge and deploy into releases. The <em>Monitor Layer</em> is where every number lands: monitoring agents read the dashboard, file new work onto the board, and send insights back to the plan — the return stops there, never at the mission. Underneath it all, the knowledge every agent reads on boot and writes back to after each run.</p>
